@@ -1,7 +1,8 @@
 {
-  "version": 2,
-  "projects": {
-    "dynamic-app": "apps/dynamic-app",
-    "dynamic-app-e2e": "apps/dynamic-app-e2e"
-  }
+	"version": 2,
+	"projects": {
+		"core-application-config-data": "libs/core/application-config/data",
+		"dynamic-app": "apps/dynamic-app",
+		"dynamic-app-e2e": "apps/dynamic-app-e2e"
+	}
 }

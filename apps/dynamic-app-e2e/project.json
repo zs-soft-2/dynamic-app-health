@@ -1,28 +1,28 @@
 {
-  "root": "apps/dynamic-app-e2e",
-  "sourceRoot": "apps/dynamic-app-e2e/src",
-  "projectType": "application",
-  "targets": {
-    "e2e": {
-      "executor": "@nrwl/cypress:cypress",
-      "options": {
-        "cypressConfig": "apps/dynamic-app-e2e/cypress.json",
-        "devServerTarget": "dynamic-app:serve:development"
-      },
-      "configurations": {
-        "production": {
-          "devServerTarget": "dynamic-app:serve:production"
-        }
-      }
-    },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["apps/dynamic-app-e2e/**/*.{js,ts}"]
-      }
-    }
-  },
-  "tags": [],
-  "implicitDependencies": ["dynamic-app"]
+	"root": "apps/dynamic-app-e2e",
+	"sourceRoot": "apps/dynamic-app-e2e/src",
+	"projectType": "application",
+	"targets": {
+		"e2e": {
+			"executor": "@nrwl/cypress:cypress",
+			"options": {
+				"cypressConfig": "apps/dynamic-app-e2e/cypress.json",
+				"devServerTarget": "dynamic-app:serve:development"
+			},
+			"configurations": {
+				"production": {
+					"devServerTarget": "dynamic-app:serve:production"
+				}
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["apps/dynamic-app-e2e/**/*.{js,ts}"]
+			}
+		}
+	},
+	"tags": [],
+	"implicitDependencies": ["dynamic-app"]
 }

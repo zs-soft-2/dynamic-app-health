@@ -14,7 +14,11 @@
 		"skipLibCheck": true,
 		"skipDefaultLibCheck": true,
 		"baseUrl": ".",
-		"paths": {}
+		"paths": {
+			"@dynamic-app-health/core/application-config/data": [
+				"libs/core/application-config/data/src/index.ts"
+			]
+		}
 	},
 	"exclude": ["node_modules", "tmp"]
 }
