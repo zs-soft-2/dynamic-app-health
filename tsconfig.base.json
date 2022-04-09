@@ -18,6 +18,9 @@
 			"@dynamic-app-health/api": ["libs/api/src/index.ts"],
 			"@dynamic-app-health/core/application-config/data": [
 				"libs/core/application-config/data/src/index.ts"
+			],
+			"@dynamic-app-health/core/authentication/data": [
+				"libs/core/authentication/data/src/index.ts"
 			]
 		}
 	},
