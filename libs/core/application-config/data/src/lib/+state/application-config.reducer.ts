@@ -1,15 +1,16 @@
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { createReducer, on, Action } from '@ngrx/store';
+import {
+	APPLICATION_CONFIG_FEATURE_KEY,
+	ApplicationConfigEntity,
+} from '@dynamic-app-health/api';
+import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
+import { Action, createReducer, on } from '@ngrx/store';
 
 import * as ApplicationConfigActions from './application-config.actions';
-import { ApplicationConfigEntity } from './application-config.models';
-
-export const APPLICATION_CONFIG_FEATURE_KEY = 'applicationConfig';
 
 export interface State extends EntityState<ApplicationConfigEntity> {
-	selectedId?: string | number; // which ApplicationConfig record has been selected
-	loaded: boolean; // has the ApplicationConfig list been loaded
-	error?: string | null; // last known error (if any)
+	selectedId: string | null;
+	loading: boolean;
+	error?: string | null;
 }
 
 export interface ApplicationConfigPartialState {
@@ -20,8 +21,8 @@ export const applicationConfigAdapter: EntityAdapter<ApplicationConfigEntity> =
 	createEntityAdapter<ApplicationConfigEntity>();
 
 export const initialState: State = applicationConfigAdapter.getInitialState({
-	// set initial required properties
-	loaded: false,
+	selectedId: null,
+	loading: false,
 });
 
 const applicationConfigReducer = createReducer(

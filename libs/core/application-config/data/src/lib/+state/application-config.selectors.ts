@@ -1,20 +1,16 @@
+import { APPLICATION_CONFIG_FEATURE_KEY } from '@dynamic-app-health/api';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import {
-	APPLICATION_CONFIG_FEATURE_KEY,
-	State,
-	applicationConfigAdapter,
-} from './application-config.reducer';
+import { State, applicationConfigAdapter } from './application-config.reducer';
 
-// Lookup the 'ApplicationConfig' feature state managed by NgRx
 export const getApplicationConfigState = createFeatureSelector<State>(
 	APPLICATION_CONFIG_FEATURE_KEY
 );
 
 const { selectAll, selectEntities } = applicationConfigAdapter.getSelectors();
 
-export const getApplicationConfigLoaded = createSelector(
+export const getApplicationConfigLoading = createSelector(
 	getApplicationConfigState,
-	(state: State) => state.loaded
+	(state: State) => state.loading
 );
 
 export const getApplicationConfigError = createSelector(
