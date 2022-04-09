@@ -1,14 +1,31 @@
+import {
+	ApplicationConfigEntity,
+	ApplicationConfigEntityUpdate,
+} from '@dynamic-app-health/api';
+import { Update } from '@ngrx/entity';
 import { createAction, props } from '@ngrx/store';
-import { ApplicationConfigEntity } from './application-config.models';
 
-export const init = createAction('[ApplicationConfig Page] Init');
-
-export const loadApplicationConfigSuccess = createAction(
-	'[ApplicationConfig/API] Load ApplicationConfig Success',
-	props<{ applicationConfig: ApplicationConfigEntity[] }>()
+export const init = createAction(
+	'[ApplicationConfig] Init',
+	props<{ applicationConfig: ApplicationConfigEntity }>()
 );
 
-export const loadApplicationConfigFailure = createAction(
-	'[ApplicationConfig/API] Load ApplicationConfig Failure',
+export const setSelectedApplicationConfigId = createAction(
+	'[ApplicationConfig] Set Selected ApplicationConfig Id',
+	props<{ applicationConfigId: string }>()
+);
+
+export const updateApplicationConfig = createAction(
+	'[ApplicationConfig] Update ApplicationConfig',
+	props<{ applicationConfigUpdate: ApplicationConfigEntityUpdate }>()
+);
+
+export const updateApplicationConfigSuccess = createAction(
+	'[ApplicationConfig] Update ApplicationConfig Success',
+	props<{ applicationConfigUpdate: Update<ApplicationConfigEntityUpdate> }>()
+);
+
+export const updateApplicationConfigFailure = createAction(
+	'[ApplicationConfig] Update ApplicationConfig Failure',
 	props<{ error: any }>()
 );

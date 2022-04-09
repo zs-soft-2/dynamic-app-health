@@ -5,7 +5,7 @@ import {
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Action, createReducer, on } from '@ngrx/store';
 
-import * as ApplicationConfigActions from './application-config.actions';
+import * as applicationConfigActions from './application-config.actions';
 
 export interface State extends EntityState<ApplicationConfigEntity> {
 	selectedId: string | null;
@@ -27,21 +27,25 @@ export const initialState: State = applicationConfigAdapter.getInitialState({
 
 const applicationConfigReducer = createReducer(
 	initialState,
-	on(ApplicationConfigActions.init, (state) => ({
+	on(applicationConfigActions.init, (state) => ({
 		...state,
 		loaded: false,
 		error: null,
 	})),
 	on(
-		ApplicationConfigActions.loadApplicationConfigSuccess,
-		(state, { applicationConfig }) =>
-			applicationConfigAdapter.setAll(applicationConfig, {
-				...state,
-				loaded: true,
-			})
+		applicationConfigActions.setSelectedApplicationConfigId,
+		(state, { applicationConfigId }) => ({
+			...state,
+			selectedId: applicationConfigId,
+		})
 	),
 	on(
-		ApplicationConfigActions.loadApplicationConfigFailure,
+		applicationConfigActions.updateApplicationConfigSuccess,
+		(state, { applicationConfigUpdate }) =>
+			applicationConfigAdapter.updateOne(applicationConfigUpdate, state)
+	),
+	on(
+		applicationConfigActions.updateApplicationConfigFailure,
 		(state, { error }) => ({ ...state, error })
 	)
 );
