@@ -1,6 +1,7 @@
 {
 	"version": 2,
 	"projects": {
+		"api": "libs/api",
 		"core-application-config-data": "libs/core/application-config/data",
 		"dynamic-app": "apps/dynamic-app",
 		"dynamic-app-e2e": "apps/dynamic-app-e2e"

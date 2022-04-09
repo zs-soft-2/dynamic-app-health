@@ -15,6 +15,7 @@
 		"skipDefaultLibCheck": true,
 		"baseUrl": ".",
 		"paths": {
+			"@dynamic-app-health/api": ["libs/api/src/index.ts"],
 			"@dynamic-app-health/core/application-config/data": [
 				"libs/core/application-config/data/src/index.ts"
 			]
