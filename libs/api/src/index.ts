@@ -1,2 +1,2 @@
 export * from './lib/common';
-export * from './lib/core/application-config';
+export * from './lib/core';

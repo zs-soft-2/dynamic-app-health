@@ -27,11 +27,9 @@ export const initialState: State = applicationConfigAdapter.getInitialState({
 
 const applicationConfigReducer = createReducer(
 	initialState,
-	on(applicationConfigActions.init, (state) => ({
-		...state,
-		loaded: false,
-		error: null,
-	})),
+	on(applicationConfigActions.init, (state, { applicationConfig }) => {
+		return applicationConfigAdapter.upsertOne(applicationConfig, state);
+	}),
 	on(
 		applicationConfigActions.setSelectedApplicationConfigId,
 		(state, { applicationConfigId }) => ({
