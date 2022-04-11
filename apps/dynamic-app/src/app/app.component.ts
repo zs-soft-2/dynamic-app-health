@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { AuthenticationStateService } from '@dynamic-app-health/api';
 
 @Component({
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -8,4 +9,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class AppComponent {
 	public title = 'dynamic-app';
+
+	public constructor(
+		private authenticationstateService: AuthenticationStateService
+	) {}
 }

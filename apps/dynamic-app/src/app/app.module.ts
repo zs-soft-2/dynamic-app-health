@@ -6,6 +6,7 @@ import {
 	DEFAULT_APPLICATION_CONFIG_TOKEN,
 } from '@dynamic-app-health/api';
 import { CoreApplicationConfigDataModule } from '@dynamic-app-health/core/application-config/data';
+import { CoreAuthenticationDataModule } from '@dynamic-app-health/core/authentication/data';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -19,7 +20,6 @@ import { initializeApp } from './initializer';
 	declarations: [AppComponent],
 	imports: [
 		BrowserModule,
-		CoreApplicationConfigDataModule,
 		StoreModule.forRoot(
 			{},
 			{
@@ -32,6 +32,8 @@ import { initializeApp } from './initializer';
 		),
 		EffectsModule.forRoot([]),
 		!environment.production ? StoreDevtoolsModule.instrument() : [],
+		CoreApplicationConfigDataModule,
+		CoreAuthenticationDataModule,
 	],
 	providers: [
 		{
