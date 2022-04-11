@@ -5,6 +5,7 @@
 		"core-application-config-data": "libs/core/application-config/data",
 		"core-authentication-data": "libs/core/authentication/data",
 		"core-error-data": "libs/core/error/data",
+		"core-error-util": "libs/core/error/util",
 		"dynamic-app": "apps/dynamic-app",
 		"dynamic-app-e2e": "apps/dynamic-app-e2e"
 	}
