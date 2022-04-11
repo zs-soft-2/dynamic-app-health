@@ -1,0 +1,26 @@
+{
+	"projectType": "library",
+	"root": "libs/core/error/data",
+	"sourceRoot": "libs/core/error/data/src",
+	"prefix": "dynamic-app-health",
+	"targets": {
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/libs/core/error/data"],
+			"options": {
+				"jestConfig": "libs/core/error/data/jest.config.js",
+				"passWithNoTests": true
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": [
+					"libs/core/error/data/src/**/*.ts",
+					"libs/core/error/data/src/**/*.html"
+				]
+			}
+		}
+	},
+	"tags": []
+}
