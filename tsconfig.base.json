@@ -21,6 +21,12 @@
 			],
 			"@dynamic-app-health/core/authentication/data": [
 				"libs/core/authentication/data/src/index.ts"
+			],
+			"@dynamic-app-health/core/error/data": [
+				"libs/core/error/data/src/index.ts"
+			],
+			"@dynamic-app-health/core/error/util": [
+				"libs/core/error/util/src/index.ts"
 			]
 		}
 	},

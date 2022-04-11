@@ -1,5 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AuthenticationStateService } from '@dynamic-app-health/api';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+	AuthenticationStateService,
+	Error,
+	ErrorTypeEnum,
+} from '@dynamic-app-health/api';
 
 @Component({
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -7,10 +11,13 @@ import { AuthenticationStateService } from '@dynamic-app-health/api';
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 	public title = 'dynamic-app';
 
 	public constructor(
 		private authenticationstateService: AuthenticationStateService
 	) {}
+	ngOnInit(): void {
+		throw new Error(ErrorTypeEnum.DataAccessError, 'AppComponent', null);
+	}
 }
