@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
 	AuthenticationStateService,
-	Error,
 	ErrorTypeEnum,
 } from '@dynamic-app-health/api';
+import { createError } from '@dynamic-app-health/core/error/util';
 
 @Component({
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -17,7 +17,13 @@ export class AppComponent implements OnInit {
 	public constructor(
 		private authenticationstateService: AuthenticationStateService
 	) {}
-	ngOnInit(): void {
-		throw new Error(ErrorTypeEnum.DataAccessError, 'AppComponent', null);
+
+	@createError()
+	public doAnithing(): void {
+		throw new Error('Hiba');
+	}
+
+	public ngOnInit(): void {
+		this.doAnithing();
 	}
 }

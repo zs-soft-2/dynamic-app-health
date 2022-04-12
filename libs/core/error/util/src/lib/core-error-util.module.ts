@@ -1,16 +1,22 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { ErrorUtilService } from '@dynamic-app-health/api';
 
-import { ErrorUtilServiceImpl } from './service';
+import { ErrorDecoratorService, ErrorUtilServiceImpl } from './service';
 
 @NgModule({
 	imports: [CommonModule],
-	providers: [
-		{
-			provide: ErrorUtilService,
-			useClass: ErrorUtilServiceImpl,
-		},
-	],
 })
-export class CoreErrorUtilModule {}
+export class CoreErrorUtilModule {
+	public static forRoot(): ModuleWithProviders<CoreErrorUtilModule> {
+		return {
+			ngModule: CoreErrorUtilModule,
+			providers: [
+				{
+					provide: ErrorUtilService,
+					useClass: ErrorUtilServiceImpl,
+				},
+			],
+		};
+	}
+}

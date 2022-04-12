@@ -7,6 +7,11 @@ import {
 } from '@dynamic-app-health/api';
 import { CoreApplicationConfigDataModule } from '@dynamic-app-health/core/application-config/data';
 import { CoreAuthenticationDataModule } from '@dynamic-app-health/core/authentication/data';
+import { CoreErrorDataModule } from '@dynamic-app-health/core/error/data';
+import {
+	CoreErrorUtilModule,
+	ErrorDecoratorService,
+} from '@dynamic-app-health/core/error/util';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -34,8 +39,11 @@ import { initializeApp } from './initializer';
 		!environment.production ? StoreDevtoolsModule.instrument() : [],
 		CoreApplicationConfigDataModule,
 		CoreAuthenticationDataModule,
+		CoreErrorDataModule,
+		CoreErrorUtilModule.forRoot(),
 	],
 	providers: [
+		ErrorDecoratorService,
 		{
 			provide: APPLICATION_ID_TOKEN,
 			useValue: environment.applicationId,
@@ -57,4 +65,6 @@ import { initializeApp } from './initializer';
 	],
 	bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+	constructor(private decoratorService: ErrorDecoratorService) {}
+}
