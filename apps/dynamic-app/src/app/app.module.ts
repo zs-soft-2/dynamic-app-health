@@ -1,9 +1,11 @@
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {
 	APPLICATION_ID_TOKEN,
 	ApplicationConfigStateService,
 	DEFAULT_APPLICATION_CONFIG_TOKEN,
+	LanguagesEnum,
 } from '@dynamic-app-health/api';
 import { CoreApplicationConfigDataModule } from '@dynamic-app-health/core/application-config/data';
 import { CoreAuthenticationDataModule } from '@dynamic-app-health/core/authentication/data';
@@ -12,6 +14,7 @@ import {
 	CoreErrorUtilModule,
 	ErrorDecoratorService,
 } from '@dynamic-app-health/core/error/util';
+import { CoreI18nDataModule } from '@dynamic-app-health/core/i18n/data';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -25,6 +28,7 @@ import { initializeApp } from './initializer';
 	declarations: [AppComponent],
 	imports: [
 		BrowserModule,
+		HttpClientModule,
 		StoreModule.forRoot(
 			{},
 			{
@@ -41,6 +45,12 @@ import { initializeApp } from './initializer';
 		CoreAuthenticationDataModule,
 		CoreErrorDataModule,
 		CoreErrorUtilModule.forRoot(),
+		CoreI18nDataModule.forRoot({
+			prodMode: environment.production,
+			availableLangs: applicationConfig.languages as LanguagesEnum[],
+			defaultLang: applicationConfig.defaultLanguage as LanguagesEnum,
+			reRenderOnLangChange: true,
+		}),
 	],
 	providers: [
 		ErrorDecoratorService,

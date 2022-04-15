@@ -1,34 +1,68 @@
-import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { fetch } from '@nrwl/angular';
+import { catchError, map, of, switchMap } from 'rxjs';
 
-import * as ApplicationConfigActions from './application-config.actions';
+import { Injectable } from '@angular/core';
+import { ApplicationConfigDataService } from '@dynamic-app-health/api';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+
+import * as applicationConfigActions from './application-config.actions';
 
 @Injectable()
 export class ApplicationConfigEffects {
 	init$ = createEffect(() =>
 		this.actions$.pipe(
-			ofType(ApplicationConfigActions.updateApplicationConfig),
-			fetch({
-				run: (action) => {
-					return ApplicationConfigActions.updateApplicationConfigSuccess(
-						{
-							applicationConfigUpdate: {
-								id: action.applicationConfigUpdate.id,
-								changes: action.applicationConfigUpdate,
-							},
-						}
-					);
-				},
-				onError: (action, error) => {
-					console.error('Error', error);
-					return ApplicationConfigActions.updateApplicationConfigFailure(
-						{ error }
-					);
-				},
+			ofType(applicationConfigActions.init),
+			switchMap((action) =>
+				this.applicationConfigDataService
+					.update$(action.applicationConfig)
+					.pipe(
+						map((applicationConfigUpdate) =>
+							applicationConfigActions.updateApplicationConfigSuccess(
+								{
+									applicationConfigUpdate: {
+										changes: { ...applicationConfigUpdate },
+										id:
+											(applicationConfigUpdate &&
+												applicationConfigUpdate.id) ||
+											'',
+									},
+								}
+							)
+						),
+						catchError((error) => {
+							return of(
+								applicationConfigActions.loadApplicationConfigFailure(
+									{ error }
+								)
+							);
+						})
+					)
+			)
+		)
+	);
+	loadApplicationConfig$ = createEffect(() =>
+		this.actions$.pipe(
+			ofType(applicationConfigActions.loadApplicationConfig),
+			switchMap((action) => {
+				return this.applicationConfigDataService.load$(action.id).pipe(
+					map((applicationConfig) => {
+						return applicationConfigActions.loadApplicationConfigSuccess(
+							{ applicationConfig }
+						);
+					}),
+					catchError((error) => {
+						return of(
+							applicationConfigActions.loadApplicationConfigFailure(
+								{ error }
+							)
+						);
+					})
+				);
 			})
 		)
 	);
 
-	constructor(private readonly actions$: Actions) {}
+	constructor(
+		private actions$: Actions,
+		private applicationConfigDataService: ApplicationConfigDataService
+	) {}
 }

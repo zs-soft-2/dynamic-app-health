@@ -1,7 +1,8 @@
-import { first, of } from 'rxjs';
+import { delay, firstValueFrom, map, of, switchMap, tap } from 'rxjs';
 
 import {
 	ApplicationConfigEntity,
+	ApplicationConfigInitializerService,
 	ApplicationConfigStateService,
 } from '@dynamic-app-health/api';
 
@@ -10,18 +11,32 @@ export function initializeApp(
 	applicationId: string,
 	applicationConfig: ApplicationConfigEntity
 ) {
-	return () => {
-		return new Promise((resolve) => {
-			of(true)
-				.pipe(first())
-				.subscribe(() => {
+	return () =>
+		firstValueFrom(
+			of(true).pipe(
+				delay(1),
+				tap(() => {
 					applicationConfigStateService.dispatchInitAction({
 						...applicationConfig,
 						id: applicationId,
 					});
-
-					resolve(true);
-				});
-		});
-	};
+					applicationConfigStateService.dispatchLoadEntityAction(
+						applicationId
+					);
+				}),
+				switchMap(() => {
+					return applicationConfigStateService
+						.selectEntityById$(applicationId)
+						.pipe(
+							map((applicationConfigEntity) => {
+								ApplicationConfigInitializerService.applicationConfig =
+									{
+										...applicationConfig,
+										...applicationConfigEntity,
+									};
+							})
+						);
+				})
+			)
+		);
 }

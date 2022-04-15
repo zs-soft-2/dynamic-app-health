@@ -8,6 +8,14 @@ import {
 	ApplicationConfigEntityUpdate,
 } from '@dynamic-app-health/api';
 
+export const mockApplicationConfig: ApplicationConfigEntity = {
+	defaultLanguage: 'en',
+	defaultTimezone: 'Europe/London',
+	id: '',
+	languages: ['en'],
+	timezones: ['Europe/London', 'Europe/Budapest'],
+};
+
 @Injectable()
 export class ApplicationConfigDataServiceImpl extends ApplicationConfigDataService {
 	public add$(
@@ -26,8 +34,17 @@ export class ApplicationConfigDataServiceImpl extends ApplicationConfigDataServi
 		throw new Error('Method not implemented.');
 	}
 
-	public load$(id: string): Observable<ApplicationConfigEntity | undefined> {
-		throw new Error('Method not implemented.');
+	public load$(id: string): Observable<ApplicationConfigEntity> {
+		if (!mockApplicationConfig) {
+			throw new Error(
+				'No exist ApplicationConfig instance for the given id!'
+			);
+		}
+
+		return of({
+			...mockApplicationConfig,
+			id,
+		});
 	}
 
 	public update$(

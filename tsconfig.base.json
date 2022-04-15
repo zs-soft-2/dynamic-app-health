@@ -27,6 +27,9 @@
 			],
 			"@dynamic-app-health/core/error/util": [
 				"libs/core/error/util/src/index.ts"
+			],
+			"@dynamic-app-health/core/i18n/data": [
+				"libs/core/i18n/data/src/index.ts"
 			]
 		}
 	},

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
 	AuthenticationStateService,
 	ErrorTypeEnum,
+	I18nService,
 } from '@dynamic-app-health/api';
 import { createError } from '@dynamic-app-health/core/error/util';
 
@@ -15,7 +16,8 @@ export class AppComponent implements OnInit {
 	public title = 'dynamic-app';
 
 	public constructor(
-		private authenticationstateService: AuthenticationStateService
+		private authenticationstateService: AuthenticationStateService,
+		private i18nService: I18nService
 	) {}
 
 	@createError()
@@ -24,6 +26,7 @@ export class AppComponent implements OnInit {
 	}
 
 	public ngOnInit(): void {
+		console.log(this.i18nService.getActiveLangAsString());
 		this.doAnithing();
 	}
 }

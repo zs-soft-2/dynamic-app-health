@@ -31,6 +31,11 @@ const applicationConfigReducer = createReducer(
 		return applicationConfigAdapter.upsertOne(applicationConfig, state);
 	}),
 	on(
+		applicationConfigActions.loadApplicationConfigSuccess,
+		(state, { applicationConfig }) =>
+			applicationConfigAdapter.upsertOne(applicationConfig, state)
+	),
+	on(
 		applicationConfigActions.setSelectedApplicationConfigId,
 		(state, { applicationConfigId }) => ({
 			...state,

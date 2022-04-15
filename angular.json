@@ -6,6 +6,7 @@
 		"core-authentication-data": "libs/core/authentication/data",
 		"core-error-data": "libs/core/error/data",
 		"core-error-util": "libs/core/error/util",
+		"core-i18n-data": "libs/core/i18n/data",
 		"dynamic-app": "apps/dynamic-app",
 		"dynamic-app-e2e": "apps/dynamic-app-e2e"
 	}

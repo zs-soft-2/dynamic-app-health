@@ -7,10 +7,11 @@ import {
 	ApplicationConfigEntityUpdate,
 	ApplicationConfigStateService,
 } from '@dynamic-app-health/api';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 
 import * as applicationConfigActions from '../+state/application-config.actions';
 import * as fromApplicationConfig from '../+state/application-config.reducer';
+import * as applicationConfigSelectors from '../+state/application-config.selectors';
 
 @Injectable()
 export class ApplicationConfigStateServiceImpl extends ApplicationConfigStateService {
@@ -43,7 +44,9 @@ export class ApplicationConfigStateServiceImpl extends ApplicationConfigStateSer
 	}
 
 	public dispatchLoadEntityAction(id: string): void {
-		throw new Error('Method not implemented.');
+		this.store.dispatch(
+			applicationConfigActions.loadApplicationConfig({ id })
+		);
 	}
 
 	public dispatchSetSelectedEntityIdAction(entityId: string): void {
@@ -70,8 +73,10 @@ export class ApplicationConfigStateServiceImpl extends ApplicationConfigStateSer
 
 	public selectEntityById$(
 		entityId: string
-	): Observable<ApplicationConfigEntity | undefined> {
-		throw new Error('Method not implemented.');
+	): Observable<ApplicationConfigEntity> {
+		return this.store.pipe(
+			select(applicationConfigSelectors.selectEntityById(entityId))
+		);
 	}
 
 	public selectSelectedEntity$(): Observable<
