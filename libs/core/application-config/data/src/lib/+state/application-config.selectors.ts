@@ -1,6 +1,11 @@
-import { APPLICATION_CONFIG_FEATURE_KEY } from '@dynamic-app-health/api';
+import {
+	ApplicationConfigEntity,
+	APPLICATION_CONFIG_FEATURE_KEY,
+} from '@dynamic-app-health/api';
+import { Dictionary } from '@ngrx/entity';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { State, applicationConfigAdapter } from './application-config.reducer';
+
+import { applicationConfigAdapter, State } from './application-config.reducer';
 
 export const getApplicationConfigState = createFeatureSelector<State>(
 	APPLICATION_CONFIG_FEATURE_KEY
@@ -38,3 +43,17 @@ export const getSelected = createSelector(
 	getSelectedId,
 	(entities, selectedId) => (selectedId ? entities[selectedId] : undefined)
 );
+
+export const selectEntityById = (id: string) =>
+	createSelector(
+		getApplicationConfigEntities,
+		(entities: Dictionary<ApplicationConfigEntity>) => {
+			const entity: ApplicationConfigEntity | undefined = entities[id];
+
+			if (!entity) {
+				throw new Error('No Entity');
+			}
+
+			return entity;
+		}
+	);

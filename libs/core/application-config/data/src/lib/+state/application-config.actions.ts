@@ -10,6 +10,21 @@ export const init = createAction(
 	props<{ applicationConfig: ApplicationConfigEntity }>()
 );
 
+export const loadApplicationConfig = createAction(
+	'[ApplicationConfig] Load ApplicationConfig',
+	props<{ id: string }>()
+);
+
+export const loadApplicationConfigSuccess = createAction(
+	'[ApplicationConfig] Load ApplicationConfig Success',
+	props<{ applicationConfig: ApplicationConfigEntity }>()
+);
+
+export const loadApplicationConfigFailure = createAction(
+	'[ApplicationConfig] Load ApplicationConfig Failure',
+	props<{ error: any }>()
+);
+
 export const setSelectedApplicationConfigId = createAction(
 	'[ApplicationConfig] Set Selected ApplicationConfig Id',
 	props<{ applicationConfigId: string }>()
