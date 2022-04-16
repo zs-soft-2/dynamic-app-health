@@ -12,4 +12,7 @@ export abstract class DynamicPageDataService extends EntityDataService<
 	DynamicPageEntity,
 	DynamicPageEntityAdd,
 	DynamicPageEntityUpdate
-> {}
+> {
+	public abstract getDynamicLayouts$(): Observable<DynamicLayout[]>;
+	public abstract getDynamicPages(): DynamicPageEntity[];
+}
