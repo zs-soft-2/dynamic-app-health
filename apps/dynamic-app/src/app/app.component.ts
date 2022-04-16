@@ -8,7 +8,7 @@ import { createError } from '@dynamic-app-health/core/error/util';
 
 @Component({
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	selector: 'dynamic-app-health-root',
+	selector: 'dh-root',
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss'],
 })

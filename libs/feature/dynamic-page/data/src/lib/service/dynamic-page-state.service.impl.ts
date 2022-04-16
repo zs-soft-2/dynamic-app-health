@@ -26,9 +26,9 @@ export class DynamicPageStateServiceImpl extends DynamicPageStateService {
 		);
 	}
 
-	public dispatchDeleteEntityAction(dynamicPageId: string): void {
+	public dispatchDeleteEntityAction(entity: DynamicPageEntity): void {
 		this.store.dispatch(
-			dynamicPageActions.deleteDynamicPage({ dynamicPageId })
+			dynamicPageActions.deleteDynamicPage({ dynamicPage: entity })
 		);
 	}
 
@@ -84,11 +84,9 @@ export class DynamicPageStateServiceImpl extends DynamicPageStateService {
 		);
 	}
 
-	public selectEntityById$(
-		id: string
-	): Observable<DynamicPageEntity | undefined> {
+	public selectEntityById$(id: string): Observable<DynamicPageEntity> {
 		return this.store.pipe(
-			select(dynamicPageSelectors.selectDynamicPageById(), { id })
+			select(dynamicPageSelectors.selectDynamicPageById(id))
 		);
 	}
 

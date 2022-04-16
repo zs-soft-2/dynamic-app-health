@@ -1,7 +1,7 @@
 import {
 	DYNAMIC_PAGE_FEATURE_KEY,
 	DynamicPageEntity,
-} from '@dynamic-health/api';
+} from '@dynamic-app-health/api';
 import { Dictionary } from '@ngrx/entity';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
@@ -13,10 +13,9 @@ import {
 
 const { selectAll, selectEntities } = dynamicPageAdapter.getSelectors();
 
-export const getDynamicPageState = createFeatureSelector<
-	DynamicPagePartialState,
-	State
->(DYNAMIC_PAGE_FEATURE_KEY);
+export const getDynamicPageState = createFeatureSelector<State>(
+	DYNAMIC_PAGE_FEATURE_KEY
+);
 
 export const getDynamicPageError = createSelector(
 	getDynamicPageState,
@@ -49,9 +48,16 @@ export const selectSelectedDynamicPage = createSelector(
 	(dynamicPageEntities, dynamicPageID) => dynamicPageEntities[dynamicPageID]
 );
 
-export const selectDynamicPageById = () =>
+export const selectDynamicPageById = (id: string) =>
 	createSelector(
 		selectDynamicPageEntities,
-		(dynamicPages: Dictionary<DynamicPageEntity>, props: any) =>
-			dynamicPages[props.id]
+		(dynamicPages: Dictionary<DynamicPageEntity>) => {
+			const dynamicPage: DynamicPageEntity | undefined = dynamicPages[id];
+
+			if (!dynamicPage) {
+				throw new Error('No DynamicPage entity!');
+			}
+
+			return dynamicPage;
+		}
 	);

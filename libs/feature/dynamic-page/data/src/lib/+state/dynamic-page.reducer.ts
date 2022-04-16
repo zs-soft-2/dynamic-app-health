@@ -1,9 +1,9 @@
-import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
-import { Action, createReducer, on } from '@ngrx/store';
 import {
 	DYNAMIC_PAGE_FEATURE_KEY,
 	DynamicPageEntity,
-} from '@dynamic-health/api';
+} from '@dynamic-app-health/api';
+import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
+import { Action, createReducer, on } from '@ngrx/store';
 
 import * as dynamicPageActions from './dynamic-page.actions';
 

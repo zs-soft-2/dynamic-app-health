@@ -1,0 +1,29 @@
+<ng-container *ngIf="params$$ | async as params">
+	<p-toolbar>
+		<div class="p-toolbar-group-left">
+			<p-menubar [model]="params.menuItems">
+				<div *ngxPermissionsOnly="params.addPagePermissions">
+					<button
+						pButton
+						(click)="handleAddClick()"
+						type="button"
+						class="p-button-raised p-button-rounded add"
+						icon="pi pi-plus"
+					></button>
+				</div>
+			</p-menubar>
+		</div>
+
+		<div class="p-toolbar-group-right">
+			<div *ngxPermissionsOnly="params.editPagePermissions">
+				<button
+					pButton
+					(click)="handleEditClick()"
+					type="button"
+					class="p-button-raised p-button-rounded"
+					icon="pi pi-pencil"
+				></button>
+			</div>
+		</div>
+	</p-toolbar>
+</ng-container>

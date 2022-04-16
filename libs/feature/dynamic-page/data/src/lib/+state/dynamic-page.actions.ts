@@ -1,6 +1,9 @@
+import {
+	DynamicPageEntity,
+	DynamicPageEntityAdd,
+} from '@dynamic-app-health/api';
 import { Update } from '@ngrx/entity';
 import { createAction, props } from '@ngrx/store';
-import { DynamicPageEntity, DynamicPageEntityAdd } from '@dynamic-health/api';
 
 export const addDynamicPage = createAction(
 	'[DynamicPage] Add DynamicPage',
@@ -23,7 +26,7 @@ export const clearDynamicPages = createAction(
 
 export const deleteDynamicPage = createAction(
 	'[DynamicPage] Delete DynamicPage',
-	props<{ dynamicPageId: string }>()
+	props<{ dynamicPage: DynamicPageEntity }>()
 );
 
 export const deleteDynamicPageFail = createAction(
