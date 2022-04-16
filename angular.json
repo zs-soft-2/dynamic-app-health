@@ -9,6 +9,7 @@
 		"core-i18n-data": "libs/core/i18n/data",
 		"dynamic-app": "apps/dynamic-app",
 		"dynamic-app-e2e": "apps/dynamic-app-e2e",
-		"feature-dynamic-page-data": "libs/feature/dynamic-page/data"
+		"feature-dynamic-page-data": "libs/feature/dynamic-page/data",
+		"feature-dynamic-page-view": "libs/feature/dynamic-page/view"
 	}
 }
