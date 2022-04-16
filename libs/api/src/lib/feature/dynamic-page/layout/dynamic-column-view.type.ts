@@ -1,4 +1,4 @@
-import { DynamicContent } from '../dynamic-content';
+import { DynamicContent } from '../content';
 
 export type DynamicColumnView = {
 	class: string;

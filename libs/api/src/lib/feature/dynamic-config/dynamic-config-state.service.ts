@@ -1,8 +1,12 @@
-import { EntityStateService } from '../base';
-import { DynamicConfigEntityAdd } from './dynamic-config.type';
+import { EntityStateService } from '../../common';
+import {
+	DynamicConfigEntity,
+	DynamicConfigEntityAdd,
+	DynamicConfigEntityUpdate,
+} from './dynamic-config.entity';
 
-export abstract class DynamicConfigStateService extends EntityStateService {
-	public abstract override dispatchAddEntityAction(
-		entity: DynamicConfigEntityAdd
-	): void;
-}
+export abstract class DynamicConfigStateService extends EntityStateService<
+	DynamicConfigEntity,
+	DynamicConfigEntityAdd,
+	DynamicConfigEntityUpdate
+> {}

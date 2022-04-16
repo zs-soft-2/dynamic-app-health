@@ -1,7 +1,7 @@
 import { KeyValue } from '@angular/common';
 import { Type } from '@angular/core';
 
-import { DynamicConfigEntity } from '../dynamic-config';
+import { DynamicConfigEntity } from '../../dynamic-config';
 
 export type DynamicContent = {
 	component: Type<any> | undefined;

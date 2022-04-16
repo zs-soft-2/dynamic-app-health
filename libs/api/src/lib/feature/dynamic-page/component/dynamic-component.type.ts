@@ -1,6 +1,7 @@
 import { Type } from '@angular/core';
 
-import { ConfigBaseComponent, ConfigComponentBaseParam } from '../base';
+import { ConfigBaseComponent } from '../../../common';
+import { ConfigComponentBaseParam } from '../../../common/base/param';
 
 export type DynamicComponent = {
 	component: Type<any>;

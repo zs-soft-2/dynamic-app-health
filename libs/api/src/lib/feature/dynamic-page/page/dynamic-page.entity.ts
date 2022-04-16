@@ -1,5 +1,5 @@
-import { DynamicLayout } from '../dynamic-layout';
-import { Identifiable } from '../identifiable';
+import { Identifiable } from '../../../common';
+import { DynamicLayout } from '../layout';
 
 export type DynamicPageEntity = {
 	layout: DynamicLayout;

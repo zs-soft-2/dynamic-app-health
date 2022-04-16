@@ -1,4 +1,4 @@
-import { Identifiable } from '../identifiable';
+import { ConfigEntity, Identifiable } from '../../common';
 
 export interface DynamicProperties {
 	[key: string]: boolean;
@@ -9,7 +9,8 @@ export type DynamicConfigEntity = {
 	label: string;
 	link?: string;
 	properties: DynamicProperties;
-} & Identifiable;
+} & Identifiable &
+	ConfigEntity<any>;
 
 export type DynamicConfigEntityAdd = Omit<DynamicConfigEntity, 'id'>;
 

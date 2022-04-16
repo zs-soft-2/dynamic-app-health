@@ -1,20 +1,12 @@
-import { Observable } from 'rxjs';
-
+import { EntityDataService } from '../../common';
 import {
 	DynamicConfigEntity,
 	DynamicConfigEntityAdd,
 	DynamicConfigEntityUpdate,
-} from './dynamic-config.type';
+} from './dynamic-config.entity';
 
-export abstract class DynamicConfigDataService {
-	public abstract add$(
-		dynamicConfig: DynamicConfigEntityAdd
-	): Observable<DynamicConfigEntity>;
-	public abstract list$(): Observable<DynamicConfigEntity[]>;
-	public abstract load$(
-		dynamicConfigId: string
-	): Observable<DynamicConfigEntity>;
-	public abstract update$(
-		dynamicConfig: DynamicConfigEntityUpdate
-	): Observable<DynamicConfigEntityUpdate>;
-}
+export abstract class DynamicConfigDataService extends EntityDataService<
+	DynamicConfigEntity,
+	DynamicConfigEntityAdd,
+	DynamicConfigEntityUpdate
+> {}

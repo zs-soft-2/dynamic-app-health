@@ -1,4 +1,4 @@
-import { DynamicRowView } from '../dynamic-layout';
+import { DynamicRowView } from '../layout';
 
 export type DynamicPageView = {
 	rows: DynamicRowView[];

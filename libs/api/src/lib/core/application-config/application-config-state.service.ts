@@ -9,4 +9,6 @@ export abstract class ApplicationConfigStateService extends EntityStateService<
 	ApplicationConfigEntity,
 	ApplicationConfigEntityAdd,
 	ApplicationConfigEntityUpdate
-> {}
+> {
+	public abstract dispatchInitAction(entity: ApplicationConfigEntity): void;
+}
