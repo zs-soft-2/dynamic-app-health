@@ -30,6 +30,9 @@
 			],
 			"@dynamic-app-health/core/i18n/data": [
 				"libs/core/i18n/data/src/index.ts"
+			],
+			"@dynamic-app-health/feature/dynamic-page/data": [
+				"libs/feature/dynamic-page/data/src/index.ts"
 			]
 		}
 	},
