@@ -29,5 +29,6 @@ const routes: Routes = [
 		}),
 	],
 	exports: [RouterModule],
+	providers: [DynamicPageResolverService],
 })
 export class AppRoutingModule {}

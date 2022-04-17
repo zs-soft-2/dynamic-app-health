@@ -2,7 +2,7 @@
 	<p-toolbar>
 		<div class="p-toolbar-group-left">
 			<p-menubar [model]="params.menuItems">
-				<div *ngxPermissionsOnly="params.addPagePermissions">
+				<div>
 					<button
 						pButton
 						(click)="handleAddClick()"
@@ -15,7 +15,7 @@
 		</div>
 
 		<div class="p-toolbar-group-right">
-			<div *ngxPermissionsOnly="params.editPagePermissions">
+			<div>
 				<button
 					pButton
 					(click)="handleEditClick()"

@@ -2,7 +2,7 @@
 	"projectType": "library",
 	"root": "libs/feature/dynamic-config/editor",
 	"sourceRoot": "libs/feature/dynamic-config/editor/src",
-	"prefix": "dynamic-app-health",
+	"prefix": "dh",
 	"targets": {
 		"test": {
 			"executor": "@nrwl/jest:jest",

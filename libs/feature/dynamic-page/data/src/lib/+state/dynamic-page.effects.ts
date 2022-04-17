@@ -6,10 +6,10 @@ import { Router } from '@angular/router';
 import {
 	DynamicComponentMappingService,
 	DynamicPageDataService,
-} from '@dynamic-health/api';
+} from '@dynamic-app-health/api';
+import { DynamicPageViewComponent } from '@dynamic-app-health/feature/dynamic-page/view';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
-import { DynamicPageViewComponent } from '../../view/component';
 import * as dynamicPageActions from './dynamic-page.actions';
 
 @Injectable()

@@ -1,13 +1,18 @@
 import { HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import {
 	APPLICATION_ID_TOKEN,
 	ApplicationConfigStateService,
 	DEFAULT_APPLICATION_CONFIG_TOKEN,
 	DynamicComponentMappingService,
+	DynamicPageStateService,
 } from '@dynamic-app-health/api';
 import { ErrorDecoratorService } from '@dynamic-app-health/core/error/util';
+import { FeatureDynamicConfigDataModule } from '@dynamic-app-health/feature/dynamic-config/data';
+import { FeatureDynamicConfigEditorModule } from '@dynamic-app-health/feature/dynamic-config/editor';
+import { FeatureDynamicPageDataModule } from '@dynamic-app-health/feature/dynamic-page/data';
 import { FeatureDynamicPageViewModule } from '@dynamic-app-health/feature/dynamic-page/view';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -40,6 +45,9 @@ import { DynamicComponentMappingServiceImpl } from './service';
 		CoreModule,
 		AppRoutingModule,
 		TopBarModule,
+		FeatureDynamicConfigDataModule,
+		FeatureDynamicConfigEditorModule,
+		FeatureDynamicPageDataModule,
 		FeatureDynamicPageViewModule,
 	],
 	providers: [
@@ -63,6 +71,8 @@ import { DynamicComponentMappingServiceImpl } from './service';
 				ApplicationConfigStateService,
 				APPLICATION_ID_TOKEN,
 				DEFAULT_APPLICATION_CONFIG_TOKEN,
+				DynamicPageStateService,
+				Router,
 			],
 			multi: true,
 		},

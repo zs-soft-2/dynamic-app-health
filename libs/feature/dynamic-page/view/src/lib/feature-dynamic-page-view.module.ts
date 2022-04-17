@@ -6,7 +6,6 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule, ROUTES } from '@angular/router';
 import { DynamicPageDataService } from '@dynamic-app-health/api';
-import { FeatureDynamicPageDataModule } from '@dynamic-app-health/feature/dynamic-page/data';
 
 import { DynamicPageViewComponent } from './component';
 import { RoutesByPagesFactory } from './factory';
@@ -18,7 +17,6 @@ import { RoutesByPagesFactory } from './factory';
 		DynamicModule,
 		RouterModule,
 		CardModule,
-		FeatureDynamicPageDataModule,
 	],
 	declarations: [DynamicPageViewComponent],
 	exports: [DynamicPageViewComponent, RouterModule],
