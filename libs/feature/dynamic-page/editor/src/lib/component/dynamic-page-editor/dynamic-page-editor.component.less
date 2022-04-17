@@ -1,0 +1,77 @@
+.content {
+	background-color: #ddd;
+	height: 85vh;
+	display: flex;
+	margin: 0.5rem 0;
+}
+
+.col {
+	min-height: 80vh;
+}
+
+.editor {
+	width: 75%;
+}
+
+.form {
+	background-color: #fff;
+	padding: 0.5rem;
+	width: 25%;
+}
+
+.col1,
+.col2,
+.col3,
+.col4 {
+	text-align: center;
+	background-color: #e9ecef;
+}
+
+.colh50 {
+	overflow: auto;
+	max-height: 50%;
+}
+
+.colh33 {
+	overflow: auto;
+	max-height: 33%;
+}
+
+.layout {
+	min-height: 100%;
+}
+
+.border {
+	border: 1px solid #ccc;
+	margin: 0.1rem 0;
+	padding: 0.25rem;
+	cursor: move;
+}
+
+.drop {
+	border: 1px dashed #ccc;
+	padding: 0.5rem;
+
+	&.p-draggable-enter {
+		opacity: 0.5;
+	}
+}
+
+:host ::ng-deep .p-panel .p-panel-header {
+	padding: 0.5rem;
+}
+
+span {
+	margin-top: 30px;
+}
+
+.field {
+	display: block;
+	margin-top: 10px;
+
+	.label {
+		font-size: 12px;
+		padding-left: 10px;
+		padding-bottom: 10px;
+	}
+}

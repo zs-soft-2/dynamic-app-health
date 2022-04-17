@@ -14,6 +14,13 @@ const routes: Routes = [
 		pathMatch: 'full',
 	},
 	{
+		path: 'dynamic-page-editor',
+		loadChildren: () =>
+			import('@dynamic-app-health/feature/dynamic-page/editor').then(
+				(lib) => lib.FeatureDynamicPageEditorModule
+			),
+	},
+	{
 		path: 'error',
 		loadChildren: () =>
 			import('../../module/page/error').then((lib) => lib.ErrorModule),
