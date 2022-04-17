@@ -1,0 +1,26 @@
+{
+	"projectType": "library",
+	"root": "libs/feature/dynamic-page/data",
+	"sourceRoot": "libs/feature/dynamic-page/data/src",
+	"prefix": "dynamic-app-health",
+	"targets": {
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/libs/feature/dynamic-page/data"],
+			"options": {
+				"jestConfig": "libs/feature/dynamic-page/data/jest.config.js",
+				"passWithNoTests": true
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": [
+					"libs/feature/dynamic-page/data/src/**/*.ts",
+					"libs/feature/dynamic-page/data/src/**/*.html"
+				]
+			}
+		}
+	},
+	"tags": []
+}

@@ -5,7 +5,6 @@ import { StateService } from '../state';
 export abstract class EntityStateService<R, S, T> extends StateService {
 	public abstract dispatchAddEntityAction(entity: S): void;
 	public abstract dispatchDeleteEntityAction(entity: R): void;
-	public abstract dispatchInitAction(entity: R): void;
 	public abstract dispatchListEntitiesAction(): void;
 	public abstract dispatchLoadEntitiesByIdsAction(ids: string[]): void;
 	public abstract dispatchLoadEntityAction(id: string): void;

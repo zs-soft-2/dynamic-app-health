@@ -1,0 +1,145 @@
+<div class="content" *ngIf="dynamicPageEditorParams$$ | async as params">
+	<div ngClass="col editor">
+		<ng-container
+			*ngFor="
+				let row of params.dynamicPageView.rows;
+				let rowIndex = index
+			"
+		>
+			<div [fxLayout]="row.layout" fxFlexFill>
+				<div
+					*ngFor="let column of row.columns; let columnIndex = index"
+					[fxFlex]="column.percent"
+					[ngClass]="column.class"
+					pDroppable="component"
+					class="drop"
+					(onDrop)="drop(rowIndex, columnIndex)"
+				>
+					<ng-container
+						*ngFor="
+							let content of column.contents;
+							let contentIndex = index
+						"
+					>
+						<p-panel [header]="content.keyValue.key">
+							<ng-template pTemplate="icons">
+								<p-button
+									icon="pi pi-pencil"
+									class="p-panel-header-icon"
+									styleClass="p-button-text p-button-rounded"
+									(click)="
+										edit(
+											content.keyValue?.value || '0',
+											content.keyValue?.key || '',
+											rowIndex,
+											columnIndex,
+											contentIndex
+										)
+									"
+								>
+								</p-button>
+								<p-button
+									icon="pi pi-times"
+									class="p-panel-header-icon"
+									styleClass="p-button-text p-button-rounded"
+									(click)="
+										remove(
+											rowIndex,
+											columnIndex,
+											contentIndex
+										)
+									"
+								></p-button>
+							</ng-template>
+
+							<ndc-dynamic
+								[ndcDynamicComponent]="content.component"
+								[ndcDynamicInputs]="{ config: content.config }"
+							></ndc-dynamic>
+						</p-panel>
+					</ng-container>
+				</div>
+			</div>
+		</ng-container>
+	</div>
+
+	<div ngClass="col form">
+		<div class="components">
+			<form [formGroup]="params.formGroup">
+				<input name="id" formControlName="id" hidden />
+				<span class="p-float-label">
+					<input
+						id="label"
+						type="text"
+						pInputText
+						formControlName="label"
+					/>
+					<label for="label">Label</label>
+				</span>
+
+				<span class="p-float-label">
+					<input
+						id="path"
+						type="text"
+						pInputText
+						formControlName="path"
+					/>
+					<label for="path">Path</label>
+				</span>
+
+				<div class="field">
+					<label class="label">Layout</label>
+
+					<div
+						*ngFor="let layout of params.layouts"
+						class="field-checkbox"
+					>
+						<p-radioButton
+							[inputId]="layout.name"
+							name="layout"
+							[value]="layout.name"
+							formControlName="layout"
+						>
+						</p-radioButton>
+
+						<label [for]="layout.name">{{ layout.name }}</label>
+					</div>
+				</div>
+
+				<div class="field">
+					<label class="label">Components</label>
+
+					<div
+						*ngFor="let component of params.components"
+						class="border"
+						pDraggable="component"
+						(onDragStart)="dragStart($event, component)"
+						(onDragEnd)="dragEnd()"
+					>
+						{{ component.name }}
+					</div>
+				</div>
+			</form>
+
+			<div
+				style="margin-top: 10px"
+				fxLayout="row"
+				fxLayoutAlign="space-around"
+			>
+				<button
+					pButton
+					type="button"
+					label="Submit"
+					(click)="submit()"
+				></button>
+
+				<button
+					pButton
+					type="button"
+					label="Cancel"
+					(click)="cancel()"
+				></button>
+			</div>
+		</div>
+	</div>
+</div>

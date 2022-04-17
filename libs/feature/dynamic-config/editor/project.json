@@ -1,0 +1,26 @@
+{
+	"projectType": "library",
+	"root": "libs/feature/dynamic-config/editor",
+	"sourceRoot": "libs/feature/dynamic-config/editor/src",
+	"prefix": "dh",
+	"targets": {
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/libs/feature/dynamic-config/editor"],
+			"options": {
+				"jestConfig": "libs/feature/dynamic-config/editor/jest.config.js",
+				"passWithNoTests": true
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": [
+					"libs/feature/dynamic-config/editor/src/**/*.ts",
+					"libs/feature/dynamic-config/editor/src/**/*.html"
+				]
+			}
+		}
+	},
+	"tags": []
+}

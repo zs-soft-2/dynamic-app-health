@@ -2,12 +2,13 @@
 	"projectType": "application",
 	"root": "apps/dynamic-app",
 	"sourceRoot": "apps/dynamic-app/src",
-	"prefix": "dynamic-app-health",
+	"prefix": "dh",
 	"targets": {
 		"build": {
 			"executor": "@angular-devkit/build-angular:browser",
 			"outputs": ["{options.outputPath}"],
 			"options": {
+				"allowedCommonJsDependencies": ["lodash"],
 				"outputPath": "dist/apps/dynamic-app",
 				"index": "apps/dynamic-app/src/index.html",
 				"main": "apps/dynamic-app/src/main.ts",
@@ -18,7 +19,12 @@
 					"apps/dynamic-app/src/favicon.ico",
 					"apps/dynamic-app/src/assets"
 				],
-				"styles": ["apps/dynamic-app/src/styles.scss"],
+				"styles": [
+					"node_modules/primeng/resources/themes/saga-blue/theme.css",
+					"node_modules/primeng/resources/primeng.min.css",
+					"node_modules/primeicons/primeicons.css",
+					"apps/dynamic-app/src/styles.scss"
+				],
 				"scripts": []
 			},
 			"configurations": {
