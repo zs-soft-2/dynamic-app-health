@@ -12,6 +12,7 @@
 		"feature-dynamic-config-data": "libs/feature/dynamic-config/data",
 		"feature-dynamic-config-editor": "libs/feature/dynamic-config/editor",
 		"feature-dynamic-page-data": "libs/feature/dynamic-page/data",
+		"feature-dynamic-page-editor": "libs/feature/dynamic-page/editor",
 		"feature-dynamic-page-view": "libs/feature/dynamic-page/view"
 	}
 }

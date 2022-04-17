@@ -40,6 +40,9 @@
 			"@dynamic-app-health/feature/dynamic-page/data": [
 				"libs/feature/dynamic-page/data/src/index.ts"
 			],
+			"@dynamic-app-health/feature/dynamic-page/editor": [
+				"libs/feature/dynamic-page/editor/src/index.ts"
+			],
 			"@dynamic-app-health/feature/dynamic-page/view": [
 				"libs/feature/dynamic-page/view/src/index.ts"
 			]
