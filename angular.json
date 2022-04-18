@@ -11,6 +11,7 @@
 		"dynamic-app-e2e": "apps/dynamic-app-e2e",
 		"feature-dynamic-config-data": "libs/feature/dynamic-config/data",
 		"feature-dynamic-config-editor": "libs/feature/dynamic-config/editor",
+		"feature-dynamic-layout-view": "libs/feature/dynamic-layout/view",
 		"feature-dynamic-page-data": "libs/feature/dynamic-page/data",
 		"feature-dynamic-page-editor": "libs/feature/dynamic-page/editor",
 		"feature-dynamic-page-view": "libs/feature/dynamic-page/view"
