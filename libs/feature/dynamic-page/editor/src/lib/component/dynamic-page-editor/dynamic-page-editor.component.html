@@ -1,66 +1,10 @@
 <div class="content" *ngIf="dynamicPageEditorParams$$ | async as params">
 	<div ngClass="col editor">
-		<ng-container
-			*ngFor="
-				let row of params.dynamicPageView.rows;
-				let rowIndex = index
-			"
-		>
-			<div [fxLayout]="row.layout" fxFlexFill>
-				<div
-					*ngFor="let column of row.columns; let columnIndex = index"
-					[fxFlex]="column.percent"
-					[ngClass]="column.class"
-					pDroppable="component"
-					class="drop"
-					(onDrop)="drop(rowIndex, columnIndex)"
-				>
-					<ng-container
-						*ngFor="
-							let content of column.contents;
-							let contentIndex = index
-						"
-					>
-						<p-panel [header]="content.keyValue.key">
-							<ng-template pTemplate="icons">
-								<p-button
-									icon="pi pi-pencil"
-									class="p-panel-header-icon"
-									styleClass="p-button-text p-button-rounded"
-									(click)="
-										edit(
-											content.keyValue?.value || '0',
-											content.keyValue?.key || '',
-											rowIndex,
-											columnIndex,
-											contentIndex
-										)
-									"
-								>
-								</p-button>
-								<p-button
-									icon="pi pi-times"
-									class="p-panel-header-icon"
-									styleClass="p-button-text p-button-rounded"
-									(click)="
-										remove(
-											rowIndex,
-											columnIndex,
-											contentIndex
-										)
-									"
-								></p-button>
-							</ng-template>
-
-							<ndc-dynamic
-								[ndcDynamicComponent]="content.component"
-								[ndcDynamicInputs]="{ config: content.config }"
-							></ndc-dynamic>
-						</p-panel>
-					</ng-container>
-				</div>
-			</div>
-		</ng-container>
+		<dh-dynamic-layout-view
+			[layoutItems]="params.dynamicPageView.layout.layoutItems"
+			(editItem)="editItemHandler($event)"
+			(removeItem)="removeItemHandler($event)"
+		></dh-dynamic-layout-view>
 	</div>
 
 	<div ngClass="col form">
@@ -88,35 +32,25 @@
 				</span>
 
 				<div class="field">
-					<label class="label">Layout</label>
-
-					<div
-						*ngFor="let layout of params.layouts"
-						class="field-checkbox"
-					>
-						<p-radioButton
-							[inputId]="layout.name"
-							name="layout"
-							[value]="layout.name"
-							formControlName="layout"
-						>
-						</p-radioButton>
-
-						<label [for]="layout.name">{{ layout.name }}</label>
-					</div>
-				</div>
-
-				<div class="field">
 					<label class="label">Components</label>
 
 					<div
 						*ngFor="let component of params.components"
 						class="border"
-						pDraggable="component"
-						(onDragStart)="dragStart($event, component)"
-						(onDragEnd)="dragEnd()"
 					>
-						{{ component.name }}
+						<span>
+							{{ component.name }}
+						</span>
+
+						<span>
+							<button
+								pButton
+								(click)="addClickHandler(component.name)"
+								type="button"
+								class="p-button-raised p-button-rounded add"
+								icon="pi pi-plus"
+							></button>
+						</span>
 					</div>
 				</div>
 			</form>

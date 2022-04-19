@@ -1,26 +1,5 @@
 <div class="bounds" *ngIf="dynamicPageParams$$ | async as params">
-	<div
-		class="content"
-		*ngFor="let row of params.dynamicPageView.rows"
-		[fxLayout]="row.layout"
-		fxLayout.xs="column"
-		fxLayoutAlign="space-between stretch"
-	>
-		<div
-			*ngFor="let column of row.columns"
-			[fxFlex]="column.percent"
-			[ngClass]="column.class"
-			fxFlex.xs="55"
-			fxFlex.sm="80"
-		>
-			<ng-container *ngFor="let content of column.contents">
-				<p-card class="contlet" [header]="content.config?.label || ''">
-					<ndc-dynamic
-						[ndcDynamicComponent]="content.component"
-						[ndcDynamicInputs]="{ config: content.config }"
-					></ndc-dynamic>
-				</p-card>
-			</ng-container>
-		</div>
-	</div>
+	<dh-dynamic-layout-view
+		[layoutItems]="params.dynamicPageView.layout.layoutItems"
+	></dh-dynamic-layout-view>
 </div>

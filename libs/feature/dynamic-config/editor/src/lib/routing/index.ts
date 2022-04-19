@@ -1,1 +1,1 @@
-export * from './dynamic-editor-routing.module';
+export * from './dynamic-config-editor-routing.module';

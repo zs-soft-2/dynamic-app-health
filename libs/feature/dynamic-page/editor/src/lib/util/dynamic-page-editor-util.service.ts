@@ -11,24 +11,22 @@ import {
 export class DynamicPageEditorUtilService {
 	public constructor(private formBuilder: FormBuilder) {}
 
-	public createDynamicPage(
-		formGroup: FormGroup,
-		layout: DynamicLayout
-	): DynamicPageEntityAdd {
+	public createDynamicPage(formGroup: FormGroup): DynamicPageEntityAdd {
 		return {
-			layout,
 			label: formGroup.value['label'],
+			layout: {
+				layoutItems: [],
+				name: '',
+			},
 			path: formGroup.value['path'],
 		};
 	}
 
 	public createFormGroup(
-		dynamicPageEntity: DynamicPageEntity | undefined,
-		layoutName: string
+		dynamicPageEntity: DynamicPageEntity | undefined
 	): FormGroup {
 		return this.formBuilder.group({
 			id: [dynamicPageEntity?.id],
-			layout: [dynamicPageEntity?.layout.name || layoutName],
 			path: [dynamicPageEntity?.path || null],
 			label: [dynamicPageEntity?.label || null],
 		});
@@ -37,8 +35,16 @@ export class DynamicPageEditorUtilService {
 	public findDynamicPage(
 		dynamicPages: DynamicPageEntity[],
 		path: string
-	): DynamicPageEntity | undefined {
-		return dynamicPages.find((dynamicPage) => dynamicPage.path === path);
+	): DynamicPageEntity {
+		const dynamicPage: DynamicPageEntity | undefined = dynamicPages.find(
+			(dynamicPage) => dynamicPage.path === path
+		);
+
+		if (!dynamicPage) {
+			throw new Error('No DynamicPage');
+		}
+
+		return dynamicPage;
 	}
 
 	public updateDynamicPage(
@@ -47,8 +53,8 @@ export class DynamicPageEditorUtilService {
 	): DynamicPageEntityUpdate {
 		return {
 			id: formGroup.value['id'],
-			layout,
 			label: formGroup.value['label'],
+			layout,
 			path: formGroup.value['path'],
 		};
 	}

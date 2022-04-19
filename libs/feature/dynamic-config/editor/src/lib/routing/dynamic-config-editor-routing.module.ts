@@ -7,7 +7,6 @@ const routes: Routes = [
 	{
 		path: ':configId',
 		component: DynamicConfigEditorComponent,
-		pathMatch: 'full',
 	},
 ];
 

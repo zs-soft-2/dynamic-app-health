@@ -2,7 +2,7 @@
 	"projectType": "library",
 	"root": "libs/feature/dynamic-layout/view",
 	"sourceRoot": "libs/feature/dynamic-layout/view/src",
-	"prefix": "dynamic-app-health",
+	"prefix": "dh",
 	"targets": {
 		"test": {
 			"executor": "@nrwl/jest:jest",

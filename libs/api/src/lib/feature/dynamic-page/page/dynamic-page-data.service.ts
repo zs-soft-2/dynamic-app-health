@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 
 import { EntityDataService } from '../../../common';
-import { DynamicLayout } from '../layout';
+import { DynamicLayout } from '../../dynamic-layout';
 import {
 	DynamicPageEntity,
 	DynamicPageEntityAdd,

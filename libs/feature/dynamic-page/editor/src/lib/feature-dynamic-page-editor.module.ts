@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FeatureDynamicLayoutViewModule } from '@dynamic-app-health/feature/dynamic-layout/view';
 
 import { DynamicPageEditorComponent } from './component';
 import { DynamicPageEditorRoutingModule } from './routing';
@@ -27,6 +28,7 @@ import { DynamicPageEditorRoutingModule } from './routing';
 		PanelModule,
 		RadioButtonModule,
 		ReactiveFormsModule,
+		FeatureDynamicLayoutViewModule,
 	],
 })
 export class FeatureDynamicPageEditorModule {}

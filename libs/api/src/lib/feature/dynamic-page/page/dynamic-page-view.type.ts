@@ -1,5 +1,5 @@
-import { DynamicRowView } from '../layout';
+import { DynamicLayout } from '../../dynamic-layout';
 
 export type DynamicPageView = {
-	rows: DynamicRowView[];
+	layout: DynamicLayout;
 };
