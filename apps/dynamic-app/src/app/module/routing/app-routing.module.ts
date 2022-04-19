@@ -11,7 +11,6 @@ const routes: Routes = [
 				(lib) => lib.FeatureDynamicPageViewModule
 			),
 		resolve: { data: DynamicPageResolverService },
-		pathMatch: 'full',
 	},
 	{
 		path: 'dynamic-page-editor',

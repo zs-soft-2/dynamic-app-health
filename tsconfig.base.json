@@ -38,6 +38,9 @@
 			"@dynamic-app-health/feature/dynamic-config/editor": [
 				"libs/feature/dynamic-config/editor/src/index.ts"
 			],
+			"@dynamic-app-health/feature/dynamic-layout/view": [
+				"libs/feature/dynamic-layout/view/src/index.ts"
+			],
 			"@dynamic-app-health/feature/dynamic-page/data": [
 				"libs/feature/dynamic-page/data/src/index.ts"
 			],

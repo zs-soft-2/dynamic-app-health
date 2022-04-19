@@ -3,7 +3,7 @@ import { ReplaySubject, Subject, takeUntil } from 'rxjs';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
 	BaseComponent,
-	DynamicComponent,
+	DynamicLayoutItem,
 	DynamicPageEditorParams,
 } from '@dynamic-app-health/api';
 
@@ -29,32 +29,12 @@ export class DynamicPageEditorComponent
 		this.dynamicPageEditorParams$$ = new ReplaySubject();
 	}
 
-	public dragEnd(): void {
-		this.componentService.dragEnd();
+	public cancel(): void {
+		this.componentService.cancel();
 	}
 
-	public dragStart(event: Event, component: DynamicComponent): void {
-		this.componentService.dragStart(component);
-	}
-
-	public drop(rowIndex: number, columnIndex: number): void {
-		this.componentService.drop(rowIndex, columnIndex);
-	}
-
-	public edit(
-		contentId: string,
-		componentName: string,
-		rowIndex: number,
-		columnIndex: number,
-		componentIndex: number
-	): void {
-		this.componentService.edit(
-			contentId,
-			componentName,
-			rowIndex,
-			columnIndex,
-			componentIndex
-		);
+	public editItemHandler(layoutItem: DynamicLayoutItem): void {
+		this.componentService.edit(layoutItem);
 	}
 
 	public ngOnInit(): void {
@@ -66,19 +46,15 @@ export class DynamicPageEditorComponent
 			});
 	}
 
-	public remove(
-		rowIndex: number,
-		columnIndex: number,
-		componentIndex: number
-	): void {
-		this.componentService.remove(rowIndex, columnIndex, componentIndex);
+	public removeItemHandler(layoutItem: DynamicLayoutItem): void {
+		this.componentService.remove(layoutItem);
 	}
 
 	public submit(): void {
 		this.componentService.submit();
 	}
 
-	public cancel(): void {
-		this.componentService.cancel();
+	public addClickHandler(componentName: string): void {
+		this.componentService.addClickHandler(componentName);
 	}
 }

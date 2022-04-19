@@ -1,0 +1,26 @@
+{
+	"projectType": "library",
+	"root": "libs/feature/dynamic-layout/view",
+	"sourceRoot": "libs/feature/dynamic-layout/view/src",
+	"prefix": "dh",
+	"targets": {
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/libs/feature/dynamic-layout/view"],
+			"options": {
+				"jestConfig": "libs/feature/dynamic-layout/view/jest.config.js",
+				"passWithNoTests": true
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": [
+					"libs/feature/dynamic-layout/view/src/**/*.ts",
+					"libs/feature/dynamic-layout/view/src/**/*.html"
+				]
+			}
+		}
+	},
+	"tags": []
+}

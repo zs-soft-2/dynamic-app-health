@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule, ROUTES } from '@angular/router';
-import { DynamicPageDataService } from '@dynamic-app-health/api';
+import { FeatureDynamicLayoutViewModule } from '@dynamic-app-health/feature/dynamic-layout/view';
 
 import { DynamicPageViewComponent } from './component';
 import { RoutesByPagesFactory } from './factory';
@@ -17,6 +17,7 @@ import { RoutesByPagesFactory } from './factory';
 		DynamicModule,
 		RouterModule,
 		CardModule,
+		FeatureDynamicLayoutViewModule,
 	],
 	declarations: [DynamicPageViewComponent],
 	exports: [DynamicPageViewComponent, RouterModule],
@@ -24,7 +25,6 @@ import { RoutesByPagesFactory } from './factory';
 		{
 			provide: ROUTES,
 			useFactory: RoutesByPagesFactory,
-			deps: [DynamicPageDataService],
 			multi: true,
 		},
 	],

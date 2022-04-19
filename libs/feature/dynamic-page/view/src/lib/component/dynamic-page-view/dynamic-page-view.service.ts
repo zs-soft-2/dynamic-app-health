@@ -50,37 +50,38 @@ export class DynamicPageViewService {
 
 				if (dynamicPage) {
 					const dynamicPageView: DynamicPageView = {
-						rows: dynamicPage.layout.rows.map((row) => {
-							return {
-								columns: row.columns.map((column) => {
+						layout: {
+							...dynamicPage.layout,
+							layoutItems: dynamicPage.layout.layoutItems.map(
+								(layoutItem) => {
+									const componentName =
+										layoutItem.content?.componentName || '';
+									const configId =
+										layoutItem.content?.configId || '';
+
 									return {
-										class: column.class,
-										percent: column.percent,
-										contents: column.contents
-											? column.contents?.map(
-													(content) => {
-														return {
-															component:
-																componentMap.get(
-																	content.key
-																)?.component,
-															config: (
-																configs as DynamicConfigEntity[]
-															).find(
-																(config) =>
-																	config.id ===
-																	content.value
-															),
-															keyValue: content,
-														};
-													}
-											  )
-											: [],
+										item: layoutItem.item,
+										content: layoutItem.content
+											? {
+													component:
+														componentMap.get(
+															componentName
+														)?.component,
+													config: (
+														configs as DynamicConfigEntity[]
+													).find(
+														(config) =>
+															config.id ===
+															configId
+													),
+													componentName,
+													configId,
+											  }
+											: undefined,
 									};
-								}),
-								layout: row.layout,
-							};
-						}),
+								}
+							),
+						},
 					};
 
 					this.dynamicPageParams = {

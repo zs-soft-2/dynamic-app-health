@@ -1,8 +1,8 @@
-import cloneDeep from 'lodash/cloneDeep';
+import { GridsterItem } from 'angular-gridster2';
 import { nanoid } from 'nanoid';
-import { combineLatest, Observable, ReplaySubject, switchMap, tap } from 'rxjs';
+import { combineLatest, Observable, ReplaySubject, switchMap } from 'rxjs';
 
-import { KeyValue, Location } from '@angular/common';
+import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -11,7 +11,7 @@ import {
 	DynamicConfigEntity,
 	DynamicConfigStateService,
 	DynamicLayout,
-	DynamicPageDataService,
+	DynamicLayoutItem,
 	DynamicPageEditorParams,
 	DynamicPageEntity,
 	DynamicPageEntityAdd,
@@ -25,19 +25,16 @@ import { DynamicPageEditorUtilService } from '../../util';
 @Injectable()
 export class DynamicPageEditorService {
 	private componentMap!: Map<string, DynamicComponent>;
-	private dragedComponent!: DynamicComponent | null;
+	private defaultItem: GridsterItem = { x: 0, y: 0, cols: 2, rows: 2 };
 	private dynamicConfigs!: DynamicConfigEntity[];
-	private dynamicPage!: DynamicPageEntity | undefined;
+	private dynamicPage!: DynamicPageEntity;
 	private dynamicPageView!: DynamicPageView;
-	private layouts!: DynamicLayout[];
+	private layout: DynamicLayout;
 	private params!: DynamicPageEditorParams;
 	private params$$: ReplaySubject<DynamicPageEditorParams>;
-	private selectedLayout!: DynamicLayout;
-	private selectedLayoutName!: string;
 
 	public constructor(
 		private activatedRoute: ActivatedRoute,
-		private dynamicPageDataService: DynamicPageDataService,
 		private dynamicPageStateService: DynamicPageStateService,
 		private dynamicComponentMapping: DynamicComponentMappingService,
 		private dynamicConfigStateService: DynamicConfigStateService,
@@ -46,83 +43,51 @@ export class DynamicPageEditorService {
 		private location: Location
 	) {
 		this.params$$ = new ReplaySubject();
+		this.layout = {
+			name: '',
+			layoutItems: [],
+		};
+	}
+
+	public addClickHandler(componentName: string): void {
+		this.addItem(componentName);
+	}
+
+	private addItem(componentName: string): void {
+		const layoutItem: DynamicLayoutItem =
+			this.createLayoutItem(componentName);
+
+		this.dynamicPage?.layout.layoutItems.push(layoutItem);
+
+		this.params = {
+			...this.params,
+			dynamicPageView: this.createDynamicPageView(
+				this.dynamicPage,
+				this.componentMap,
+				this.dynamicConfigs
+			),
+		};
+
+		this.params$$.next(this.params);
 	}
 
 	public cancel(): void {
 		this.back();
 	}
 
-	public dragEnd(): void {
-		this.dragedComponent = null;
-	}
+	public edit(layoutItem: DynamicLayoutItem): void {
+		let configId = layoutItem.content?.configId;
 
-	public dragStart(component: DynamicComponent): void {
-		this.dragedComponent = component;
-	}
-
-	public drop(rowIndex: number, columnIndex: number) {
-		if (this.dragedComponent) {
-			const contents: KeyValue<string, string | null>[] =
-				this.selectedLayout.rows[rowIndex].columns[columnIndex]
-					.contents || [];
-
-			const content: KeyValue<string, string | null> = {
-				key: this.dragedComponent.name,
-				value: null,
-			};
-
-			contents.push(content);
-
-			this.dragedComponent = null;
-			this.selectedLayout.rows[rowIndex].columns[columnIndex].contents =
-				contents;
-			this.params = {
-				...this.params,
-				dynamicPageView: this.createDynamicPageView(
-					this.dynamicPage,
-					this.selectedLayout,
-					this.componentMap
-				),
-			};
-			this.params$$.next(this.params);
-		}
-	}
-
-	public edit(
-		configId: string,
-		componentName: string,
-		rowIndex: number,
-		columnIndex: number,
-		componentIndex: number
-	): void {
 		if (configId === '0') {
 			configId = nanoid(10);
 
-			const contents: KeyValue<string, string | null>[] =
-				this.selectedLayout.rows[rowIndex].columns[columnIndex]
-					.contents || [];
-
-			let content: KeyValue<string, string | null> =
-				contents[componentIndex];
-
-			if (content) {
-				content.value = configId;
-			} else {
-				content = {
-					key: componentName,
-					value: configId,
-				};
-			}
-
-			contents[componentIndex] = content;
-
-			this.updateDynamicPage();
+			this.updateDynamicPage(this.layout);
 		}
 
 		this.router.navigate([`config/${configId}`], {
 			relativeTo: this.activatedRoute,
 			queryParams: {
-				componentName,
+				componentName: layoutItem.content?.componentName,
 			},
 		});
 	}
@@ -132,77 +97,56 @@ export class DynamicPageEditorService {
 			switchMap((data) =>
 				combineLatest([
 					this.dynamicPageStateService.selectEntities$(),
-					this.dynamicPageDataService.getDynamicLayouts$(),
 					this.dynamicComponentMapping.getComponentMapping$(),
 					this.dynamicConfigStateService.selectEntities$(),
 				]).pipe(
-					switchMap(
-						([entities, layouts, componentMap, dynamicConfigs]) => {
-							this.dynamicConfigs =
-								dynamicConfigs as DynamicConfigEntity[];
-							this.componentMap = componentMap;
-							this.layouts = cloneDeep(layouts);
-							this.dynamicPage =
-								this.componentUtil.findDynamicPage(
-									entities as DynamicPageEntity[],
-									data['path']
-								);
+					switchMap(([entities, componentMap, dynamicConfigs]) => {
+						this.dynamicConfigs =
+							dynamicConfigs as DynamicConfigEntity[];
+						this.componentMap = componentMap;
+						this.dynamicPage = this.componentUtil.findDynamicPage(
+							entities as DynamicPageEntity[],
+							data['path']
+						);
 
-							const layout: DynamicLayout = this.dynamicPage
-								?.layout
-								? this.dynamicPage?.layout
-								: this.layouts[0];
+						this.dynamicPageView = this.createDynamicPageView(
+							this.dynamicPage,
+							this.componentMap,
+							this.dynamicConfigs
+						);
 
-							this.selectedLayout = cloneDeep(layout);
-							this.selectedLayoutName = this.selectedLayout.name;
-							this.dynamicPageView = this.createDynamicPageView(
-								this.dynamicPage,
-								this.selectedLayout,
-								componentMap
-							);
+						this.params = this.createDynamicPageEditorParams(
+							componentMap,
+							this.dynamicPageView
+						);
 
-							this.params = this.createDynamicPageEditorParams(
-								componentMap,
-								layouts
-							);
-							this.params$$.next(this.params);
+						this.params$$.next(this.params);
 
-							return this.params$$;
-						}
-					)
+						return this.params$$;
+					})
 				)
 			)
 		);
 	}
 
-	public remove(
-		rowIndex: number,
-		columnIndex: number,
-		componentIndex: number
-	): void {
-		const contents: KeyValue<string, string | null>[] =
-			this.selectedLayout.rows[rowIndex].columns[columnIndex].contents ||
-			[];
+	public remove(removableItem: DynamicLayoutItem): void {
+		this.removeItem(removableItem, this.layout);
 
-		if (contents) {
-			contents.splice(componentIndex, 1);
+		this.params = {
+			...this.params,
+			dynamicPageView: this.createDynamicPageView(
+				this.dynamicPage,
+				this.componentMap,
+				this.dynamicConfigs
+			),
+		};
 
-			this.params = {
-				...this.params,
-				dynamicPageView: this.createDynamicPageView(
-					this.dynamicPage,
-					this.selectedLayout,
-					this.componentMap
-				),
-			};
-
-			this.params$$.next(this.params);
-		}
+		this.params$$.next(this.params);
 	}
 
 	public submit(): void {
 		if (this.dynamicPage) {
-			this.updateDynamicPage();
+			this.updateDynamicPage(this.layout);
 		} else {
 			this.addDynamicPage();
 		}
@@ -212,10 +156,7 @@ export class DynamicPageEditorService {
 
 	private addDynamicPage(): void {
 		const dynamicPage: DynamicPageEntityAdd =
-			this.componentUtil.createDynamicPage(
-				this.params.formGroup,
-				this.selectedLayout
-			);
+			this.componentUtil.createDynamicPage(this.params.formGroup);
 
 		this.dynamicPageStateService.dispatchAddEntityAction(dynamicPage);
 	}
@@ -224,83 +165,77 @@ export class DynamicPageEditorService {
 		this.location.back();
 	}
 
-	private changeLayout(layoutName: string): void {
-		const layout = this.getLayoutByName(this.layouts, layoutName);
-
-		if (layout) {
-			this.selectedLayout = layout;
-			this.selectedLayoutName = layoutName;
-			this.params.dynamicPageView = this.createDynamicPageView(
-				this.dynamicPage,
-				this.selectedLayout,
-				this.componentMap
-			);
-
-			this.params$$.next(this.params);
-		}
-	}
-
 	private createDynamicPageEditorParams(
 		componentMap: Map<string, DynamicComponent>,
-		layouts: DynamicLayout[]
+		pageView: DynamicPageView
 	): DynamicPageEditorParams {
-		const formGroup = this.componentUtil.createFormGroup(
-			this.dynamicPage,
-			this.selectedLayout.name
-		);
-
-		formGroup.valueChanges
-			.pipe(
-				tap((values) => {
-					if (values['layout'] !== this.selectedLayoutName) {
-						this.changeLayout(values['layout']);
-					}
-				})
-			)
-			.subscribe();
+		const formGroup = this.componentUtil.createFormGroup(this.dynamicPage);
 
 		const dynamicPageEditorParams = {
 			components: Array.from(componentMap.values()).map((value) => value),
 			formGroup,
-			layouts: layouts,
-			dynamicPageView: this.dynamicPageView,
+			dynamicPageView: pageView,
 		};
 
 		return dynamicPageEditorParams;
 	}
 
 	private createDynamicPageView(
-		dynamicPage: DynamicPageEntity | undefined,
-		layout: DynamicLayout,
-		componentMap: Map<string, DynamicComponent>
+		dynamicPage: DynamicPageEntity,
+		componentMap: Map<string, DynamicComponent>,
+		configs: DynamicConfigEntity[]
 	): DynamicPageView {
-		return {
-			rows: layout.rows.map((row) => {
-				return {
-					columns: row.columns.map((column) => {
+		const dynamicPageView: DynamicPageView = {
+			layout: {
+				...dynamicPage.layout,
+				layoutItems: dynamicPage.layout.layoutItems.map(
+					(layoutItem) => {
 						return {
-							class: column.class,
-							percent: column.percent,
-							contents: column.contents
-								? column.contents.map((content) => {
-										return {
-											component: componentMap.get(
-												content.key
-											)?.component,
-											config: this.dynamicConfigs.find(
-												(config) =>
-													config.id === content.value
-											),
-											keyValue: content,
-										};
-								  })
-								: [],
+							item: layoutItem.item,
+							content: layoutItem.content
+								? {
+										component: componentMap.get(
+											layoutItem.content.componentName
+										)?.component,
+										config: (
+											configs as DynamicConfigEntity[]
+										).find(
+											(config) =>
+												config.id ===
+												layoutItem.content?.configId
+										),
+										componentName:
+											layoutItem.content.componentName,
+										configId: layoutItem.content?.configId,
+								  }
+								: undefined,
 						};
-					}),
-					layout: row.layout,
-				};
-			}),
+					}
+				),
+			},
 		};
+
+		return dynamicPageView;
+	}
+
+	private createLayoutItem(componentName: string): DynamicLayoutItem {
+		return {
+			item: this.defaultItem,
+			content: {
+				componentName,
+			},
+		};
+	}
+
+	private getConfig(configId: string): DynamicConfigEntity {
+		const config: DynamicConfigEntity | undefined =
+			this.dynamicConfigs.find((config) => config.id === configId);
+
+		if (!config) {
+			throw new Error('No DynamicConfigEntity');
+		}
+
+		return config;
 	}
 
 	private getLayoutByName(
@@ -318,12 +253,25 @@ export class DynamicPageEditorService {
 		return foundedLayout;
 	}
 
-	private updateDynamicPage(): void {
+	private removeItem(
+		removableItem: DynamicLayoutItem,
+		layout: DynamicLayout
+	): DynamicLayout {
+		const itemIndex = layout.layoutItems.findIndex(
+			(layoutItem) => layoutItem.item === removableItem.item
+		);
+
+		layout.layoutItems.splice(itemIndex, 1);
+
+		return {
+			...layout,
+		};
+	}
+
+	private updateDynamicPage(layout: DynamicLayout): void {
 		const dynamicPage: DynamicPageEntityUpdate =
-			this.componentUtil.updateDynamicPage(
-				this.params.formGroup,
-				this.selectedLayout
-			);
+			this.componentUtil.updateDynamicPage(this.params.formGroup, layout);
+
 		this.dynamicPageStateService.dispatchUpdateEntityAction(dynamicPage);
 	}
 }
