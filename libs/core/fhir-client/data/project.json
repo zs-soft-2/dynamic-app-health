@@ -1,0 +1,26 @@
+{
+	"projectType": "library",
+	"root": "libs/core/fhir-client/data",
+	"sourceRoot": "libs/core/fhir-client/data/src",
+	"prefix": "dynamic-app-health",
+	"targets": {
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/libs/core/fhir-client/data"],
+			"options": {
+				"jestConfig": "libs/core/fhir-client/data/jest.config.js",
+				"passWithNoTests": true
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": [
+					"libs/core/fhir-client/data/src/**/*.ts",
+					"libs/core/fhir-client/data/src/**/*.html"
+				]
+			}
+		}
+	},
+	"tags": []
+}
