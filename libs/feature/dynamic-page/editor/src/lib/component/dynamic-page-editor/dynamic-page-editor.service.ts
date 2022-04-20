@@ -27,7 +27,7 @@ export class DynamicPageEditorService {
 	private componentMap!: Map<string, DynamicComponent>;
 	private defaultItem: GridsterItem = { x: 0, y: 0, cols: 2, rows: 2 };
 	private dynamicConfigs!: DynamicConfigEntity[];
-	private dynamicPage!: DynamicPageEntity;
+	private dynamicPage!: DynamicPageEntity | undefined;
 	private dynamicPageView!: DynamicPageView;
 	private layout: DynamicLayout;
 	private params!: DynamicPageEditorParams;
@@ -57,12 +57,12 @@ export class DynamicPageEditorService {
 		const layoutItem: DynamicLayoutItem =
 			this.createLayoutItem(componentName);
 
-		this.dynamicPage?.layout.layoutItems.push(layoutItem);
+		this.layout.layoutItems.push(layoutItem);
 
 		this.params = {
 			...this.params,
 			dynamicPageView: this.createDynamicPageView(
-				this.dynamicPage,
+				this.layout,
 				this.componentMap,
 				this.dynamicConfigs
 			),
@@ -110,14 +110,15 @@ export class DynamicPageEditorService {
 						);
 
 						this.dynamicPageView = this.createDynamicPageView(
-							this.dynamicPage,
+							this.layout,
 							this.componentMap,
 							this.dynamicConfigs
 						);
 
 						this.params = this.createDynamicPageEditorParams(
 							componentMap,
-							this.dynamicPageView
+							this.dynamicPageView,
+							this.dynamicPage
 						);
 
 						this.params$$.next(this.params);
@@ -135,7 +136,7 @@ export class DynamicPageEditorService {
 		this.params = {
 			...this.params,
 			dynamicPageView: this.createDynamicPageView(
-				this.dynamicPage,
+				this.layout,
 				this.componentMap,
 				this.dynamicConfigs
 			),
@@ -167,9 +168,10 @@ export class DynamicPageEditorService {
 
 	private createDynamicPageEditorParams(
 		componentMap: Map<string, DynamicComponent>,
-		pageView: DynamicPageView
+		pageView: DynamicPageView,
+		page: DynamicPageEntity | undefined
 	): DynamicPageEditorParams {
-		const formGroup = this.componentUtil.createFormGroup(this.dynamicPage);
+		const formGroup = this.componentUtil.createFormGroup(page);
 
 		const dynamicPageEditorParams = {
 			components: Array.from(componentMap.values()).map((value) => value),
@@ -181,14 +183,14 @@ export class DynamicPageEditorService {
 	}
 
 	private createDynamicPageView(
-		dynamicPage: DynamicPageEntity,
+		layout: DynamicLayout,
 		componentMap: Map<string, DynamicComponent>,
 		configs: DynamicConfigEntity[]
 	): DynamicPageView {
 		const dynamicPageView: DynamicPageView = {
 			layout: {
-				...dynamicPage.layout,
-				layoutItems: dynamicPage.layout.layoutItems.map(
+				...layout,
+				layoutItems: layout.layoutItems.map(
 					(layoutItem) => {
 						return {
 							item: layoutItem.item,

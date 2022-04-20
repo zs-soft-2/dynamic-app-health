@@ -35,14 +35,10 @@ export class DynamicPageEditorUtilService {
 	public findDynamicPage(
 		dynamicPages: DynamicPageEntity[],
 		path: string
-	): DynamicPageEntity {
+	): DynamicPageEntity | undefined {
 		const dynamicPage: DynamicPageEntity | undefined = dynamicPages.find(
 			(dynamicPage) => dynamicPage.path === path
 		);
-
-		if (!dynamicPage) {
-			throw new Error('No DynamicPage');
-		}
 
 		return dynamicPage;
 	}
