@@ -32,6 +32,9 @@
 			"@dynamic-app-health/core/i18n/data": [
 				"libs/core/i18n/data/src/index.ts"
 			],
+			"@dynamic-app-health/domain/fhir/patient/data": [
+				"libs/domain/fhir/patient/data/src/index.ts"
+			],
 			"@dynamic-app-health/feature/dynamic-config/data": [
 				"libs/feature/dynamic-config/data/src/index.ts"
 			],

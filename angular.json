@@ -7,6 +7,7 @@
 		"core-error-data": "libs/core/error/data",
 		"core-error-util": "libs/core/error/util",
 		"core-i18n-data": "libs/core/i18n/data",
+		"domain-fhir-patient-data": "libs/domain/fhir/patient/data",
 		"dynamic-app": "apps/dynamic-app",
 		"dynamic-app-e2e": "apps/dynamic-app-e2e",
 		"feature-dynamic-config-data": "libs/feature/dynamic-config/data",
