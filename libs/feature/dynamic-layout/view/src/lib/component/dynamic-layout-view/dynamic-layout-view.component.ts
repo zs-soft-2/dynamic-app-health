@@ -8,7 +8,10 @@ import {
 	OnInit,
 	Output,
 } from '@angular/core';
-import { DynamicLayoutItem } from '@dynamic-app-health/api';
+import {
+	DynamicLayoutItem,
+	DynamicLayoutModeEnum,
+} from '@dynamic-app-health/api';
 
 import { DynamicLayoutViewService } from './dynamic-layout-view.service';
 
@@ -28,6 +31,8 @@ export class DynamicLayoutViewComponent implements OnInit {
 	public options: GridsterConfig;
 	@Output()
 	public removeItem: EventEmitter<DynamicLayoutItem>;
+	@Input()
+	public mode: DynamicLayoutModeEnum = DynamicLayoutModeEnum.view;
 
 	public constructor(private componentService: DynamicLayoutViewService) {
 		this.editItem = new EventEmitter();

@@ -5,7 +5,7 @@
 			*ngFor="let layoutItem of layoutItems"
 		>
 			<p-panel [header]="layoutItem.content?.componentName || ''">
-				<ng-template pTemplate="icons">
+				<ng-template pTemplate="icons" *ngIf="mode === 'edit'">
 					<p-button
 						icon="pi pi-pencil"
 						class="p-panel-header-icon"
