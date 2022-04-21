@@ -2,6 +2,7 @@
 	<div ngClass="col editor">
 		<dh-dynamic-layout-view
 			[layoutItems]="params.dynamicPageView.layout.layoutItems"
+			[mode]="params.dynamicLayoutMode"
 			(editItem)="editItemHandler($event)"
 			(removeItem)="removeItemHandler($event)"
 		></dh-dynamic-layout-view>

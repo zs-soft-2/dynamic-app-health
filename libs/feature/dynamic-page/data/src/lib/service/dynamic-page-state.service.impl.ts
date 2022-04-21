@@ -84,7 +84,9 @@ export class DynamicPageStateServiceImpl extends DynamicPageStateService {
 		);
 	}
 
-	public selectEntityById$(id: string): Observable<DynamicPageEntity> {
+	public selectEntityById$(
+		id: string
+	): Observable<DynamicPageEntity | undefined> {
 		return this.store.pipe(
 			select(dynamicPageSelectors.selectDynamicPageById(id))
 		);

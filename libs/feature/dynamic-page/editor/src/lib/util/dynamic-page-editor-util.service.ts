@@ -11,13 +11,13 @@ import {
 export class DynamicPageEditorUtilService {
 	public constructor(private formBuilder: FormBuilder) {}
 
-	public createDynamicPage(formGroup: FormGroup): DynamicPageEntityAdd {
+	public createDynamicPage(
+		formGroup: FormGroup,
+		layout: DynamicLayout
+	): DynamicPageEntityAdd {
 		return {
 			label: formGroup.value['label'],
-			layout: {
-				layoutItems: [],
-				name: '',
-			},
+			layout,
 			path: formGroup.value['path'],
 		};
 	}

@@ -51,13 +51,5 @@ export const selectSelectedDynamicPage = createSelector(
 export const selectDynamicPageById = (id: string) =>
 	createSelector(
 		selectDynamicPageEntities,
-		(dynamicPages: Dictionary<DynamicPageEntity>) => {
-			const dynamicPage: DynamicPageEntity | undefined = dynamicPages[id];
-
-			if (!dynamicPage) {
-				throw new Error('No DynamicPage entity!');
-			}
-
-			return dynamicPage;
-		}
+		(dynamicPages: Dictionary<DynamicPageEntity>) => dynamicPages[id]
 	);

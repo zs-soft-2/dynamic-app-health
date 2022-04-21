@@ -12,6 +12,7 @@ import {
 	DynamicConfigStateService,
 	DynamicLayout,
 	DynamicLayoutItem,
+	DynamicLayoutModeEnum,
 	DynamicPageEditorParams,
 	DynamicPageEntity,
 	DynamicPageEntityAdd,
@@ -21,6 +22,7 @@ import {
 } from '@dynamic-app-health/api';
 
 import { DynamicPageEditorUtilService } from '../../util';
+import { cloneDeep } from 'lodash';
 
 @Injectable()
 export class DynamicPageEditorService {
@@ -109,6 +111,10 @@ export class DynamicPageEditorService {
 							data['path']
 						);
 
+						this.layout = cloneDeep(
+							this.dynamicPage?.layout || this.layout
+						);
+
 						this.dynamicPageView = this.createDynamicPageView(
 							this.layout,
 							this.componentMap,
@@ -157,7 +163,10 @@ export class DynamicPageEditorService {
 
 	private addDynamicPage(): void {
 		const dynamicPage: DynamicPageEntityAdd =
-			this.componentUtil.createDynamicPage(this.params.formGroup);
+			this.componentUtil.createDynamicPage(
+				this.params.formGroup,
+				this.layout
+			);
 
 		this.dynamicPageStateService.dispatchAddEntityAction(dynamicPage);
 	}
@@ -173,10 +182,11 @@ export class DynamicPageEditorService {
 	): DynamicPageEditorParams {
 		const formGroup = this.componentUtil.createFormGroup(page);
 
-		const dynamicPageEditorParams = {
+		const dynamicPageEditorParams: DynamicPageEditorParams = {
 			components: Array.from(componentMap.values()).map((value) => value),
 			formGroup,
 			dynamicPageView: pageView,
+			dynamicLayoutMode: DynamicLayoutModeEnum.edit,
 		};
 
 		return dynamicPageEditorParams;
@@ -190,30 +200,28 @@ export class DynamicPageEditorService {
 		const dynamicPageView: DynamicPageView = {
 			layout: {
 				...layout,
-				layoutItems: layout.layoutItems.map(
-					(layoutItem) => {
-						return {
-							item: layoutItem.item,
-							content: layoutItem.content
-								? {
-										component: componentMap.get(
-											layoutItem.content.componentName
-										)?.component,
-										config: (
-											configs as DynamicConfigEntity[]
-										).find(
-											(config) =>
-												config.id ===
-												layoutItem.content?.configId
-										),
-										componentName:
-											layoutItem.content.componentName,
-										configId: layoutItem.content?.configId,
-								  }
-								: undefined,
-						};
-					}
-				),
+				layoutItems: layout.layoutItems.map((layoutItem) => {
+					return {
+						item: layoutItem.item,
+						content: layoutItem.content
+							? {
+									component: componentMap.get(
+										layoutItem.content.componentName
+									)?.component,
+									config: (
+										configs as DynamicConfigEntity[]
+									).find(
+										(config) =>
+											config.id ===
+											layoutItem.content?.configId
+									),
+									componentName:
+										layoutItem.content.componentName,
+									configId: layoutItem.content?.configId,
+							  }
+							: undefined,
+					};
+				}),
 			},
 		};
 
