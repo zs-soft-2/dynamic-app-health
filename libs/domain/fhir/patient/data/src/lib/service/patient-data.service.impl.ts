@@ -39,7 +39,9 @@ export class PatientDataServiceImpl extends PatientDataService {
 				.search({ resourceType: 'Patient' })
 		).pipe(
 			switchMap((response) => {
-				return of(response['entry']);
+				return of(
+					response['entry'].map((entry: any) => entry.resource)
+				);
 			})
 		);
 	}

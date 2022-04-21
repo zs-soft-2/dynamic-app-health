@@ -1,0 +1,103 @@
+<ng-container *ngIf="params$$ | async as params">
+	<div class="content" fxLayout="column" fxLayoutAlign="space-around center">
+		<form
+			[formGroup]="params.formGroup"
+			fxLayout="column"
+			fxLayoutAlign="space-around start"
+		>
+			<input name="id" formControlName="id" hidden />
+
+			<div class="field">
+				<span class="p-float-label">
+					<input
+						id="label"
+						type="text"
+						pInputText
+						formControlName="label"
+					/>
+
+					<label for="label">Label</label>
+				</span>
+			</div>
+
+			<div class="field">
+				<span class="p-float-label">
+					<input
+						id="link"
+						type="text"
+						pInputText
+						formControlName="link"
+					/>
+
+					<label for="link">Link</label>
+				</span>
+			</div>
+
+			<div class="field">
+				<p-checkbox
+					[binary]="true"
+					inputId="familyName"
+					formControlName="familyName"
+				></p-checkbox>
+
+				<label for="familyName">Family name</label>
+			</div>
+
+			<div class="field">
+				<p-checkbox
+					[binary]="true"
+					inputId="givenName"
+					formControlName="givenName"
+				></p-checkbox>
+
+				<label for="givenName">Given name</label>
+			</div>
+
+			<div class="field">
+				<p-checkbox
+					[binary]="true"
+					inputId="phone"
+					formControlName="phone"
+				></p-checkbox>
+
+				<label for="phone">Phone</label>
+			</div>
+
+			<div class="field">
+				<p-checkbox
+					[binary]="true"
+					inputId="birthDate"
+					formControlName="birthDate"
+				></p-checkbox>
+
+				<label for="birthDate">Birthdate</label>
+			</div>
+
+			<div class="field">
+				<p-checkbox
+					[binary]="true"
+					inputId="gender"
+					formControlName="gender"
+				></p-checkbox>
+
+				<label for="gender">Gender</label>
+			</div>
+		</form>
+
+		<div class="footer" fxLayout="row" fxLayoutAlign="space-around center">
+			<button
+				pButton
+				type="button"
+				label="Submit"
+				(click)="submit()"
+			></button>
+
+			<button
+				pButton
+				type="button"
+				label="Cancel"
+				(click)="cancel()"
+			></button>
+		</div>
+	</div>
+</ng-container>

@@ -61,6 +61,12 @@
 			],
 			"@dynamic-app-health/feature/dynamic-page/view": [
 				"libs/feature/dynamic-page/view/src/index.ts"
+			],
+			"@dynamic-app-health/patient-list-view": [
+				"libs/domain/fhir/patient/view/src/lib/module/patient-list"
+			],
+			"@dynamic-app-health/patient-view": [
+				"libs/domain/fhir/patient/view/src/lib/module/patient"
 			]
 		}
 	},

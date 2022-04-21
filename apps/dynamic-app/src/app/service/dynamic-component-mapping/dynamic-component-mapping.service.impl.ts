@@ -26,10 +26,41 @@ export class DynamicComponentMappingServiceImpl
 	}
 
 	public getComponentMapping$(): Observable<Map<string, DynamicComponent>> {
-		return of([]).pipe(
+		return forkJoin([
+			this.getPatientComponents$().pipe(
+				tap((module) => {
+					this.componentMap.set('PatientViewComponent', {
+						name: 'PatientViewComponent',
+						component: module.PatientViewComponent,
+						configComponentName: 'PatientConfigComponent',
+						configComponent: module.PatientConfigComponent,
+						instancable: true,
+					});
+				})
+			),
+			this.getPatientListComponents$().pipe(
+				tap((module) => {
+					this.componentMap.set('PatientListComponent', {
+						name: 'PatientListComponent',
+						component: module.PatientListComponent,
+						configComponentName: 'PatientListConfigComponent',
+						configComponent: module.PatientListConfigComponent,
+						instancable: true,
+					});
+				})
+			),
+		]).pipe(
 			switchMap(() => {
 				return of(this.componentMap);
 			})
 		);
+	}
+
+	private getPatientComponents$(): Observable<any> {
+		return from(import('@dynamic-app-health/patient-view'));
+	}
+
+	private getPatientListComponents$(): Observable<any> {
+		return from(import('@dynamic-app-health/patient-list-view'));
 	}
 }

@@ -14,9 +14,6 @@ import * as patientSelectors from '../+state/patient.selectors';
 
 @Injectable()
 export class PatientStateServiceImpl extends PatientStateService {
-	public selectSelectedEntityId$(): Observable<string> {
-		throw new Error('Method not implemented.');
-	}
 	public constructor(private store: Store<fromPatient.PatientPartialState>) {
 		super();
 	}
@@ -79,7 +76,9 @@ export class PatientStateServiceImpl extends PatientStateService {
 		return this.store.pipe(select(patientSelectors.selectSelectedPatient));
 	}
 
-	public selectEntityById$(id: string): Observable<PatientEntity> {
+	public selectEntityById$(
+		id: string
+	): Observable<PatientEntity | undefined> {
 		return this.store.pipe(select(patientSelectors.selectPatientById(id)));
 	}
 
@@ -87,7 +86,7 @@ export class PatientStateServiceImpl extends PatientStateService {
 		return this.store.pipe(select(patientSelectors.selectSelectedPatient));
 	}
 
-	public selectSelectedEntityID$(): Observable<string> {
+	public selectSelectedEntityId$(): Observable<string> {
 		return this.store.pipe(select(patientSelectors.getSelectedId));
 	}
 }

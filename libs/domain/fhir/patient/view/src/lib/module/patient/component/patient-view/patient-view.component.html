@@ -1,0 +1,54 @@
+<ng-container *ngIf="params$$ | async as params; else skeleton">
+	<section
+		class="p-component"
+		fxLayout="row wrap"
+		fxLayoutAlign="start start"
+	>
+		<ng-container *ngIf="params.patient?.givenName">
+			<div class="item">
+				<span class="item-name">Given name</span>
+				<span class="item-value">{{ params.patient?.givenName }}</span>
+			</div>
+		</ng-container>
+
+		<ng-container *ngIf="params.patient?.familyName">
+			<div class="item">
+				<span class="item-name">Family name</span>
+				<span class="item-value">{{ params.patient?.familyName }}</span>
+			</div>
+		</ng-container>
+
+		<ng-container *ngIf="params.patient?.gender">
+			<div class="item">
+				<span class="item-name">Gender</span>
+				<span class="item-value">{{ params.patient?.gender }}</span>
+			</div>
+		</ng-container>
+
+		<ng-container *ngIf="params.patient?.birthDate">
+			<div class="item">
+				<span class="item-name">Birth date</span>
+				<span class="item-value">{{ params.patient?.birthDate }}</span>
+			</div>
+		</ng-container>
+
+		<ng-container *ngIf="params.patient?.phone">
+			<div class="item">
+				<span class="item-name">Phone</span>
+				<span class="item-value">{{ params.patient?.phone }}</span>
+			</div>
+		</ng-container>
+	</section>
+</ng-container>
+
+<ng-template #skeleton>
+	<div>
+		<ng-container *ngIf="params$$ | async as params">
+			<p-skeleton styleClass="mb-2"></p-skeleton>
+			<p-skeleton width="9rem" styleClass="mb-2"></p-skeleton>
+			<p-skeleton width="5rem" styleClass="mb-2"></p-skeleton>
+			<p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+			<p-skeleton width="9rem" height="4rem"></p-skeleton>
+		</ng-container>
+	</div>
+</ng-template>

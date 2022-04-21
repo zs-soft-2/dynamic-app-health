@@ -42,13 +42,5 @@ export const selectSelectedPatient = createSelector(
 export const selectPatientById = (id: string) =>
 	createSelector(
 		selectPatientEntities,
-		(patients: Dictionary<PatientEntity>) => {
-			const patient: PatientEntity | undefined = patients[id];
-
-			if (!patient) {
-				throw new Error('No Patient');
-			}
-
-			return patient;
-		}
+		(patients: Dictionary<PatientEntity>) => patients[id]
 	);

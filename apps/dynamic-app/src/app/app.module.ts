@@ -12,6 +12,8 @@ import {
 	EnvironmentService,
 } from '@dynamic-app-health/api';
 import { ErrorDecoratorService } from '@dynamic-app-health/core/error/util';
+import { DomainFhirPatientDataModule } from '@dynamic-app-health/domain/fhir/patient/data';
+import { DomainFhirPatientUtilModule } from '@dynamic-app-health/domain/fhir/patient/util';
 import { FeatureDynamicConfigDataModule } from '@dynamic-app-health/feature/dynamic-config/data';
 import { FeatureDynamicConfigEditorModule } from '@dynamic-app-health/feature/dynamic-config/editor';
 import { FeatureDynamicPageDataModule } from '@dynamic-app-health/feature/dynamic-page/data';
@@ -55,6 +57,8 @@ import {
 		FeatureDynamicConfigEditorModule,
 		FeatureDynamicPageDataModule,
 		FeatureDynamicPageViewModule,
+		DomainFhirPatientDataModule,
+		DomainFhirPatientUtilModule,
 	],
 	providers: [
 		ErrorDecoratorService,
