@@ -12,7 +12,9 @@ export abstract class EntityStateService<R, S, T> extends StateService {
 	public abstract dispatchUpdateEntityAction(entity: T): void;
 	public abstract isLoading$(): Observable<boolean>;
 	public abstract selectEntities$(): Observable<R[]>;
-	public abstract selectEntityById$(entityId: string): Observable<R>;
+	public abstract selectEntityById$(
+		entityId: string
+	): Observable<R | undefined>;
 	public abstract selectSelectedEntity$(): Observable<R | undefined>;
 	public abstract selectSelectedEntityId$(): Observable<string>;
 }

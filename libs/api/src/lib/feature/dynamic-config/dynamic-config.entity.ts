@@ -6,9 +6,7 @@ export interface DynamicProperties {
 
 export type DynamicConfigEntity = {
 	selectedId?: string;
-	label: string;
 	link?: string;
-	properties: DynamicProperties;
 } & Identifiable &
 	ConfigEntity<any>;
 

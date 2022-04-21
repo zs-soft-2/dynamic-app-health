@@ -5,7 +5,7 @@ import { BaseService } from './base.service';
 
 export abstract class ComponentBaseService<S, T> extends BaseService {
 	protected params!: S;
-	protected params$$!: Subject<T>;
+	protected params$$!: Subject<S>;
 
 	public constructor() {
 		super();
@@ -13,5 +13,5 @@ export abstract class ComponentBaseService<S, T> extends BaseService {
 		this.params$$ = new ReplaySubject();
 	}
 
-	public abstract init$(config?: ConfigEntity<T>): Observable<S>;
+	public abstract init$(configEntity?: ConfigEntity<T>): Observable<S>;
 }
