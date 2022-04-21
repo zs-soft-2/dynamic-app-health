@@ -1,0 +1,26 @@
+{
+	"projectType": "library",
+	"root": "libs/domain/fhir/patient/util",
+	"sourceRoot": "libs/domain/fhir/patient/util/src",
+	"prefix": "dynamic-app-health",
+	"targets": {
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/libs/domain/fhir/patient/util"],
+			"options": {
+				"jestConfig": "libs/domain/fhir/patient/util/jest.config.js",
+				"passWithNoTests": true
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": [
+					"libs/domain/fhir/patient/util/src/**/*.ts",
+					"libs/domain/fhir/patient/util/src/**/*.html"
+				]
+			}
+		}
+	},
+	"tags": []
+}

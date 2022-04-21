@@ -9,6 +9,7 @@
 		"core-fhir-client-data": "libs/core/fhir-client/data",
 		"core-i18n-data": "libs/core/i18n/data",
 		"domain-fhir-patient-data": "libs/domain/fhir/patient/data",
+		"domain-fhir-patient-util": "libs/domain/fhir/patient/util",
 		"dynamic-app": "apps/dynamic-app",
 		"dynamic-app-e2e": "apps/dynamic-app-e2e",
 		"feature-dynamic-config-data": "libs/feature/dynamic-config/data",
