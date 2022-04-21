@@ -10,7 +10,6 @@ const routes: Routes = [
 			import('@dynamic-app-health/feature/dynamic-page/view').then(
 				(lib) => lib.FeatureDynamicPageViewModule
 			),
-		resolve: { data: DynamicPageResolverService },
 	},
 	{
 		path: 'dynamic-page-editor',
