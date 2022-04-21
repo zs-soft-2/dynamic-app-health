@@ -48,14 +48,5 @@ export const selectSelectedDynamicConfig = createSelector(
 export const selectDynamicConfigById = (id: string) =>
 	createSelector(
 		selectDynamicConfigEntities,
-		(dynamicConfigs: Dictionary<DynamicConfigEntity>) => {
-			const dynamicConfig: DynamicConfigEntity | undefined =
-				dynamicConfigs[id];
-
-			if (!dynamicConfig) {
-				throw new Error('No DynamicConfig entity!');
-			}
-
-			return dynamicConfig;
-		}
+		(dynamicConfigs: Dictionary<DynamicConfigEntity>) => dynamicConfigs[id]
 	);

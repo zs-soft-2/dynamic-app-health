@@ -84,7 +84,9 @@ export class DynamicConfigStateServiceImpl extends DynamicConfigStateService {
 		);
 	}
 
-	public selectEntityById$(id: string): Observable<DynamicConfigEntity> {
+	public selectEntityById$(
+		id: string
+	): Observable<DynamicConfigEntity | undefined> {
 		return this.store.pipe(
 			select(dynamicConfigSelectors.selectDynamicConfigById(id))
 		);
