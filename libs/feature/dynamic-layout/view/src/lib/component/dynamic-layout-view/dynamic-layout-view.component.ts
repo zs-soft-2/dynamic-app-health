@@ -11,6 +11,7 @@ import {
 import {
 	DynamicLayoutItem,
 	DynamicLayoutModeEnum,
+	ParamsBaseComponent,
 } from '@dynamic-app-health/api';
 
 import { DynamicLayoutViewService } from './dynamic-layout-view.service';
@@ -39,10 +40,10 @@ export class DynamicLayoutViewComponent implements OnInit {
 		this.removeItem = new EventEmitter();
 		this.options = {
 			draggable: {
-				enabled: true,
+				enabled: false,
 			},
 			resizable: {
-				enabled: true,
+				enabled: false,
 			},
 		};
 	}

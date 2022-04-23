@@ -1,5 +1,5 @@
-import { Routes } from '@angular/router';
+import { DynamicPageEntity } from '../page';
 
 export class DynamicPageRouteService {
-	public static dynamicRoutes: Routes = [];
+	public static dynamicPages: DynamicPageEntity[] = [];
 }

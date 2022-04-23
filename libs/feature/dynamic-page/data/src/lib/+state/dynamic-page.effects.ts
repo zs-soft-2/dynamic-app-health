@@ -20,13 +20,29 @@ export class DynamicPageEffects {
 			switchMap((action) =>
 				this.dynamicPageDataService.add$(action.dynamicPage).pipe(
 					map((dynamicPage) => {
-						this.router.config.push({
-							data: {
-								param: dynamicPage.path,
-							},
-							path: dynamicPage.path,
-							component: DynamicPageViewComponent,
-						});
+						const dynamicPageRoute: any | undefined =
+							this.router.config.find(
+								(route) => route.path === 'dynamic-page'
+							);
+
+						if (dynamicPageRoute) {
+							const childRoute: any | undefined =
+								dynamicPageRoute._loadedConfig.routes.find(
+									(route: any) => route.path === ''
+								);
+
+							if (childRoute) {
+								childRoute.children.push({
+									data: {
+										param: dynamicPage.path,
+									},
+									path: dynamicPage.path,
+									component: DynamicPageViewComponent,
+								});
+							}
+						}
+
+						console.log('add', this.router.config);
 
 						return dynamicPageActions.addDynamicPageSuccess({
 							dynamicPage: dynamicPage,

@@ -13,6 +13,7 @@ import {
 	DynamicComponentMappingService,
 	DynamicConfigEntity,
 	DynamicConfigStateService,
+	DynamicLayoutModeEnum,
 	DynamicPageEntity,
 	DynamicPageParams,
 	DynamicPageStateService,
@@ -86,6 +87,10 @@ export class DynamicPageViewService {
 
 					this.dynamicPageParams = {
 						dynamicPageView,
+						dynamicLayoutViewParams: {
+							mode: DynamicLayoutModeEnum.view,
+							options: {},
+						},
 					};
 
 					this.params$$.next(this.dynamicPageParams);

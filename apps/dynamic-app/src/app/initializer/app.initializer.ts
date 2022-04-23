@@ -58,32 +58,7 @@ export function initializeApp(
 					return dynamicPageStateService.selectEntities$().pipe(
 						filter((entities) => !!entities),
 						map((entities) => {
-							const routes: Routes = [];
-							const firstPage: DynamicPageEntity | undefined =
-								entities.find((entity) => !!entity);
-
-							if (firstPage) {
-								routes.push({
-									path: '',
-									redirectTo: firstPage.path,
-									pathMatch: 'full',
-								});
-
-								entities.forEach((entity) => {
-									routes.push({
-										data: {
-											param: entity.path,
-											pageId: entity.id,
-										},
-										path: entity.path,
-										component: DynamicPageViewComponent,
-									});
-								});
-							}
-
-							DynamicPageRouteService.dynamicRoutes = routes;
-
-							router.config = [...router.config, ...routes];
+							DynamicPageRouteService.dynamicPages = entities;
 
 							return router;
 						})

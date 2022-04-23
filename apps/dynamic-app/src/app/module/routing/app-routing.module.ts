@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
-import { DynamicPageResolverService } from './resolver';
-
 const routes: Routes = [
 	{
 		path: '',
+		redirectTo: 'dynamic-page',
+		pathMatch: 'full',
+	},
+	{
+		path: 'dynamic-page',
 		loadChildren: () =>
 			import('@dynamic-app-health/feature/dynamic-page/view').then(
 				(lib) => lib.FeatureDynamicPageViewModule
@@ -34,6 +37,5 @@ const routes: Routes = [
 		}),
 	],
 	exports: [RouterModule],
-	providers: [DynamicPageResolverService],
 })
 export class AppRoutingModule {}

@@ -35,21 +35,22 @@ export class TopBarService {
 		dynamicPages: DynamicPageEntity[]
 	): MenuItem[] {
 		return dynamicPages.map((dynamicPage) => ({
-			routerLink: ['/' + dynamicPage.path],
+			routerLink: ['dynamic-page/' + dynamicPage.path],
 			label: dynamicPage.label,
 		}));
 	}
 
 	public handleAddClick(): void {
-		this.router.navigateByUrl('/dynamic-page-editor/0');
+		this.router.navigateByUrl('dynamic-page-editor/0');
 	}
 
 	public handleEditClick(): void {
 		const routerStateSnapshot: RouterStateSnapshot =
 			this.router.routerState.snapshot;
+		const items: string[] = routerStateSnapshot.url.split('/');
 
 		this.router.navigateByUrl(
-			'/dynamic-page-editor' + routerStateSnapshot.url
+			'/dynamic-page-editor/' + items[items.length - 1]
 		);
 	}
 

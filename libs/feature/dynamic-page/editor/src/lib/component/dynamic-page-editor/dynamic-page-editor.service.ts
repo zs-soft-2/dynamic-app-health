@@ -1,4 +1,8 @@
-import { GridsterItem } from 'angular-gridster2';
+import {
+	GridsterItem,
+	GridsterItemComponentInterface,
+} from 'angular-gridster2';
+import { cloneDeep } from 'lodash';
 import { nanoid } from 'nanoid';
 import { combineLatest, Observable, ReplaySubject, switchMap } from 'rxjs';
 
@@ -10,6 +14,7 @@ import {
 	DynamicComponentMappingService,
 	DynamicConfigEntity,
 	DynamicConfigStateService,
+	DynamicContent,
 	DynamicLayout,
 	DynamicLayoutItem,
 	DynamicLayoutModeEnum,
@@ -22,7 +27,6 @@ import {
 } from '@dynamic-app-health/api';
 
 import { DynamicPageEditorUtilService } from '../../util';
-import { cloneDeep } from 'lodash';
 
 @Injectable()
 export class DynamicPageEditorService {
@@ -55,24 +59,6 @@ export class DynamicPageEditorService {
 		this.addItem(componentName);
 	}
 
-	private addItem(componentName: string): void {
-		const layoutItem: DynamicLayoutItem =
-			this.createLayoutItem(componentName);
-
-		this.layout.layoutItems.push(layoutItem);
-
-		this.params = {
-			...this.params,
-			dynamicPageView: this.createDynamicPageView(
-				this.layout,
-				this.componentMap,
-				this.dynamicConfigs
-			),
-		};
-
-		this.params$$.next(this.params);
-	}
-
 	public cancel(): void {
 		this.back();
 	}
@@ -80,8 +66,22 @@ export class DynamicPageEditorService {
 	public edit(layoutItem: DynamicLayoutItem): void {
 		let configId = layoutItem.content?.configId;
 
-		if (configId === '0') {
+		if (!configId || configId === '0') {
 			configId = nanoid(10);
+
+			const content: DynamicContent | undefined = layoutItem.content;
+
+			if (content) {
+				content.configId = configId;
+
+				const itemIndex: number = this.layout.layoutItems.findIndex(
+					(item) => item.item['id'] === layoutItem.item['id']
+				);
+
+				if (itemIndex > -1) {
+					this.layout.layoutItems[itemIndex] = layoutItem;
+				}
+			}
 
 			this.updateDynamicPage(this.layout);
 		}
@@ -171,6 +171,24 @@ export class DynamicPageEditorService {
 		this.dynamicPageStateService.dispatchAddEntityAction(dynamicPage);
 	}
 
+	private addItem(componentName: string): void {
+		const layoutItem: DynamicLayoutItem =
+			this.createLayoutItem(componentName);
+
+		this.layout.layoutItems.push(layoutItem);
+
+		this.params = {
+			...this.params,
+			dynamicPageView: this.createDynamicPageView(
+				this.layout,
+				this.componentMap,
+				this.dynamicConfigs
+			),
+		};
+
+		this.params$$.next(this.params);
+	}
+
 	private back(): void {
 		this.location.back();
 	}
@@ -186,7 +204,18 @@ export class DynamicPageEditorService {
 			components: Array.from(componentMap.values()).map((value) => value),
 			formGroup,
 			dynamicPageView: pageView,
-			dynamicLayoutMode: DynamicLayoutModeEnum.edit,
+			dynamicLayoutViewParams: {
+				options: {
+					draggable: {
+						enabled: true,
+					},
+					resizable: {
+						enabled: true,
+					},
+					itemChangeCallback: this.itemChangeHandler,
+				},
+				mode: DynamicLayoutModeEnum.edit,
+			},
 		};
 
 		return dynamicPageEditorParams;
@@ -230,7 +259,10 @@ export class DynamicPageEditorService {
 
 	private createLayoutItem(componentName: string): DynamicLayoutItem {
 		return {
-			item: this.defaultItem,
+			item: {
+				...this.defaultItem,
+				id: nanoid(3),
+			},
 			content: {
 				componentName,
 			},
@@ -261,6 +293,13 @@ export class DynamicPageEditorService {
 		}
 
 		return foundedLayout;
+	}
+
+	private itemChangeHandler(
+		item: GridsterItem,
+		itemComponent: GridsterItemComponentInterface
+	): void {
+		console.log(item, itemComponent);
 	}
 
 	private removeItem(
