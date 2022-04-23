@@ -38,7 +38,7 @@ export class PatientListService extends ComponentBaseService<
 		);
 
 		if (this.dynamicConfig?.link) {
-			this.router.navigateByUrl(this.dynamicConfig.link);
+			this.router.navigateByUrl('/dynamic-page' + this.dynamicConfig.link);
 		}
 	}
 

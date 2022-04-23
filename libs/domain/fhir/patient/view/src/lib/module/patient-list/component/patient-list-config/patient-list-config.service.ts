@@ -18,7 +18,7 @@ export class PatientListConfigService extends ConfigComponentBaseService<
 	PatientListConfigParams,
 	PatientListConfig
 > {
-	private configId!: string;
+	private configId!: string | undefined;
 
 	public constructor(
 		private activatedRoute: ActivatedRoute,
@@ -36,11 +36,11 @@ export class PatientListConfigService extends ConfigComponentBaseService<
 	public init$(): Observable<PatientListConfigParams> {
 		return this.activatedRoute.params.pipe(
 			tap((params) => {
-				this.configId = params['configId'] as string;
+				this.configId = params['configId'];
 			}),
 			switchMap(() =>
 				this.dynamicConfigStateService
-					.selectEntityById$(this.configId)
+					.selectEntityById$(this.configId || '')
 					.pipe(
 						switchMap((dynamicConfig) => {
 							this.config = dynamicConfig as DynamicConfigEntity;
