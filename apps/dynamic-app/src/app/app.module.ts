@@ -1,6 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import {
 	APPLICATION_ID_TOKEN,
@@ -29,6 +30,7 @@ import { DynamicComponentMappingServiceImpl } from './service';
 	declarations: [AppComponent],
 	imports: [
 		BrowserModule,
+		BrowserAnimationsModule,
 		HttpClientModule,
 		StoreModule.forRoot(
 			{},

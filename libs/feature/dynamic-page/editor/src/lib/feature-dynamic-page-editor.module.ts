@@ -1,6 +1,8 @@
 import { DynamicModule } from 'ng-dynamic-component';
+import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
 import { DragDropModule } from 'primeng/dragdrop';
+import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
 import { RadioButtonModule } from 'primeng/radiobutton';
@@ -17,6 +19,7 @@ import { DynamicPageEditorRoutingModule } from './routing';
 @NgModule({
 	declarations: [DynamicPageEditorComponent],
 	imports: [
+		AccordionModule,
 		CommonModule,
 		ButtonModule,
 		DragDropModule,
@@ -24,6 +27,7 @@ import { DynamicPageEditorRoutingModule } from './routing';
 		DynamicPageEditorRoutingModule,
 		FlexLayoutModule,
 		FormsModule,
+		InputNumberModule,
 		InputTextModule,
 		PanelModule,
 		RadioButtonModule,

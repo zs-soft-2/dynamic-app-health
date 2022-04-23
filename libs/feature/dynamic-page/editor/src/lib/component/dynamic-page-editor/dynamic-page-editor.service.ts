@@ -52,6 +52,10 @@ export class DynamicPageEditorService {
 		this.layout = {
 			name: '',
 			layoutItems: [],
+			minCols: 1,
+			maxCols: 100,
+			minRows: 1,
+			maxRows: 100,
 		};
 	}
 
@@ -196,9 +200,10 @@ export class DynamicPageEditorService {
 	private createDynamicPageEditorParams(
 		componentMap: Map<string, DynamicComponent>,
 		pageView: DynamicPageView,
-		page: DynamicPageEntity | undefined
+		dynamicPage: DynamicPageEntity | undefined
 	): DynamicPageEditorParams {
-		const formGroup = this.componentUtil.createFormGroup(page);
+		const formGroup = this.componentUtil.createFormGroup(dynamicPage);
+		const layout: DynamicLayout | undefined = dynamicPage?.layout;
 
 		const dynamicPageEditorParams: DynamicPageEditorParams = {
 			components: Array.from(componentMap.values()).map((value) => value),
@@ -212,6 +217,11 @@ export class DynamicPageEditorService {
 					resizable: {
 						enabled: true,
 					},
+					displayGrid: 'always',
+					minCols: layout?.minCols || 1,
+					maxCols: layout?.maxCols || 100,
+					minRows: layout?.minRows || 1,
+					maxRows: layout?.maxRows || 100,
 					itemChangeCallback: this.itemChangeHandler,
 				},
 				mode: DynamicLayoutModeEnum.edit,

@@ -23,12 +23,20 @@ export class DynamicPageEditorUtilService {
 	}
 
 	public createFormGroup(
-		dynamicPageEntity: DynamicPageEntity | undefined
+		dynamicPage: DynamicPageEntity | undefined
 	): FormGroup {
+		const layout: DynamicLayout | undefined = dynamicPage?.layout;
+
 		return this.formBuilder.group({
-			id: [dynamicPageEntity?.id],
-			path: [dynamicPageEntity?.path || null],
-			label: [dynamicPageEntity?.label || null],
+			id: [dynamicPage?.id],
+			path: [dynamicPage?.path || null],
+			label: [dynamicPage?.label || null],
+			layout: this.formBuilder.group({
+				minCols: [layout?.minCols || null],
+				maxCols: [layout?.maxCols || null],
+				minRows: [layout?.minRows || null],
+				maxRows: [layout?.maxRows || null],
+			}),
 		});
 	}
 
@@ -50,7 +58,10 @@ export class DynamicPageEditorUtilService {
 		return {
 			id: formGroup.value['id'],
 			label: formGroup.value['label'],
-			layout,
+			layout: {
+				...layout,
+				...formGroup.value['layout'],
+			},
 			path: formGroup.value['path'],
 		};
 	}

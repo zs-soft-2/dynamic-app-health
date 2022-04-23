@@ -10,7 +10,7 @@ import {
 	DynamicPageEntityUpdate,
 } from '@dynamic-app-health/api';
 
-import { dynamicLayouts, dynamicLayoutsForPages } from '../layout';
+import { dynamicLayoutsForPages } from '../layout';
 
 export const dynamicPages: DynamicPageEntity[] = [
 	{
@@ -39,7 +39,7 @@ export class DynamicPageDataServiceImpl extends DynamicPageDataService {
 	}
 
 	public getDynamicLayouts$(): Observable<DynamicLayout[]> {
-		return of(dynamicLayouts);
+		return of(dynamicLayoutsForPages);
 	}
 
 	public getDynamicPages(): DynamicPageEntity[] {

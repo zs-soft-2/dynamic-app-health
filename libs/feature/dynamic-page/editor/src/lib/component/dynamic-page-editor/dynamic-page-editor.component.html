@@ -13,48 +13,137 @@
 		<div class="components">
 			<form [formGroup]="params.formGroup">
 				<input name="id" formControlName="id" hidden />
-				<span class="p-float-label">
-					<input
-						id="label"
-						type="text"
-						pInputText
-						formControlName="label"
-					/>
-					<label for="label">Label</label>
-				</span>
 
-				<span class="p-float-label">
-					<input
-						id="path"
-						type="text"
-						pInputText
-						formControlName="path"
-					/>
-					<label for="path">Path</label>
-				</span>
-
-				<div class="field">
-					<label class="label">Components</label>
-
-					<div
-						*ngFor="let component of params.components"
-						class="border"
-					>
-						<span>
-							{{ component.name }}
+				<p-accordion>
+					<p-accordionTab header="Base" [selected]="true">
+						<span class="p-float-label">
+							<input
+								id="label"
+								type="text"
+								pInputText
+								formControlName="label"
+							/>
+							<label for="label">Label</label>
 						</span>
 
-						<span>
-							<button
-								pButton
-								(click)="addClickHandler(component.name)"
-								type="button"
-								class="p-button-raised p-button-rounded add"
-								icon="pi pi-plus"
-							></button>
+						<span class="p-float-label">
+							<input
+								id="path"
+								type="text"
+								pInputText
+								formControlName="path"
+							/>
+							<label for="path">Path</label>
 						</span>
-					</div>
-				</div>
+					</p-accordionTab>
+
+					<p-accordionTab header="Layout">
+						<div formGroupName="layout">
+							<span class="p-float-label">
+								<p-inputNumber
+									id="minCols"
+									mode="decimal"
+									[showButtons]="true"
+									[min]="1"
+									[max]="8"
+									buttonLayout="horizontal"
+									spinnerMode="horizontal"
+									decrementButtonClass="p-button-secondary"
+									incrementButtonClass="p-button-secondary"
+									incrementButtonIcon="pi pi-plus"
+									decrementButtonIcon="pi pi-minus"
+									formControlName="minCols"
+								></p-inputNumber>
+
+								<label for="minCols">Min grid cols</label>
+							</span>
+
+							<span class="p-float-label">
+								<p-inputNumber
+									id="maxCols"
+									mode="decimal"
+									[showButtons]="true"
+									[min]="1"
+									[max]="8"
+									buttonLayout="horizontal"
+									spinnerMode="horizontal"
+									decrementButtonClass="p-button-secondary"
+									incrementButtonClass="p-button-secondary"
+									incrementButtonIcon="pi pi-plus"
+									decrementButtonIcon="pi pi-minus"
+									formControlName="maxCols"
+								></p-inputNumber>
+
+								<label for="maxCols">Max grid cols</label>
+							</span>
+
+							<span class="p-float-label">
+								<p-inputNumber
+									id="minRows"
+									mode="decimal"
+									[showButtons]="true"
+									[min]="1"
+									[max]="8"
+									buttonLayout="horizontal"
+									spinnerMode="horizontal"
+									decrementButtonClass="p-button-secondary"
+									incrementButtonClass="p-button-secondary"
+									incrementButtonIcon="pi pi-plus"
+									decrementButtonIcon="pi pi-minus"
+									formControlName="minRows"
+								></p-inputNumber>
+
+								<label for="minRows">Min grid rows</label>
+							</span>
+
+							<span class="p-float-label">
+								<p-inputNumber
+									id="maxRows"
+									mode="decimal"
+									[showButtons]="true"
+									[min]="1"
+									[max]="8"
+									buttonLayout="horizontal"
+									spinnerMode="horizontal"
+									decrementButtonClass="p-button-secondary"
+									incrementButtonClass="p-button-secondary"
+									incrementButtonIcon="pi pi-plus"
+									decrementButtonIcon="pi pi-minus"
+									formControlName="maxRows"
+								></p-inputNumber>
+
+								<label for="maxRows">Max grid rows</label>
+							</span>
+						</div>
+					</p-accordionTab>
+
+					<p-accordionTab header="Content">
+						<div class="field">
+							<label class="label">Components</label>
+
+							<div
+								*ngFor="let component of params.components"
+								class="border"
+							>
+								<span>
+									{{ component.name }}
+								</span>
+
+								<span>
+									<button
+										pButton
+										(click)="
+											addClickHandler(component.name)
+										"
+										type="button"
+										class="p-button-raised p-button-rounded add"
+										icon="pi pi-plus"
+									></button>
+								</span>
+							</div>
+						</div>
+					</p-accordionTab>
+				</p-accordion>
 			</form>
 
 			<div

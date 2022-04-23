@@ -45,6 +45,7 @@ export class DynamicLayoutViewComponent implements OnInit {
 			resizable: {
 				enabled: false,
 			},
+			displayGrid: 'always',
 		};
 	}
 
