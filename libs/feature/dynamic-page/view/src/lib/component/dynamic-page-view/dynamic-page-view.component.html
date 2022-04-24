@@ -1,5 +1,8 @@
-<div class="bounds" *ngIf="dynamicPageParams$$ | async as params">
-	<dh-dynamic-layout-view [layoutItems]="params.dynamicPageView.layout.layoutItems"
-		[options]="params.dynamicLayoutViewParams.options" [mode]="params.dynamicLayoutViewParams.mode">
+<div class="bounds" *ngIf="params$$ | async as params">
+	<dh-dynamic-layout-view
+		[layoutItems]="params.dynamicPageView.layout.layoutItems"
+		[options]="params.dynamicLayoutViewParams.options"
+		[mode]="params.dynamicLayoutViewParams.mode"
+	>
 	</dh-dynamic-layout-view>
 </div>
