@@ -7,10 +7,10 @@ import { ActivatedRoute } from '@angular/router';
 import {
 	ConfigComponentBaseService,
 	DynamicConfigEntity,
-	DynamicConfigEntityUpdate,
 	DynamicConfigStateService,
 	PatientListConfig,
 	PatientListConfigParams,
+	PatientUtilService,
 } from '@dynamic-app-health/api';
 
 @Injectable()
@@ -24,7 +24,8 @@ export class PatientListConfigService extends ConfigComponentBaseService<
 		private activatedRoute: ActivatedRoute,
 		private dynamicConfigStateService: DynamicConfigStateService,
 		private formBuilder: FormBuilder,
-		private location: Location
+		private location: Location,
+		private patientUtilService: PatientUtilService
 	) {
 		super();
 	}
@@ -79,33 +80,12 @@ export class PatientListConfigService extends ConfigComponentBaseService<
 	}
 
 	private creataDynamicConfig(): void {
-		const {
-			label,
-			id,
-			link,
-			familyName,
-			phone,
-			givenName,
-			gender,
-			birthDate,
-		} = this.formGroup.value;
-
-		const dynamicConfig: DynamicConfigEntity = {
-			id: id || this.configId,
-			label,
-			link,
-			config: {
-				properties: {
-					birthDate,
-					familyName,
-					givenName,
-					gender,
-					phone,
-				},
-			},
-		};
-
-		this.dynamicConfigStateService.dispatchAddEntityAction(dynamicConfig);
+		this.dynamicConfigStateService.dispatchAddEntityAction(
+			this.patientUtilService.getPatientDynamicConfigAdd(
+				this.formGroup.value,
+				this.configId
+			)
+		);
 	}
 
 	private createFormGroup(
@@ -124,35 +104,10 @@ export class PatientListConfigService extends ConfigComponentBaseService<
 	}
 
 	private updateDynamicConfig(): void {
-		const {
-			label,
-			id,
-			link,
-			familyName,
-			phone,
-			givenName,
-			gender,
-			birthDate,
-		} = this.formGroup.value;
-
-		const dynamicConfig: DynamicConfigEntityUpdate = {
-			id,
-			label,
-			link,
-			config: {
-				properties: {
-					id,
-					birthDate,
-					familyName,
-					gender,
-					givenName,
-					phone,
-				},
-			},
-		};
-
 		this.dynamicConfigStateService.dispatchUpdateEntityAction(
-			dynamicConfig
+			this.patientUtilService.getPatientDynamicConfigUpdate(
+				this.formGroup.value
+			)
 		);
 	}
 }

@@ -7,7 +7,6 @@ import { ActivatedRoute } from '@angular/router';
 import {
 	ConfigComponentBaseService,
 	DynamicConfigEntity,
-	DynamicConfigEntityUpdate,
 	DynamicConfigStateService,
 	PatientConfig,
 	PatientConfigParams,
@@ -97,33 +96,12 @@ export class PatientConfigService extends ConfigComponentBaseService<
 	}
 
 	private creataDynamicConfig(): void {
-		const {
-			label,
-			id,
-			familyName,
-			phone,
-			givenName,
-			gender,
-			birthDate,
-			selectedId,
-		} = this.formGroup.value;
-
-		const dynamicConfig: DynamicConfigEntity = {
-			id: id || this.configId,
-			label,
-			selectedId,
-			config: {
-				properties: {
-					birthDate,
-					familyName,
-					givenName,
-					gender,
-					phone,
-				},
-			},
-		};
-
-		this.dynamicConfigStateService.dispatchAddEntityAction(dynamicConfig);
+		this.dynamicConfigStateService.dispatchAddEntityAction(
+			this.patientUtilService.getPatientDynamicConfigAdd(
+				this.formGroup.value,
+				this.configId
+			)
+		);
 	}
 
 	private createFormGroup(
@@ -142,35 +120,10 @@ export class PatientConfigService extends ConfigComponentBaseService<
 	}
 
 	private updateDynamicConfig(): void {
-		const {
-			label,
-			id,
-			familyName,
-			phone,
-			givenName,
-			gender,
-			birthDate,
-			selectedId,
-		} = this.formGroup.value;
-
-		const dynamicConfig: DynamicConfigEntityUpdate = {
-			id,
-			label,
-			selectedId,
-			config: {
-				properties: {
-					id,
-					birthDate,
-					familyName,
-					gender,
-					givenName,
-					phone,
-				},
-			},
-		};
-
 		this.dynamicConfigStateService.dispatchUpdateEntityAction(
-			dynamicConfig
+			this.patientUtilService.getPatientDynamicConfigUpdate(
+				this.formGroup.value
+			)
 		);
 	}
 }

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {
 	ContactPoint,
+	DynamicConfigEntity,
+	DynamicConfigEntityUpdate,
 	HumanName,
 	PatientEntity,
 	PatientTableColumn,
@@ -33,6 +35,68 @@ export class PatientUtilServiceImpl extends PatientUtilService {
 			birthDate: patient.birthDate,
 			gender: patient.gender,
 			phone: phone?.value,
+		};
+	}
+
+	public getPatientDynamicConfigAdd(
+		formGroupValue: any,
+		configId: string | undefined
+	): DynamicConfigEntity {
+		const {
+			label,
+			id,
+			link,
+			familyName,
+			phone,
+			givenName,
+			gender,
+			birthDate,
+		} = formGroupValue;
+
+		return {
+			id: id || configId,
+			label,
+			link,
+			config: {
+				properties: {
+					birthDate,
+					familyName,
+					givenName,
+					gender,
+					phone,
+				},
+			},
+		};
+	}
+
+	public getPatientDynamicConfigUpdate(
+		formGroupValue: any
+	): DynamicConfigEntityUpdate {
+		const {
+			label,
+			id,
+			link,
+			familyName,
+			phone,
+			givenName,
+			gender,
+			birthDate,
+		} = formGroupValue;
+
+		return {
+			id,
+			label,
+			link,
+			config: {
+				properties: {
+					id,
+					birthDate,
+					familyName,
+					gender,
+					givenName,
+					phone,
+				},
+			},
 		};
 	}
 
