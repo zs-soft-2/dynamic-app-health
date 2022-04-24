@@ -56,6 +56,7 @@ export class DynamicPageEditorService {
 			maxCols: 100,
 			minRows: 1,
 			maxRows: 100,
+			margin: 5
 		};
 	}
 
@@ -222,6 +223,7 @@ export class DynamicPageEditorService {
 					maxCols: layout?.maxCols || 100,
 					minRows: layout?.minRows || 1,
 					maxRows: layout?.maxRows || 100,
+					margin: layout?.margin || 5,
 					itemChangeCallback: this.itemChangeHandler,
 				},
 				mode: DynamicLayoutModeEnum.edit,

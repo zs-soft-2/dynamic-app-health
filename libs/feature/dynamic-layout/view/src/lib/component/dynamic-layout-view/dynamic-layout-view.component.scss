@@ -1,3 +1,7 @@
 .dynamic-layout-view {
 	height: 100%;
 }
+
+:host ::ng-deep gridster-item {
+	overflow-y: auto;
+}

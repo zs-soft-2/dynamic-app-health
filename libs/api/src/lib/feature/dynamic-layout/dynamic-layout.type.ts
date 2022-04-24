@@ -7,4 +7,5 @@ export type DynamicLayout = {
 	maxCols: number;
 	minRows: number;
 	maxRows: number;
+	margin: number;
 };

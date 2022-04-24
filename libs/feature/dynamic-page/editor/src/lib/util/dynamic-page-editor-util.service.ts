@@ -36,6 +36,7 @@ export class DynamicPageEditorUtilService {
 				maxCols: [layout?.maxCols || null],
 				minRows: [layout?.minRows || null],
 				maxRows: [layout?.maxRows || null],
+				margin: [layout?.margin || null],
 			}),
 		});
 	}

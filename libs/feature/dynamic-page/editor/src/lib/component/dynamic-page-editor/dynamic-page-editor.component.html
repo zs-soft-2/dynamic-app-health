@@ -114,6 +114,25 @@
 
 								<label for="maxRows">Max grid rows</label>
 							</span>
+
+							<span class="p-float-label">
+								<p-inputNumber
+									id="margin"
+									mode="decimal"
+									[showButtons]="true"
+									[min]="1"
+									[max]="20"
+									buttonLayout="horizontal"
+									spinnerMode="horizontal"
+									decrementButtonClass="p-button-secondary"
+									incrementButtonClass="p-button-secondary"
+									incrementButtonIcon="pi pi-plus"
+									decrementButtonIcon="pi pi-minus"
+									formControlName="margin"
+								></p-inputNumber>
+
+								<label for="margin">Margin</label>
+							</span>
 						</div>
 					</p-accordionTab>
 

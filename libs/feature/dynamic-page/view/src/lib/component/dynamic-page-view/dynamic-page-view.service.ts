@@ -13,6 +13,7 @@ import {
 	DynamicComponentMappingService,
 	DynamicConfigEntity,
 	DynamicConfigStateService,
+	DynamicLayout,
 	DynamicLayoutModeEnum,
 	DynamicPageEntity,
 	DynamicPageParams,
@@ -44,16 +45,18 @@ export class DynamicPageViewService {
 			delay(100),
 			switchMap(([data, entities, componentMap, configs]) => {
 				const dynamicPage: DynamicPageEntity | undefined = (
-					entities as DynamicPageEntity[]
+					entities
 				).find((dynamicPage) => {
 					return dynamicPage.path === data['param'];
 				});
 
-				if (dynamicPage) {
+				const layout: DynamicLayout | undefined = dynamicPage?.layout;
+
+				if (layout) {
 					const dynamicPageView: DynamicPageView = {
 						layout: {
-							...dynamicPage.layout,
-							layoutItems: dynamicPage.layout.layoutItems.map(
+							...layout,
+							layoutItems: layout.layoutItems.map(
 								(layoutItem) => {
 									const componentName =
 										layoutItem.content?.componentName || '';
@@ -89,7 +92,13 @@ export class DynamicPageViewService {
 						dynamicPageView,
 						dynamicLayoutViewParams: {
 							mode: DynamicLayoutModeEnum.view,
-							options: {},
+							options: {
+								minCols: layout.minCols,
+								maxCols: layout.maxCols,
+								minRows: layout.minRows,
+								maxRows: layout.maxRows,
+								margin: layout.margin
+							},
 						},
 					};
 

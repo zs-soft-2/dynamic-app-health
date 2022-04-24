@@ -8,5 +8,6 @@ export const dynamicLayoutsForPages: DynamicLayout[] = [
 		maxCols: 8,
 		minRows: 1,
 		maxRows: 8,
+		margin: 5
 	},
 ];

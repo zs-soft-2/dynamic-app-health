@@ -4,7 +4,7 @@
 			[item]="layoutItem.item"
 			*ngFor="let layoutItem of layoutItems"
 		>
-			<p-panel [header]="layoutItem.content?.componentName || ''">
+			<p-panel [header]="layoutItem.content?.config?.label || layoutItem.content?.componentName || ''">
 				<ng-template pTemplate="icons" *ngIf="mode === 'edit'">
 					<p-button
 						icon="pi pi-pencil"
@@ -13,6 +13,7 @@
 						(click)="edit(layoutItem)"
 					>
 					</p-button>
+
 					<p-button
 						icon="pi pi-times"
 						class="p-panel-header-icon"
