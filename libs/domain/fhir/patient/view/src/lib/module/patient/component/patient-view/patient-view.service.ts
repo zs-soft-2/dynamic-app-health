@@ -3,7 +3,6 @@ import { iif, Observable, switchMap, takeUntil } from 'rxjs';
 import { Injectable } from '@angular/core';
 import {
 	ComponentBaseService,
-	ConfigEntity,
 	ContactPoint,
 	DynamicConfigEntity,
 	HumanName,
@@ -26,9 +25,9 @@ export class PatientViewService extends ComponentBaseService<
 	}
 
 	public init$(
-		dynamicCconfig?: DynamicConfigEntity
+		dynamicConfig?: DynamicConfigEntity
 	): Observable<PatientParams> {
-		this.dynamicConfig = dynamicCconfig;
+		this.dynamicConfig = dynamicConfig;
 		this.patientStateService.dispatchListEntitiesAction();
 
 		const selectedPatientId: string = this.dynamicConfig?.selectedId || '';
@@ -46,7 +45,7 @@ export class PatientViewService extends ComponentBaseService<
 					this.params = {
 						patient: this.createPatientViewByConfig(
 							patient,
-							dynamicCconfig
+							dynamicConfig
 						),
 					} as PatientParams;
 
@@ -63,7 +62,7 @@ export class PatientViewService extends ComponentBaseService<
 
 	private createPatientViewByConfig(
 		patient: PatientEntity | undefined,
-		config: DynamicConfigEntity | undefined
+		dynamicConfig: DynamicConfigEntity | undefined
 	): PatientView | undefined {
 		if (!patient) {
 			return patient;
@@ -80,23 +79,23 @@ export class PatientViewService extends ComponentBaseService<
 			(e) => e.system === 'phone'
 		);
 
-		if (this.dynamicConfig?.config?.properties['givenName']) {
+		if (dynamicConfig?.config?.properties['givenName']) {
 			patientView.givenName = name?.given?.join(' ');
 		}
 
-		if (this.dynamicConfig?.config?.properties['familyName']) {
+		if (dynamicConfig?.config?.properties['familyName']) {
 			patientView.familyName = name?.family;
 		}
 
-		if (this.dynamicConfig?.config?.properties['phone']) {
+		if (dynamicConfig?.config?.properties['phone']) {
 			patientView.phone = phone?.value;
 		}
 
-		if (this.dynamicConfig?.config?.properties['birthDate']) {
+		if (dynamicConfig?.config?.properties['birthDate']) {
 			patientView.birthDate = patient.birthDate;
 		}
 
-		if (this.dynamicConfig?.config?.properties['gender']) {
+		if (dynamicConfig?.config?.properties['gender']) {
 			patientView.gender = patient.gender;
 		}
 

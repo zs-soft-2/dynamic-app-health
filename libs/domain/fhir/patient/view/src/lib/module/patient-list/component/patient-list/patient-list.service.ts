@@ -1,4 +1,4 @@
-import { combineLatest, map, Observable, of, switchMap, tap } from 'rxjs';
+import { combineLatest, map, Observable, of, switchMap } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 import {
@@ -21,8 +21,6 @@ export class PatientListService extends ComponentBaseService<
 	PatientListConfig
 > {
 	private dynamicConfig: DynamicConfigEntity | undefined;
-	private patientViews!: PatientView[];
-	private selectedPatientId!: string;
 
 	public constructor(
 		private router: Router,
@@ -38,7 +36,9 @@ export class PatientListService extends ComponentBaseService<
 		);
 
 		if (this.dynamicConfig?.link) {
-			this.router.navigateByUrl('/dynamic-page' + this.dynamicConfig.link);
+			this.router.navigateByUrl(
+				'/dynamic-page' + this.dynamicConfig.link
+			);
 		}
 	}
 
@@ -52,34 +52,27 @@ export class PatientListService extends ComponentBaseService<
 			this.patientStateService
 				.selectEntities$()
 				.pipe(map((entities) => entities as PatientEntity[])),
-			this.patientStateService
-				.selectSelectedEntityId$()
-				.pipe(
-					tap(
-						(selectedPatientId) =>
-							(this.selectedPatientId = selectedPatientId)
-					)
-				),
+			this.patientStateService.selectSelectedEntityId$(),
 		]).pipe(
 			switchMap(([patients, selectedPatientId]) => {
-				this.patientViews = patients.map((patient) =>
+				const patientViews: PatientView[] = patients.map((patient) =>
 					this.createPatientView(patient)
 				);
 
-				const columns: PatientTableColumn[] =
+				const tableColumns: PatientTableColumn[] =
 					this.createColumnsByConfig(
 						this.dynamicConfig?.config.properties,
 						this.patientUtilService.getPatientTableColumns()
 					);
 
 				const selectedPatientView: PatientView | undefined =
-					this.patientViews.find(
+					patientViews.find(
 						(patientView) => patientView.id === selectedPatientId
 					);
 
 				this.params = this.createParams(
-					this.patientViews,
-					columns,
+					patientViews,
+					tableColumns,
 					selectedPatientView
 				);
 
