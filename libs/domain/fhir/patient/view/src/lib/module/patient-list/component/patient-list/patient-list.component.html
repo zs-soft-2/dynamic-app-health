@@ -1,51 +1,54 @@
-<ng-container *ngIf="params$$ | async as params; else skeleton">
-	<p-table
-		[columns]="params.columns"
-		[value]="params.patients"
-		responsiveLayout="stack"
-		selectionMode="single"
-		[(selection)]="params.selectedPatientView"
-		(onRowSelect)="handleRowSelect($event)"
-		styleClass="p-datatable-sm"
-	>
-		<ng-template pTemplate="header" let-columns>
-			<tr>
-				<th *ngFor="let col of columns">
-					{{ col.header }}
-				</th>
-			</tr>
-		</ng-template>
 
-		<ng-template pTemplate="body" let-rowData let-columns="columns">
-			<tr [pSelectableRow]="rowData">
-				<td *ngFor="let col of columns">
-					{{ rowData[col.field] }}
-				</td>
-			</tr>
-		</ng-template>
-	</p-table>
-</ng-container>
-
-<ng-template #skeleton>
-	<p-table [value]="[]" responsiveLayout="scroll">
-		<ng-template pTemplate="header">
-			<tr>
-				<th>Family Name</th>
-				<th>Given name</th>
-				<th>Phone</th>
-				<th>Birthdate</th>
-				<th>Gender</th>
-			</tr>
-		</ng-template>
-
-		<ng-template pTemplate="body" let-product>
-			<tr>
-				<td><p-skeleton></p-skeleton></td>
-				<td><p-skeleton></p-skeleton></td>
-				<td><p-skeleton></p-skeleton></td>
-				<td><p-skeleton></p-skeleton></td>
-				<td><p-skeleton></p-skeleton></td>
-			</tr>
-		</ng-template>
-	</p-table>
-</ng-template>
+<div class="patient-list">
+	<ng-container *ngIf="params$$ | async as params; else skeleton">
+		<p-table
+			[columns]="params.columns"
+			[value]="params.patients"
+			responsiveLayout="stack"
+			selectionMode="single"
+			[(selection)]="params.selectedPatientView"
+			(onRowSelect)="handleRowSelect($event)"
+			styleClass="p-datatable-sm"
+		>
+			<ng-template pTemplate="header" let-columns>
+				<tr>
+					<th *ngFor="let col of columns">
+						{{ col.header }}
+					</th>
+				</tr>
+			</ng-template>
+	
+			<ng-template pTemplate="body" let-rowData let-columns="columns">
+				<tr [pSelectableRow]="rowData">
+					<td *ngFor="let col of columns">
+						{{ rowData[col.field] }}
+					</td>
+				</tr>
+			</ng-template>
+		</p-table>
+	</ng-container>
+	
+	<ng-template #skeleton>
+		<p-table [value]="[]" responsiveLayout="scroll">
+			<ng-template pTemplate="header">
+				<tr>
+					<th>Family Name</th>
+					<th>Given name</th>
+					<th>Phone</th>
+					<th>Birthdate</th>
+					<th>Gender</th>
+				</tr>
+			</ng-template>
+	
+			<ng-template pTemplate="body" let-product>
+				<tr>
+					<td><p-skeleton></p-skeleton></td>
+					<td><p-skeleton></p-skeleton></td>
+					<td><p-skeleton></p-skeleton></td>
+					<td><p-skeleton></p-skeleton></td>
+					<td><p-skeleton></p-skeleton></td>
+				</tr>
+			</ng-template>
+		</p-table>
+	</ng-template>	
+</div>
