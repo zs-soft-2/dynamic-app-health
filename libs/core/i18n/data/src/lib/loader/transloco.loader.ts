@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Environment, EnvironmentService } from '@dynamic-app-health/api';
 import {
 	Translation,
 	TRANSLOCO_LOADER,
@@ -8,10 +9,18 @@ import {
 
 @Injectable()
 export class HttpLoader implements TranslocoLoader {
-	public constructor(private http: HttpClient) {}
+	public constructor(
+		private environmentService: EnvironmentService,
+		private http: HttpClient
+	) {}
 
 	public getTranslation(langPath: string) {
-		return this.http.get<Translation>(`${langPath}.json`);
+		const environment: Environment =
+			this.environmentService.getEnvironment();
+
+		return this.http.get<Translation>(
+			`${environment.i18nPath}/${langPath}.json`
+		);
 	}
 }
 

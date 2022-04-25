@@ -9,6 +9,7 @@ import {
 	DEFAULT_APPLICATION_CONFIG_TOKEN,
 	DynamicComponentMappingService,
 	DynamicPageStateService,
+	EnvironmentService,
 } from '@dynamic-app-health/api';
 import { ErrorDecoratorService } from '@dynamic-app-health/core/error/util';
 import { FeatureDynamicConfigDataModule } from '@dynamic-app-health/feature/dynamic-config/data';
@@ -24,7 +25,10 @@ import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { initializeApp } from './initializer';
 import { AppRoutingModule, CoreModule, TopBarModule } from './module';
-import { DynamicComponentMappingServiceImpl } from './service';
+import {
+	DynamicComponentMappingServiceImpl,
+	EnvironmentServiceImpl,
+} from './service';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -54,6 +58,10 @@ import { DynamicComponentMappingServiceImpl } from './service';
 	],
 	providers: [
 		ErrorDecoratorService,
+		{
+			provide: EnvironmentService,
+			useClass: EnvironmentServiceImpl,
+		},
 		{
 			provide: DynamicComponentMappingService,
 			useClass: DynamicComponentMappingServiceImpl,
