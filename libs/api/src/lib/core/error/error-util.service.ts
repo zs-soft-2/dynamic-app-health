@@ -1,10 +1,13 @@
 import { BaseService } from '../../common';
 import { Error } from './error.model';
+import { ErrorType } from './error.type';
 
 export abstract class ErrorUtilService extends BaseService {
 	public abstract createError(
-		original: any,
 		methodParent: string,
-		methodName: string
+		methodName: string,
+		type: ErrorType,
+		redirect?: string,
+		original?: any
 	): Error;
 }

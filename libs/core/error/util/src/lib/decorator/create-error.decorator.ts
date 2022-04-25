@@ -1,8 +1,10 @@
 import { catchError, Observable, of } from 'rxjs';
 
+import { ErrorType, ErrorTypeEnum } from '@dynamic-app-health/api';
+
 import { ErrorDecoratorService } from '../service';
 
-export function createError(): any {
+export function createError(type: ErrorType): any {
 	// eslint-disable-next-line @typescript-eslint/ban-types
 	return function (target: Function, methodName: string, descriptor: any) {
 		const method = descriptor.value;
@@ -14,11 +16,19 @@ export function createError(): any {
 				if (result && result instanceof Observable) {
 					result.pipe(
 						catchError((error: any) => {
+							let redirect = undefined;
+
+							if (type === ErrorTypeEnum.SimpleError) {
+								redirect = 'error';
+							}
+
 							return of(
 								ErrorDecoratorService.getUtilService().createError(
-									error,
 									this.constructor.name,
-									methodName
+									methodName,
+									type,
+									error,
+									redirect
 								)
 							);
 						})
@@ -27,13 +37,22 @@ export function createError(): any {
 
 				return result;
 			} catch (error: any) {
+				let redirect = undefined;
+
+				if (type === ErrorTypeEnum.SimpleError) {
+					redirect = 'error';
+				}
+
 				throw ErrorDecoratorService.getUtilService().createError(
-					error,
 					this.constructor.name,
-					methodName
+					methodName,
+					type,
+					error,
+					redirect
 				);
 			}
 		};
+
 		return descriptor;
 	};
 }

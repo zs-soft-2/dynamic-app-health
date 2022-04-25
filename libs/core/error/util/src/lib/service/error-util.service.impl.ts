@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
-import {
-	Error,
-	ErrorType,
-	ErrorTypeEnum,
-	ErrorUtilService,
-} from '@dynamic-app-health/api';
+import { Error, ErrorType, ErrorUtilService } from '@dynamic-app-health/api';
 
 @Injectable()
 export class ErrorUtilServiceImpl extends ErrorUtilService {
 	public createError(
-		original: any,
 		methodParent: string,
-		methodName: string
+		methodName: string,
+		type: ErrorType,
+		original?: any,
+		redirect?: string
 	): Error {
-		const type: ErrorType | null = ErrorTypeEnum.NotInitializedError;
-
-		return new Error(type, `${methodParent}/${methodName}`, original);
+		return {
+			type,
+			local: `${methodParent}/${methodName}`,
+			original,
+			redirect,
+		};
 	}
 }

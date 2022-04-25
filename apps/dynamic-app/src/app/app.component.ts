@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
 		private i18nService: I18nService
 	) {}
 
-	@createError()
+	@createError(ErrorTypeEnum.SimpleError)
 	public doAnithing(): void {
 		throw new Error('Hiba');
 	}

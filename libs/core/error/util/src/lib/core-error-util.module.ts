@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { ErrorUtilService } from '@dynamic-app-health/api';
 
-import { ErrorDecoratorService, ErrorUtilServiceImpl } from './service';
+import { ErrorUtilServiceImpl } from './service';
 
 @NgModule({
 	imports: [CommonModule],
