@@ -23,6 +23,6 @@
 			}
 		}
 	},
-	"tags": [],
+	"tags": ["scope:app"],
 	"implicitDependencies": ["dynamic-app"]
 }

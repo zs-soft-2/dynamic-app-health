@@ -2,7 +2,7 @@
 	"projectType": "library",
 	"root": "libs/api",
 	"sourceRoot": "libs/api/src",
-	"prefix": "dynamic-app-health",
+	"prefix": "dh",
 	"targets": {
 		"test": {
 			"executor": "@nrwl/jest:jest",
@@ -22,5 +22,5 @@
 			}
 		}
 	},
-	"tags": []
+	"tags": ["type:api"]
 }

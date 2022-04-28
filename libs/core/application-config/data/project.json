@@ -2,7 +2,7 @@
 	"projectType": "library",
 	"root": "libs/core/application-config/data",
 	"sourceRoot": "libs/core/application-config/data/src",
-	"prefix": "dynamic-app-health",
+	"prefix": "dh",
 	"targets": {
 		"test": {
 			"executor": "@nrwl/jest:jest",
@@ -22,5 +22,5 @@
 			}
 		}
 	},
-	"tags": []
+	"tags": ["scope:data", "type:core"]
 }

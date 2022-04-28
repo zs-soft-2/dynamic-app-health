@@ -2,7 +2,7 @@
 	"projectType": "library",
 	"root": "libs/core/authentication/data",
 	"sourceRoot": "libs/core/authentication/data/src",
-	"prefix": "dynamic-app-health",
+	"prefix": "dh",
 	"targets": {
 		"test": {
 			"executor": "@nrwl/jest:jest",
@@ -22,5 +22,5 @@
 			}
 		}
 	},
-	"tags": []
+	"tags": ["scope:data", "type:core"]
 }
