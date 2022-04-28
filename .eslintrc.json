@@ -1,35 +1,63 @@
 {
-  "root": true,
-  "ignorePatterns": ["**/*"],
-  "plugins": ["@nrwl/nx"],
-  "overrides": [
-    {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "rules": {
-        "@nrwl/nx/enforce-module-boundaries": [
-          "error",
-          {
-            "enforceBuildableLibDependency": true,
-            "allow": [],
-            "depConstraints": [
-              {
-                "sourceTag": "*",
-                "onlyDependOnLibsWithTags": ["*"]
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "files": ["*.ts", "*.tsx"],
-      "extends": ["plugin:@nrwl/nx/typescript"],
-      "rules": {}
-    },
-    {
-      "files": ["*.js", "*.jsx"],
-      "extends": ["plugin:@nrwl/nx/javascript"],
-      "rules": {}
-    }
-  ]
+	"root": true,
+	"ignorePatterns": ["**/*"],
+	"plugins": ["@nrwl/nx"],
+	"overrides": [
+		{
+			"files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+			"rules": {
+				"@nrwl/nx/enforce-module-boundaries": [
+					"error",
+					{
+						"enforceBuildableLibDependency": true,
+						"allow": [],
+						"depConstraints": [
+							{
+								"sourceTag": "scope:view",
+								"onlyDependOnLibsWithTags": [
+									"scope:view",
+									"scope:editor"
+								]
+							},
+							{
+								"sourceTag": "type:feature",
+								"onlyDependOnLibsWithTags": [
+									"type:api",
+									"type:feature"
+								]
+							},
+							{
+								"sourceTag": "type:core",
+								"onlyDependOnLibsWithTags": ["type:api"]
+							},
+							{
+								"sourceTag": "type:app",
+								"onlyDependOnLibsWithTags": [
+									"type:api",
+									"type:core",
+									"type:feature"
+								]
+							},
+							{
+								"sourceTag": "name:dynamic-page-view",
+								"onlyDependOnLibsWithTags": [
+									"name:dynamic-layout-view"
+								]
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"files": ["*.ts", "*.tsx"],
+			"extends": ["plugin:@nrwl/nx/typescript"],
+			"rules": {}
+		},
+		{
+			"files": ["*.js", "*.jsx"],
+			"extends": ["plugin:@nrwl/nx/javascript"],
+			"rules": {}
+		}
+	]
 }

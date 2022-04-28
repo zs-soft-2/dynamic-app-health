@@ -22,5 +22,5 @@
 			}
 		}
 	},
-	"tags": ["scope:view", "type:feature"]
+	"tags": ["name:dynamic-page-view", "scope:view", "type:feature"]
 }
