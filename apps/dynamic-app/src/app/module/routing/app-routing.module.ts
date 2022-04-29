@@ -22,6 +22,11 @@ const routes: Routes = [
 			),
 	},
 	{
+		path: 'admin',
+		loadChildren: () =>
+			import('../page/admin').then((lib) => lib.AdminPageModule),
+	},
+	{
 		path: 'error',
 		loadChildren: () =>
 			import('../../module/page/error').then((lib) => lib.ErrorModule),

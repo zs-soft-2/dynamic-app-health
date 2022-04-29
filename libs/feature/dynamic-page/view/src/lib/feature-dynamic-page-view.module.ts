@@ -3,7 +3,6 @@ import { CardModule } from 'primeng/card';
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule, ROUTES } from '@angular/router';
 import { FeatureDynamicLayoutViewModule } from '@dynamic-app-health/feature/dynamic-layout/view';
 
@@ -13,7 +12,6 @@ import { RoutesByPagesFactory } from './factory';
 @NgModule({
 	imports: [
 		CommonModule,
-		FlexLayoutModule,
 		DynamicModule,
 		RouterModule,
 		CardModule,
