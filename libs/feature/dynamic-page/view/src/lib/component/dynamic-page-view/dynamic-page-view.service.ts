@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
 	ComponentBaseService,
+	DynamicComponent,
 	DynamicComponentMappingService,
 	DynamicConfigEntity,
 	DynamicConfigStateService,
@@ -48,55 +49,17 @@ export class DynamicPageViewService extends ComponentBaseService<
 						dynamicPage?.layout;
 
 					if (layout) {
-						const dynamicPageView: DynamicPageView = {
-							layout: {
-								...layout,
-								layoutItems: layout.layoutItems.map(
-									(layoutItem) => {
-										const componentName =
-											layoutItem.content?.componentName ||
-											'';
-										const configId =
-											layoutItem.content?.configId || '';
+						const dynamicPageView: DynamicPageView =
+							this.createDynamicPageView(
+								layout,
+								configs,
+								componentMap
+							);
 
-										return {
-											item: layoutItem.item,
-											content: layoutItem.content
-												? {
-														component:
-															componentMap.get(
-																componentName
-															)?.component,
-														config: (
-															configs as DynamicConfigEntity[]
-														).find(
-															(config) =>
-																config.id ===
-																configId
-														),
-														componentName,
-														configId,
-												  }
-												: undefined,
-										};
-									}
-								),
-							},
-						};
-
-						this.params = {
+						this.params = this.createDynamicPageParams(
 							dynamicPageView,
-							dynamicLayoutViewParams: {
-								mode: DynamicLayoutModeEnum.view,
-								options: {
-									minCols: layout.minCols,
-									maxCols: layout.maxCols,
-									minRows: layout.minRows,
-									maxRows: layout.maxRows,
-									margin: layout.margin,
-								},
-							},
-						};
+							layout
+						);
 
 						this.params$$.next(this.params);
 					}
@@ -108,5 +71,57 @@ export class DynamicPageViewService extends ComponentBaseService<
 			.subscribe();
 
 		return this.params$$.asObservable();
+	}
+
+	private createDynamicPageParams(
+		dynamicPageView: DynamicPageView,
+		layout: DynamicLayout
+	): DynamicPageParams {
+		return {
+			dynamicPageView,
+			dynamicLayoutViewParams: {
+				mode: DynamicLayoutModeEnum.view,
+				options: {
+					minCols: layout.minCols,
+					maxCols: layout.maxCols,
+					minRows: layout.minRows,
+					maxRows: layout.maxRows,
+					margin: layout.margin,
+				},
+			},
+		};
+	}
+
+	private createDynamicPageView(
+		layout: DynamicLayout,
+		configs: DynamicConfigEntity[],
+		componentMap: Map<string, DynamicComponent>
+	): DynamicPageView {
+		return {
+			layout: {
+				...layout,
+				layoutItems: layout.layoutItems.map((layoutItem) => {
+					const componentName =
+						layoutItem.content?.componentName || '';
+					const configId = layoutItem.content?.configId || '';
+
+					return {
+						item: layoutItem.item,
+						content: layoutItem.content
+							? {
+									component:
+										componentMap.get(componentName)
+											?.component,
+									config: configs.find(
+										(config) => config.id === configId
+									),
+									componentName,
+									configId,
+							  }
+							: undefined,
+					};
+				}),
+			},
+		};
 	}
 }
