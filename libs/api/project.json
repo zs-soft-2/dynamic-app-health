@@ -22,5 +22,5 @@
 			}
 		}
 	},
-	"tags": ["type:api"]
+	"tags": ["scope:api", "type:api", "name:api"]
 }

@@ -16,7 +16,8 @@
 								"sourceTag": "scope:view",
 								"onlyDependOnLibsWithTags": [
 									"scope:view",
-									"scope:editor"
+									"scope:editor",
+									"scope:api"
 								]
 							},
 							{
@@ -41,7 +42,8 @@
 							{
 								"sourceTag": "name:dynamic-page-view",
 								"onlyDependOnLibsWithTags": [
-									"name:dynamic-layout-view"
+									"name:dynamic-layout-view",
+									"name:api"
 								]
 							}
 						]
