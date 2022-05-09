@@ -4,6 +4,7 @@ import {
 	DynamicConfigEntity,
 	DynamicConfigEntityUpdate,
 	HumanName,
+	Pagination,
 	PatientEntity,
 	PatientTableColumn,
 	PatientUtilService,
@@ -19,8 +20,21 @@ export class PatientUtilServiceImpl extends PatientUtilService {
 		{ field: 'birthDate', header: 'Birthdate' },
 		{ field: 'gender', header: 'Gender' },
 	];
+	private defaultPagination: Pagination = {
+		rows: 10,
+		isPagination: false,
+		showPageLinks: false,
+		showJumpToPageDropdown: false,
+	};
 
-	public createPatientView(patient: PatientEntity): PatientView {
+	public createPatientView(
+		patient: PatientEntity,
+		dynamicConfig: DynamicConfigEntity | undefined
+	): PatientView {
+		const patientView: PatientView = {
+			id: patient.id,
+		};
+
 		const name: HumanName | undefined = patient.name?.find(
 			(e) => e.use === 'official'
 		);
@@ -28,43 +42,56 @@ export class PatientUtilServiceImpl extends PatientUtilService {
 			(e) => e.system === 'phone'
 		);
 
-		return {
-			id: patient.id,
-			givenName: name?.given?.join(' '),
-			familyName: name?.family,
-			birthDate: patient.birthDate,
-			gender: patient.gender,
-			phone: phone?.value,
-		};
+		if (dynamicConfig?.config.properties['givenName']) {
+			patientView.givenName = name?.given?.join(' ');
+		}
+
+		if (dynamicConfig?.config.properties['familyName']) {
+			patientView.familyName = name?.family;
+		}
+
+		if (dynamicConfig?.config.properties['phone']) {
+			patientView.phone = phone?.value;
+		}
+
+		if (dynamicConfig?.config.properties['birthDate']) {
+			patientView.birthDate = patient.birthDate;
+		}
+
+		if (dynamicConfig?.config.properties['gender']) {
+			patientView.gender = patient.gender;
+		}
+
+		return patientView;
+	}
+
+	public createPatientViewByConfig(
+		patient: PatientEntity | undefined,
+		dynamicConfig: DynamicConfigEntity | undefined
+	): PatientView | undefined {
+		if (!patient) {
+			return patient;
+		}
+
+		return this.createPatientView(patient, dynamicConfig);
+	}
+
+	public getDefaultPagination(): Pagination {
+		return this.defaultPagination;
 	}
 
 	public getPatientDynamicConfigAdd(
 		formGroupValue: any,
 		configId: string | undefined
 	): DynamicConfigEntity {
-		const {
-			label,
-			id,
-			link,
-			familyName,
-			phone,
-			givenName,
-			gender,
-			birthDate,
-		} = formGroupValue;
+		const { label, id, link, properties } = formGroupValue;
 
 		return {
 			id: id || configId,
 			label,
 			link,
 			config: {
-				properties: {
-					birthDate,
-					familyName,
-					givenName,
-					gender,
-					phone,
-				},
+				properties,
 			},
 		};
 	}
@@ -72,30 +99,47 @@ export class PatientUtilServiceImpl extends PatientUtilService {
 	public getPatientDynamicConfigUpdate(
 		formGroupValue: any
 	): DynamicConfigEntityUpdate {
-		const {
-			label,
-			id,
-			link,
-			familyName,
-			phone,
-			givenName,
-			gender,
-			birthDate,
-		} = formGroupValue;
+		const { label, id, link, properties } = formGroupValue;
 
 		return {
 			id,
 			label,
 			link,
 			config: {
-				properties: {
-					id,
-					birthDate,
-					familyName,
-					gender,
-					givenName,
-					phone,
-				},
+				properties,
+			},
+		};
+	}
+
+	public getPatientListDynamicConfigAdd(
+		formGroupValue: any,
+		configId: string | undefined
+	): DynamicConfigEntity {
+		const { label, id, link, properties, pagination } = formGroupValue;
+
+		return {
+			id: id || configId,
+			label,
+			link,
+			config: {
+				properties,
+				pagination,
+			},
+		};
+	}
+
+	public getPatientListDynamicConfigUpdate(
+		formGroupValue: any
+	): DynamicConfigEntityUpdate {
+		const { label, id, link, properties, pagination } = formGroupValue;
+
+		return {
+			id,
+			label,
+			link,
+			config: {
+				properties,
+				pagination,
 			},
 		};
 	}

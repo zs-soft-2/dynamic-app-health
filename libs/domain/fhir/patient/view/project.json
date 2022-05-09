@@ -22,5 +22,5 @@
 			}
 		}
 	},
-	"tags": []
+	"tags": ["name:patient-view", "scope:view", "type:domain"]
 }

@@ -63,10 +63,10 @@
 				"libs/feature/dynamic-page/view/src/index.ts"
 			],
 			"@dynamic-app-health/patient-list-view": [
-				"libs/domain/fhir/patient/view/src/lib/module/patient-list"
+				"libs/domain/fhir/patient/view/src/lib/module/patient-list/index.ts"
 			],
 			"@dynamic-app-health/patient-view": [
-				"libs/domain/fhir/patient/view/src/lib/module/patient"
+				"libs/domain/fhir/patient/view/src/lib/module/patient/index.ts"
 			]
 		}
 	},

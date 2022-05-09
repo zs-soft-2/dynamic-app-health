@@ -65,7 +65,8 @@ export class PatientConfigService extends ConfigComponentBaseService<
 										entities as PatientEntity[]
 									).map((patient) =>
 										this.patientUtilService.createPatientView(
-											patient
+											patient,
+											dynamicConfig
 										)
 									),
 								};
@@ -110,12 +111,14 @@ export class PatientConfigService extends ConfigComponentBaseService<
 		return this.formBuilder.group({
 			id: [dynamicConfig?.id],
 			label: [dynamicConfig?.label],
-			birthDate: [dynamicConfig?.config.properties['birthDate']],
-			gender: [dynamicConfig?.config.properties['gender']],
-			givenName: [dynamicConfig?.config.properties['givenName']],
-			familyName: [dynamicConfig?.config.properties['familyName']],
-			phone: [dynamicConfig?.config.properties['phone']],
-			selectedId: [dynamicConfig?.selectedId],
+			properties: this.formBuilder.group({
+				birthDate: [dynamicConfig?.config.properties['birthDate']],
+				gender: [dynamicConfig?.config.properties['gender']],
+				givenName: [dynamicConfig?.config.properties['givenName']],
+				familyName: [dynamicConfig?.config.properties['familyName']],
+				phone: [dynamicConfig?.config.properties['phone']],
+				selectedId: [dynamicConfig?.selectedId],
+			}),
 		});
 	}
 

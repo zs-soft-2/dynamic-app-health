@@ -14,10 +14,11 @@ import {
 } from '@dynamic-app-health/api';
 
 import { PatientListService } from './patient-list.service';
+import { PatientListStoreService } from './patient-list-store.service';
 
 @Component({
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	providers: [PatientListService],
+	providers: [PatientListService, PatientListStoreService],
 	selector: 'dh-patient-list',
 	styleUrls: ['./patient-list.component.less'],
 	templateUrl: './patient-list.component.html',

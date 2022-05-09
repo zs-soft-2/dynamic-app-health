@@ -1,4 +1,7 @@
 import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { FieldsetModule } from 'primeng/fieldset';
+import { InputNumberModule } from 'primeng/inputnumber';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TableModule } from 'primeng/table';
 
@@ -8,7 +11,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { PatientListComponent } from './component';
-import { CheckboxModule } from 'primeng/checkbox';
 import { PatientListConfigComponent } from './component/patient-list-config';
 
 @NgModule({
@@ -17,8 +19,10 @@ import { PatientListConfigComponent } from './component/patient-list-config';
 		CommonModule,
 		ButtonModule,
 		CheckboxModule,
+		FieldsetModule,
 		FlexLayoutModule,
 		FormsModule,
+		InputNumberModule,
 		ReactiveFormsModule,
 		SkeletonModule,
 		TableModule,

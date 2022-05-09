@@ -3,22 +3,22 @@
 		<form [formGroup]="params.formGroup" novalidate>
 			<input name="id" formControlName="id" hidden />
 
-			<div class="field">
-				<span class="p-float-label">
-					<input
-						id="label"
-						type="text"
-						pInputText
-						formControlName="label"
-					/>
+			<p-fieldset legend="Base">
+				<div class="field">
+					<span class="p-float-label">
+						<input
+							id="label"
+							type="text"
+							pInputText
+							formControlName="label"
+						/>
 
-					<label for="label">Label</label>
-				</span>
-			</div>
+						<label for="label">Label</label>
+					</span>
+				</div>
+			</p-fieldset>
 
-			<fieldset>
-				<legend>Select Patient</legend>
-
+			<p-fieldset legend="Select Patient">
 				<div>
 					<select
 						class="form-control p-dropdown"
@@ -33,61 +33,61 @@
 						</option>
 					</select>
 				</div>
-			</fieldset>
+			</p-fieldset>
 
-			<fieldset>
-				<legend>Properties:</legend>
+			<p-fieldset legend="Properties">
+				<div formGroupName="properties">
+					<div class="field">
+						<p-checkbox
+							[binary]="true"
+							inputId="familyName"
+							formControlName="familyName"
+						></p-checkbox>
 
-				<div class="field">
-					<p-checkbox
-						[binary]="true"
-						inputId="familyName"
-						formControlName="familyName"
-					></p-checkbox>
+						<label for="familyName">Family name</label>
+					</div>
 
-					<label for="familyName">Family name</label>
+					<div class="field">
+						<p-checkbox
+							[binary]="true"
+							inputId="givenName"
+							formControlName="givenName"
+						></p-checkbox>
+
+						<label for="givenName">Given name</label>
+					</div>
+
+					<div class="field">
+						<p-checkbox
+							[binary]="true"
+							inputId="phone"
+							formControlName="phone"
+						></p-checkbox>
+
+						<label for="phone">Phone</label>
+					</div>
+
+					<div class="field">
+						<p-checkbox
+							[binary]="true"
+							inputId="birthDate"
+							formControlName="birthDate"
+						></p-checkbox>
+
+						<label for="birthDate">Birthdate</label>
+					</div>
+
+					<div class="field">
+						<p-checkbox
+							[binary]="true"
+							inputId="gender"
+							formControlName="gender"
+						></p-checkbox>
+
+						<label for="gender">Gender</label>
+					</div>
 				</div>
-
-				<div class="field">
-					<p-checkbox
-						[binary]="true"
-						inputId="givenName"
-						formControlName="givenName"
-					></p-checkbox>
-
-					<label for="givenName">Given name</label>
-				</div>
-
-				<div class="field">
-					<p-checkbox
-						[binary]="true"
-						inputId="phone"
-						formControlName="phone"
-					></p-checkbox>
-
-					<label for="phone">Phone</label>
-				</div>
-
-				<div class="field">
-					<p-checkbox
-						[binary]="true"
-						inputId="birthDate"
-						formControlName="birthDate"
-					></p-checkbox>
-
-					<label for="birthDate">Birthdate</label>
-				</div>
-
-				<div class="field">
-					<p-checkbox
-						[binary]="true"
-						inputId="gender"
-						formControlName="gender"
-					></p-checkbox>
-
-					<label for="gender">Gender</label>
-				</div>
-			</fieldset>
+			</p-fieldset>
 		</form>
 
 		<div class="footer" fxLayout="row" fxLayoutAlign="space-around center">

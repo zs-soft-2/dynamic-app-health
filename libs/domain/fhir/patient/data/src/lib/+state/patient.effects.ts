@@ -26,13 +26,15 @@ export class PatientEffects {
 		this.actions$.pipe(
 			ofType(patientActions.listPatients),
 			switchMap(() =>
-				this.patientDataService.list$().pipe(
-					map((patients) =>
-						patientActions.listPatientsSuccess({
-							patients: patients as PatientEntity[],
-						})
+				this.patientDataService
+					.search$({ resourceType: 'Patient' })
+					.pipe(
+						map((patients) =>
+							patientActions.listPatientsSuccess({
+								patients,
+							})
+						)
 					)
-				)
 			)
 		)
 	);

@@ -1,10 +1,9 @@
+import { Compartment, ResourceType, SearchParams } from 'fhir-kit-client';
 import { nanoid } from 'nanoid';
 import { from, map, Observable, of, switchMap } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 import {
-	Entity,
-	EntityAdd,
 	EntityUpdate,
 	FhirClientService,
 	PatientDataService,
@@ -12,6 +11,14 @@ import {
 	PatientEntityAdd,
 	PatientEntityUpdate,
 } from '@dynamic-app-health/api';
+
+export interface RequestParams {
+	compartment?: Compartment;
+	headers?: HeadersInit;
+	options?: RequestInit;
+	resourceType: ResourceType;
+	searchParams?: SearchParams;
+}
 
 @Injectable()
 export class PatientDataServiceImpl extends PatientDataService {
@@ -54,6 +61,18 @@ export class PatientDataServiceImpl extends PatientDataService {
 		).pipe(
 			switchMap((response) => {
 				return of(response['entry']);
+			})
+		);
+	}
+
+	public search$(requestParams: RequestParams): Observable<PatientEntity[]> {
+		return this.fhirClientService.search(requestParams).pipe(
+			switchMap((response) => {
+				const entries = response['entry'] ? response['entry'] : [];
+
+				return of(
+					entries.map((entry: any) => entry.resource as unknown)
+				);
 			})
 		);
 	}

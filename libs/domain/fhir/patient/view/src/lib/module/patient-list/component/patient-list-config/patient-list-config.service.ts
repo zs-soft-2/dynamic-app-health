@@ -8,6 +8,7 @@ import {
 	ConfigComponentBaseService,
 	DynamicConfigEntity,
 	DynamicConfigStateService,
+	Pagination,
 	PatientListConfig,
 	PatientListConfigParams,
 	PatientUtilService,
@@ -19,6 +20,7 @@ export class PatientListConfigService extends ConfigComponentBaseService<
 	PatientListConfig
 > {
 	private configId!: string | undefined;
+	private defaultPagination!: Pagination;
 
 	public constructor(
 		private activatedRoute: ActivatedRoute,
@@ -28,6 +30,8 @@ export class PatientListConfigService extends ConfigComponentBaseService<
 		private patientUtilService: PatientUtilService
 	) {
 		super();
+
+		this.defaultPagination = this.patientUtilService.getDefaultPagination();
 	}
 
 	public cancel(): void {
@@ -81,7 +85,7 @@ export class PatientListConfigService extends ConfigComponentBaseService<
 
 	private creataDynamicConfig(): void {
 		this.dynamicConfigStateService.dispatchAddEntityAction(
-			this.patientUtilService.getPatientDynamicConfigAdd(
+			this.patientUtilService.getPatientListDynamicConfigAdd(
 				this.formGroup.value,
 				this.configId
 			)
@@ -95,17 +99,35 @@ export class PatientListConfigService extends ConfigComponentBaseService<
 			id: [dynamicConfig?.id],
 			label: [dynamicConfig?.label],
 			link: [dynamicConfig?.link],
-			birthDate: [dynamicConfig?.config.properties['birthDate']],
-			gender: [dynamicConfig?.config.properties['gender']],
-			givenName: [dynamicConfig?.config.properties['givenName']],
-			familyName: [dynamicConfig?.config.properties['familyName']],
-			phone: [dynamicConfig?.config.properties['phone']],
+			properties: this.formBuilder.group({
+				birthDate: [
+					dynamicConfig
+						? dynamicConfig?.config.properties['birthDate']
+						: true,
+				],
+				gender: [dynamicConfig?.config.properties['gender']],
+				givenName: [dynamicConfig?.config.properties['givenName']],
+				familyName: [dynamicConfig?.config.properties['familyName']],
+				phone: [dynamicConfig?.config.properties['phone']],
+			}),
+			pagination: this.formBuilder.group({
+				isPagination: [
+					dynamicConfig
+						? dynamicConfig?.config.pagination['isPagination']
+						: this.defaultPagination.isPagination,
+				],
+				rows: [
+					dynamicConfig
+						? dynamicConfig?.config.pagination['rows']
+						: this.defaultPagination.rows,
+				],
+			}),
 		});
 	}
 
 	private updateDynamicConfig(): void {
 		this.dynamicConfigStateService.dispatchUpdateEntityAction(
-			this.patientUtilService.getPatientDynamicConfigUpdate(
+			this.patientUtilService.getPatientListDynamicConfigUpdate(
 				this.formGroup.value
 			)
 		);

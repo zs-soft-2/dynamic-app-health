@@ -8,6 +8,10 @@
 			[(selection)]="params.selectedPatientView"
 			(onRowSelect)="handleRowSelect($event)"
 			styleClass="p-datatable-sm"
+			[paginator]="params.pagination.isPagination"
+			[showPageLinks]="params.pagination.showPageLinks"
+			[showJumpToPageDropdown]="params.pagination.showJumpToPageDropdown"
+			[rows]="params.pagination.rows"
 		>
 			<ng-template pTemplate="header" let-columns>
 				<tr>

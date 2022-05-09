@@ -10,6 +10,7 @@ import {
 	PatientEntity,
 	PatientParams,
 	PatientStateService,
+	PatientUtilService,
 	PatientView,
 } from '@dynamic-app-health/api';
 
@@ -20,7 +21,10 @@ export class PatientViewService extends ComponentBaseService<
 > {
 	private dynamicConfig: DynamicConfigEntity | undefined;
 
-	public constructor(private patientStateService: PatientStateService) {
+	public constructor(
+		private patientStateService: PatientStateService,
+		private patientUtilService: PatientUtilService
+	) {
 		super();
 	}
 
@@ -64,41 +68,9 @@ export class PatientViewService extends ComponentBaseService<
 		patient: PatientEntity | undefined,
 		dynamicConfig: DynamicConfigEntity | undefined
 	): PatientView | undefined {
-		if (!patient) {
-			return patient;
-		}
-
-		const patientView: PatientView = {
-			id: patient.id,
-		};
-
-		const name: HumanName | undefined = patient.name?.find(
-			(e) => e.use === 'official'
+		return this.patientUtilService.createPatientViewByConfig(
+			patient,
+			dynamicConfig
 		);
-		const phone: ContactPoint | undefined = patient.telecom?.find(
-			(e) => e.system === 'phone'
-		);
-
-		if (dynamicConfig?.config?.properties['givenName']) {
-			patientView.givenName = name?.given?.join(' ');
-		}
-
-		if (dynamicConfig?.config?.properties['familyName']) {
-			patientView.familyName = name?.family;
-		}
-
-		if (dynamicConfig?.config?.properties['phone']) {
-			patientView.phone = phone?.value;
-		}
-
-		if (dynamicConfig?.config?.properties['birthDate']) {
-			patientView.birthDate = patient.birthDate;
-		}
-
-		if (dynamicConfig?.config?.properties['gender']) {
-			patientView.gender = patient.gender;
-		}
-
-		return patientView;
 	}
 }

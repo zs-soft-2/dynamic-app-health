@@ -7,81 +7,121 @@
 		>
 			<input name="id" formControlName="id" hidden />
 
-			<div class="field">
-				<span class="p-float-label">
-					<input
-						id="label"
-						type="text"
-						pInputText
-						formControlName="label"
-					/>
+			<p-fieldset legend="Base">
+				<div class="field">
+					<span class="p-float-label">
+						<input
+							id="label"
+							type="text"
+							pInputText
+							formControlName="label"
+						/>
 
-					<label for="label">Label</label>
-				</span>
-			</div>
+						<label for="label">Label</label>
+					</span>
+				</div>
 
-			<div class="field">
-				<span class="p-float-label">
-					<input
-						id="link"
-						type="text"
-						pInputText
-						formControlName="link"
-					/>
+				<div class="field">
+					<span class="p-float-label">
+						<input
+							id="link"
+							type="text"
+							pInputText
+							formControlName="link"
+						/>
 
-					<label for="link">Link</label>
-				</span>
-			</div>
+						<label for="link">Link</label>
+					</span>
+				</div>
+			</p-fieldset>
 
-			<div class="field">
-				<p-checkbox
-					[binary]="true"
-					inputId="familyName"
-					formControlName="familyName"
-				></p-checkbox>
+			<p-fieldset legend="Pagination">
+				<div formGroupName="pagination">
+					<div class="field">
+						<p-checkbox
+							[binary]="true"
+							inputId="isPagination"
+							formControlName="isPagination"
+						></p-checkbox>
 
-				<label for="familyName">Family name</label>
-			</div>
+						<label for="isPagination">is Pagination</label>
+					</div>
 
-			<div class="field">
-				<p-checkbox
-					[binary]="true"
-					inputId="givenName"
-					formControlName="givenName"
-				></p-checkbox>
+					<span class="p-float-label">
+						<p-inputNumber
+							id="rows"
+							mode="decimal"
+							[showButtons]="true"
+							[min]="5"
+							[max]="50"
+							[step]="5"
+							buttonLayout="horizontal"
+							spinnerMode="horizontal"
+							decrementButtonClass="p-button-secondary"
+							incrementButtonClass="p-button-secondary"
+							incrementButtonIcon="pi pi-plus"
+							decrementButtonIcon="pi pi-minus"
+							formControlName="rows"
+						></p-inputNumber>
 
-				<label for="givenName">Given name</label>
-			</div>
+						<label for="rows">Rows</label>
+					</span>
+				</div>
+			</p-fieldset>
 
-			<div class="field">
-				<p-checkbox
-					[binary]="true"
-					inputId="phone"
-					formControlName="phone"
-				></p-checkbox>
+			<p-fieldset legend="Properties">
+				<div formGroupName="properties">
+					<div class="field">
+						<p-checkbox
+							[binary]="true"
+							inputId="familyName"
+							formControlName="familyName"
+						></p-checkbox>
 
-				<label for="phone">Phone</label>
-			</div>
+						<label for="familyName">Family name</label>
+					</div>
 
-			<div class="field">
-				<p-checkbox
-					[binary]="true"
-					inputId="birthDate"
-					formControlName="birthDate"
-				></p-checkbox>
+					<div class="field">
+						<p-checkbox
+							[binary]="true"
+							inputId="givenName"
+							formControlName="givenName"
+						></p-checkbox>
 
-				<label for="birthDate">Birthdate</label>
-			</div>
+						<label for="givenName">Given name</label>
+					</div>
 
-			<div class="field">
-				<p-checkbox
-					[binary]="true"
-					inputId="gender"
-					formControlName="gender"
-				></p-checkbox>
+					<div class="field">
+						<p-checkbox
+							[binary]="true"
+							inputId="phone"
+							formControlName="phone"
+						></p-checkbox>
 
-				<label for="gender">Gender</label>
-			</div>
+						<label for="phone">Phone</label>
+					</div>
+
+					<div class="field">
+						<p-checkbox
+							[binary]="true"
+							inputId="birthDate"
+							formControlName="birthDate"
+						></p-checkbox>
+
+						<label for="birthDate">Birthdate</label>
+					</div>
+
+					<div class="field">
+						<p-checkbox
+							[binary]="true"
+							inputId="gender"
+							formControlName="gender"
+						></p-checkbox>
+
+						<label for="gender">Gender</label>
+					</div>
+				</div>
+			</p-fieldset>
 		</form>
 
 		<div class="footer" fxLayout="row" fxLayoutAlign="space-around center">

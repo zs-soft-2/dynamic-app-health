@@ -1,5 +1,4 @@
 import { ButtonModule } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
 import { MenubarModule } from 'primeng/menubar';
 import { ToolbarModule } from 'primeng/toolbar';
 
@@ -15,7 +14,6 @@ import { TopBarComponent } from './component';
 	imports: [
 		CommonModule,
 		ButtonModule,
-		DropdownModule,
 		FormsModule,
 		MenubarModule,
 		ToolbarModule,

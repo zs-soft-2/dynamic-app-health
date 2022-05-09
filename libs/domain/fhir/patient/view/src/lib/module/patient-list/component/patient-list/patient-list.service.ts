@@ -1,10 +1,12 @@
 import { combineLatest, map, Observable, of, switchMap } from 'rxjs';
 
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import {
 	ComponentBaseService,
 	DynamicConfigEntity,
 	DynamicProperties,
+	Pagination,
 	PatientEntity,
 	PatientListConfig,
 	PatientListParams,
@@ -13,7 +15,8 @@ import {
 	PatientUtilService,
 	PatientView,
 } from '@dynamic-app-health/api';
-import { Router } from '@angular/router';
+
+import { PatientListStoreService } from './patient-list-store.service';
 
 @Injectable()
 export class PatientListService extends ComponentBaseService<
@@ -21,13 +24,17 @@ export class PatientListService extends ComponentBaseService<
 	PatientListConfig
 > {
 	private dynamicConfig: DynamicConfigEntity | undefined;
+	private defaultPagination!: Pagination;
 
 	public constructor(
-		private router: Router,
-		private patientStateService: PatientStateService,
-		private patientUtilService: PatientUtilService
+		private readonly router: Router,
+		private readonly componentStore: PatientListStoreService,
+		private readonly patientStateService: PatientStateService,
+		private readonly patientUtilService: PatientUtilService
 	) {
 		super();
+
+		this.defaultPagination = this.patientUtilService.getDefaultPagination();
 	}
 
 	public handleRowSelect(selectedPatientView: PatientView): void {
@@ -45,8 +52,27 @@ export class PatientListService extends ComponentBaseService<
 	public init$(
 		dynamicConfig?: DynamicConfigEntity
 	): Observable<PatientListParams> {
-		this.patientStateService.dispatchListEntitiesAction();
 		this.dynamicConfig = dynamicConfig;
+
+		const patientListConfig: PatientListConfig =
+			dynamicConfig?.config as PatientListConfig;
+
+		this.patientStateService.dispatchListEntitiesAction();
+		this.componentStore.setState((state) => {
+			const pagination: Pagination | undefined =
+				patientListConfig?.pagination;
+
+			return {
+				...state,
+				dynamicConfig,
+				pagination: {
+					rows: pagination?.rows || 0,
+					isPagination: !!pagination?.isPagination,
+					showPageLinks: pagination.showPageLinks,
+					showJumpToPageDropdown: false,
+				},
+			};
+		});
 
 		return combineLatest([
 			this.patientStateService
@@ -56,7 +82,7 @@ export class PatientListService extends ComponentBaseService<
 		]).pipe(
 			switchMap(([patients, selectedPatientId]) => {
 				const patientViews: PatientView[] = patients.map((patient) =>
-					this.createPatientView(patient)
+					this.createPatientView(patient, this.dynamicConfig)
 				);
 
 				const tableColumns: PatientTableColumn[] =
@@ -73,7 +99,9 @@ export class PatientListService extends ComponentBaseService<
 				this.params = this.createParams(
 					patientViews,
 					tableColumns,
-					selectedPatientView
+					selectedPatientView,
+					this.dynamicConfig?.config.pagination ||
+						this.defaultPagination
 				);
 
 				return of(this.params);
@@ -93,16 +121,24 @@ export class PatientListService extends ComponentBaseService<
 	private createParams(
 		patientViews: PatientView[],
 		columns: PatientTableColumn[],
-		selectedPatientView: PatientView | undefined
+		selectedPatientView: PatientView | undefined,
+		pagination: Pagination
 	): PatientListParams {
 		return {
 			patients: patientViews,
 			columns,
 			selectedPatientView,
+			pagination,
 		};
 	}
 
-	private createPatientView(patient: PatientEntity): PatientView {
-		return this.patientUtilService.createPatientView(patient);
+	private createPatientView(
+		patient: PatientEntity,
+		dynamicConfig: DynamicConfigEntity | undefined
+	): PatientView {
+		return this.patientUtilService.createPatientView(
+			patient,
+			dynamicConfig
+		);
 	}
 }
