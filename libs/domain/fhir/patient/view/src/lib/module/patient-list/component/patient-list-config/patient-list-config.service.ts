@@ -8,6 +8,7 @@ import {
 	ConfigComponentBaseService,
 	DynamicConfigEntity,
 	DynamicConfigStateService,
+	DynamicProperties,
 	Pagination,
 	PatientListConfig,
 	PatientListConfigParams,
@@ -21,6 +22,7 @@ export class PatientListConfigService extends ConfigComponentBaseService<
 > {
 	private configId!: string | undefined;
 	private defaultPagination!: Pagination;
+	private defaultProperties!: DynamicProperties;
 
 	public constructor(
 		private activatedRoute: ActivatedRoute,
@@ -32,6 +34,7 @@ export class PatientListConfigService extends ConfigComponentBaseService<
 		super();
 
 		this.defaultPagination = this.patientUtilService.getDefaultPagination();
+		this.defaultProperties = this.patientUtilService.getDefaultProperties();
 	}
 
 	public cancel(): void {
@@ -95,32 +98,27 @@ export class PatientListConfigService extends ConfigComponentBaseService<
 	private createFormGroup(
 		dynamicConfig: DynamicConfigEntity | undefined
 	): FormGroup {
+		const pagination: Pagination =
+			dynamicConfig?.config.pagination || this.defaultPagination;
+		const properties: DynamicProperties =
+			dynamicConfig?.config.properties || this.defaultProperties;
+
 		return this.formBuilder.group({
 			id: [dynamicConfig?.id],
 			label: [dynamicConfig?.label],
-			link: [dynamicConfig?.link],
-			properties: this.formBuilder.group({
-				birthDate: [
-					dynamicConfig
-						? dynamicConfig?.config.properties['birthDate']
-						: true,
-				],
-				gender: [dynamicConfig?.config.properties['gender']],
-				givenName: [dynamicConfig?.config.properties['givenName']],
-				familyName: [dynamicConfig?.config.properties['familyName']],
-				phone: [dynamicConfig?.config.properties['phone']],
-			}),
-			pagination: this.formBuilder.group({
-				isPagination: [
-					dynamicConfig
-						? dynamicConfig?.config.pagination['isPagination']
-						: this.defaultPagination.isPagination,
-				],
-				rows: [
-					dynamicConfig
-						? dynamicConfig?.config.pagination['rows']
-						: this.defaultPagination.rows,
-				],
+			config: this.formBuilder.group({
+				link: [dynamicConfig?.config.link],
+				properties: this.formBuilder.group({
+					birthDate: [properties['birthDate']],
+					gender: [properties['gender']],
+					givenName: [properties['givenName']],
+					familyName: [properties['familyName']],
+					phone: [properties['phone']],
+				}),
+				pagination: this.formBuilder.group({
+					isPagination: [pagination['isPagination']],
+					rows: [pagination['rows']],
+				}),
 			}),
 		});
 	}

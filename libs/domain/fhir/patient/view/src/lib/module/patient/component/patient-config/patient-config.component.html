@@ -3,91 +3,93 @@
 		<form [formGroup]="params.formGroup" novalidate>
 			<input name="id" formControlName="id" hidden />
 
-			<p-fieldset legend="Base">
-				<div class="field">
-					<span class="p-float-label">
-						<input
-							id="label"
-							type="text"
-							pInputText
-							formControlName="label"
-						/>
-
-						<label for="label">Label</label>
-					</span>
-				</div>
-			</p-fieldset>
-
-			<p-fieldset legend="Select Patient">
-				<div>
-					<select
-						class="form-control p-dropdown"
-						id="selectedId"
-						formControlName="selectedId"
-					>
-						<option
-							*ngFor="let patient of params.patientViews"
-							[value]="patient.id"
+			<div formGroupName="config">
+				<p-fieldset legend="Base">
+					<div class="field">
+						<span class="p-float-label">
+							<input
+								id="label"
+								type="text"
+								pInputText
+								formControlName="label"
+							/>
+	
+							<label for="label">Label</label>
+						</span>
+					</div>
+				</p-fieldset>
+	
+				<p-fieldset legend="Select Patient" [toggleable]="true" [collapsed]="true">
+					<div>
+						<select
+							class="form-control p-dropdown"
+							id="selectedId"
+							formControlName="selectedId"
 						>
-							{{ patient.givenName }}
-						</option>
-					</select>
-				</div>
-			</p-fieldset>
-
-			<p-fieldset legend="Properties">
-				<div formGroupName="properties">
-					<div class="field">
-						<p-checkbox
-							[binary]="true"
-							inputId="familyName"
-							formControlName="familyName"
-						></p-checkbox>
-
-						<label for="familyName">Family name</label>
+							<option
+								*ngFor="let patient of params.patientViews"
+								[value]="patient.id"
+							>
+								{{ patient.givenName }}
+							</option>
+						</select>
 					</div>
-
-					<div class="field">
-						<p-checkbox
-							[binary]="true"
-							inputId="givenName"
-							formControlName="givenName"
-						></p-checkbox>
-
-						<label for="givenName">Given name</label>
+				</p-fieldset>
+	
+				<p-fieldset legend="Properties" [toggleable]="true" [collapsed]="true">
+					<div formGroupName="properties">
+						<div class="field">
+							<p-checkbox
+								[binary]="true"
+								inputId="familyName"
+								formControlName="familyName"
+							></p-checkbox>
+	
+							<label for="familyName">Family name</label>
+						</div>
+	
+						<div class="field">
+							<p-checkbox
+								[binary]="true"
+								inputId="givenName"
+								formControlName="givenName"
+							></p-checkbox>
+	
+							<label for="givenName">Given name</label>
+						</div>
+	
+						<div class="field">
+							<p-checkbox
+								[binary]="true"
+								inputId="phone"
+								formControlName="phone"
+							></p-checkbox>
+	
+							<label for="phone">Phone</label>
+						</div>
+	
+						<div class="field">
+							<p-checkbox
+								[binary]="true"
+								inputId="birthDate"
+								formControlName="birthDate"
+							></p-checkbox>
+	
+							<label for="birthDate">Birthdate</label>
+						</div>
+	
+						<div class="field">
+							<p-checkbox
+								[binary]="true"
+								inputId="gender"
+								formControlName="gender"
+							></p-checkbox>
+	
+							<label for="gender">Gender</label>
+						</div>
 					</div>
-
-					<div class="field">
-						<p-checkbox
-							[binary]="true"
-							inputId="phone"
-							formControlName="phone"
-						></p-checkbox>
-
-						<label for="phone">Phone</label>
-					</div>
-
-					<div class="field">
-						<p-checkbox
-							[binary]="true"
-							inputId="birthDate"
-							formControlName="birthDate"
-						></p-checkbox>
-
-						<label for="birthDate">Birthdate</label>
-					</div>
-
-					<div class="field">
-						<p-checkbox
-							[binary]="true"
-							inputId="gender"
-							formControlName="gender"
-						></p-checkbox>
-
-						<label for="gender">Gender</label>
-					</div>
-				</div>
-			</p-fieldset>
+				</p-fieldset>
+			</div>
 		</form>
 
 		<div class="footer" fxLayout="row" fxLayoutAlign="space-around center">

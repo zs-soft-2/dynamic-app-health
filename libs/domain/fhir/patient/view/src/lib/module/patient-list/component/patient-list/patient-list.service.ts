@@ -24,7 +24,8 @@ export class PatientListService extends ComponentBaseService<
 	PatientListConfig
 > {
 	private dynamicConfig: DynamicConfigEntity | undefined;
-	private defaultPagination!: Pagination;
+	private defaultPagination: Pagination;
+	private defaultProperties: DynamicProperties;
 
 	public constructor(
 		private readonly router: Router,
@@ -35,6 +36,7 @@ export class PatientListService extends ComponentBaseService<
 		super();
 
 		this.defaultPagination = this.patientUtilService.getDefaultPagination();
+		this.defaultProperties = this.patientUtilService.getDefaultProperties();
 	}
 
 	public handleRowSelect(selectedPatientView: PatientView): void {
@@ -42,9 +44,9 @@ export class PatientListService extends ComponentBaseService<
 			selectedPatientView.id || ''
 		);
 
-		if (this.dynamicConfig?.link) {
+		if (this.dynamicConfig?.config.link) {
 			this.router.navigateByUrl(
-				'/dynamic-page' + this.dynamicConfig.link
+				'/dynamic-page' + this.dynamicConfig.config.link
 			);
 		}
 	}
@@ -82,7 +84,7 @@ export class PatientListService extends ComponentBaseService<
 		]).pipe(
 			switchMap(([patients, selectedPatientId]) => {
 				const patientViews: PatientView[] = patients.map((patient) =>
-					this.createPatientView(patient, this.dynamicConfig)
+					this.createPatientView(patient, this.dynamicConfig?.config.properties || this.defaultProperties)
 				);
 
 				const tableColumns: PatientTableColumn[] =
@@ -134,11 +136,11 @@ export class PatientListService extends ComponentBaseService<
 
 	private createPatientView(
 		patient: PatientEntity,
-		dynamicConfig: DynamicConfigEntity | undefined
+		properties: DynamicProperties
 	): PatientView {
 		return this.patientUtilService.createPatientView(
 			patient,
-			dynamicConfig
+			properties
 		);
 	}
 }

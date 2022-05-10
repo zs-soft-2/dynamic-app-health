@@ -3,9 +3,8 @@ import { iif, Observable, switchMap, takeUntil } from 'rxjs';
 import { Injectable } from '@angular/core';
 import {
 	ComponentBaseService,
-	ContactPoint,
 	DynamicConfigEntity,
-	HumanName,
+	DynamicProperties,
 	PatientConfig,
 	PatientEntity,
 	PatientParams,
@@ -20,12 +19,15 @@ export class PatientViewService extends ComponentBaseService<
 	PatientConfig
 > {
 	private dynamicConfig: DynamicConfigEntity | undefined;
+	private defaultProperties: DynamicProperties;
 
 	public constructor(
 		private patientStateService: PatientStateService,
 		private patientUtilService: PatientUtilService
 	) {
 		super();
+
+		this.defaultProperties = this.patientUtilService.getDefaultProperties();
 	}
 
 	public init$(
@@ -34,7 +36,7 @@ export class PatientViewService extends ComponentBaseService<
 		this.dynamicConfig = dynamicConfig;
 		this.patientStateService.dispatchListEntitiesAction();
 
-		const selectedPatientId: string = this.dynamicConfig?.selectedId || '';
+		const selectedPatientId: string = this.dynamicConfig?.config.selectedId || '';
 
 		iif(
 			() => !!selectedPatientId,
@@ -49,7 +51,7 @@ export class PatientViewService extends ComponentBaseService<
 					this.params = {
 						patient: this.createPatientViewByConfig(
 							patient,
-							dynamicConfig
+							this.dynamicConfig?.config.properties || this.defaultProperties
 						),
 					} as PatientParams;
 
@@ -66,11 +68,11 @@ export class PatientViewService extends ComponentBaseService<
 
 	private createPatientViewByConfig(
 		patient: PatientEntity | undefined,
-		dynamicConfig: DynamicConfigEntity | undefined
+		properties: DynamicProperties
 	): PatientView | undefined {
 		return this.patientUtilService.createPatientViewByConfig(
 			patient,
-			dynamicConfig
+			properties
 		);
 	}
 }

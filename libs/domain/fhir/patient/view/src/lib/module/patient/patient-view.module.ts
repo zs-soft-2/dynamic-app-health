@@ -1,6 +1,7 @@
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { FieldsetModule } from 'primeng/fieldset';
+import { InputTextModule } from 'primeng/inputtext';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TableModule } from 'primeng/table';
 
@@ -20,6 +21,7 @@ import { PatientConfigComponent, PatientViewComponent } from './component';
 		FieldsetModule,
 		FlexLayoutModule,
 		FormsModule,
+		InputTextModule,
 		ReactiveFormsModule,
 		SkeletonModule,
 		TableModule,

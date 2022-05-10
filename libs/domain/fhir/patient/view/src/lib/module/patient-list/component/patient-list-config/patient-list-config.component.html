@@ -1,143 +1,92 @@
 <ng-container *ngIf="params$$ | async as params">
 	<div class="content" fxLayout="column" fxLayoutAlign="space-around center">
-		<form
-			[formGroup]="params.formGroup"
-			fxLayout="column"
-			fxLayoutAlign="space-around start"
-		>
+		<form [formGroup]="params.formGroup">
 			<input name="id" formControlName="id" hidden />
 
 			<p-fieldset legend="Base">
 				<div class="field">
 					<span class="p-float-label">
-						<input
-							id="label"
-							type="text"
-							pInputText
-							formControlName="label"
-						/>
+						<input id="label" type="text" pInputText formControlName="label" />
 
 						<label for="label">Label</label>
 					</span>
 				</div>
-
-				<div class="field">
-					<span class="p-float-label">
-						<input
-							id="link"
-							type="text"
-							pInputText
-							formControlName="link"
-						/>
-
-						<label for="link">Link</label>
-					</span>
-				</div>
 			</p-fieldset>
 
-			<p-fieldset legend="Pagination">
-				<div formGroupName="pagination">
+			<div formGroupName="config">
+				<p-fieldset legend="Action" [toggleable]="true" [collapsed]="true">
 					<div class="field">
-						<p-checkbox
-							[binary]="true"
-							inputId="isPagination"
-							formControlName="isPagination"
-						></p-checkbox>
+						<span class="p-float-label">
+							<input id="link" type="text" pInputText formControlName="link" />
 
-						<label for="isPagination">is Pagination</label>
+							<label for="link">Link</label>
+						</span>
 					</div>
+				</p-fieldset>
 
-					<span class="p-float-label">
-						<p-inputNumber
-							id="rows"
-							mode="decimal"
-							[showButtons]="true"
-							[min]="5"
-							[max]="50"
-							[step]="5"
-							buttonLayout="horizontal"
-							spinnerMode="horizontal"
-							decrementButtonClass="p-button-secondary"
-							incrementButtonClass="p-button-secondary"
-							incrementButtonIcon="pi pi-plus"
-							decrementButtonIcon="pi pi-minus"
-							formControlName="rows"
-						></p-inputNumber>
+				<p-fieldset legend="Pagination" [toggleable]="true" [collapsed]="true">
+					<div formGroupName="pagination">
+						<div class="field">
+							<p-checkbox [binary]="true" inputId="isPagination" formControlName="isPagination">
+							</p-checkbox>
 
-						<label for="rows">Rows</label>
-					</span>
-				</div>
-			</p-fieldset>
+							<label for="isPagination">is Pagination</label>
+						</div>
 
-			<p-fieldset legend="Properties">
-				<div formGroupName="properties">
-					<div class="field">
-						<p-checkbox
-							[binary]="true"
-							inputId="familyName"
-							formControlName="familyName"
-						></p-checkbox>
+						<div class="field">
+							<span class="p-float-label">
+								<p-inputNumber id="rows" mode="decimal" [showButtons]="true" [min]="5" [max]="50"
+									[step]="5" buttonLayout="horizontal" spinnerMode="horizontal"
+									decrementButtonClass="p-button-secondary" incrementButtonClass="p-button-secondary"
+									incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"
+									formControlName="rows"></p-inputNumber>
 
-						<label for="familyName">Family name</label>
+								<label for="rows">Rows</label>
+							</span>
+						</div>
 					</div>
+				</p-fieldset>
 
-					<div class="field">
-						<p-checkbox
-							[binary]="true"
-							inputId="givenName"
-							formControlName="givenName"
-						></p-checkbox>
+				<p-fieldset legend="Properties" [toggleable]="true" [collapsed]="true">
+					<div formGroupName="properties">
+						<div class="field">
+							<p-checkbox [binary]="true" inputId="familyName" formControlName="familyName"></p-checkbox>
 
-						<label for="givenName">Given name</label>
+							<label for="familyName">Family name</label>
+						</div>
+
+						<div class="field">
+							<p-checkbox [binary]="true" inputId="givenName" formControlName="givenName"></p-checkbox>
+
+							<label for="givenName">Given name</label>
+						</div>
+
+						<div class="field">
+							<p-checkbox [binary]="true" inputId="phone" formControlName="phone"></p-checkbox>
+
+							<label for="phone">Phone</label>
+						</div>
+
+						<div class="field">
+							<p-checkbox [binary]="true" inputId="birthDate" formControlName="birthDate"></p-checkbox>
+
+							<label for="birthDate">Birthdate</label>
+						</div>
+
+						<div class="field">
+							<p-checkbox [binary]="true" inputId="gender" formControlName="gender"></p-checkbox>
+
+							<label for="gender">Gender</label>
+						</div>
 					</div>
-
-					<div class="field">
-						<p-checkbox
-							[binary]="true"
-							inputId="phone"
-							formControlName="phone"
-						></p-checkbox>
-
-						<label for="phone">Phone</label>
-					</div>
-
-					<div class="field">
-						<p-checkbox
-							[binary]="true"
-							inputId="birthDate"
-							formControlName="birthDate"
-						></p-checkbox>
-
-						<label for="birthDate">Birthdate</label>
-					</div>
-
-					<div class="field">
-						<p-checkbox
-							[binary]="true"
-							inputId="gender"
-							formControlName="gender"
-						></p-checkbox>
-
-						<label for="gender">Gender</label>
-					</div>
-				</div>
-			</p-fieldset>
+				</p-fieldset>
+			</div>
 		</form>
 
 		<div class="footer" fxLayout="row" fxLayoutAlign="space-around center">
-			<button
-				pButton
-				type="button"
-				label="Submit"
-				(click)="submit()"
-			></button>
+			<button pButton type="button" label="Submit" (click)="submit()"></button>
 
-			<button
-				pButton
-				type="button"
-				label="Cancel"
-				(click)="cancel()"
-			></button>
+			<button pButton type="button" label="Cancel" (click)="cancel()"></button>
 		</div>
 	</div>
 </ng-container>

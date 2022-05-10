@@ -8,6 +8,7 @@ import {
 	ConfigComponentBaseService,
 	DynamicConfigEntity,
 	DynamicConfigStateService,
+	DynamicProperties,
 	PatientConfig,
 	PatientConfigParams,
 	PatientEntity,
@@ -21,6 +22,7 @@ export class PatientConfigService extends ConfigComponentBaseService<
 	PatientConfig
 > {
 	private configId!: string;
+	private defaultProperties: DynamicProperties;
 
 	public constructor(
 		private activatedRoute: ActivatedRoute,
@@ -31,6 +33,8 @@ export class PatientConfigService extends ConfigComponentBaseService<
 		private patientUtilService: PatientUtilService
 	) {
 		super();
+
+		this.defaultProperties = this.patientUtilService.getDefaultProperties();
 	}
 
 	public cancel(): void {
@@ -66,7 +70,8 @@ export class PatientConfigService extends ConfigComponentBaseService<
 									).map((patient) =>
 										this.patientUtilService.createPatientView(
 											patient,
-											dynamicConfig
+											this.config?.config.properties ||
+												this.defaultProperties
 										)
 									),
 								};
@@ -108,16 +113,21 @@ export class PatientConfigService extends ConfigComponentBaseService<
 	private createFormGroup(
 		dynamicConfig: DynamicConfigEntity | undefined
 	): FormGroup {
+		const properties: DynamicProperties =
+			dynamicConfig?.config.properties || this.defaultProperties;
+
 		return this.formBuilder.group({
 			id: [dynamicConfig?.id],
-			label: [dynamicConfig?.label],
-			properties: this.formBuilder.group({
-				birthDate: [dynamicConfig?.config.properties['birthDate']],
-				gender: [dynamicConfig?.config.properties['gender']],
-				givenName: [dynamicConfig?.config.properties['givenName']],
-				familyName: [dynamicConfig?.config.properties['familyName']],
-				phone: [dynamicConfig?.config.properties['phone']],
-				selectedId: [dynamicConfig?.selectedId],
+			config: this.formBuilder.group({
+				label: [dynamicConfig?.config.label],
+				selectedId: [dynamicConfig?.config.selectedId],
+				properties: this.formBuilder.group({
+					birthDate: [properties['birthDate']],
+					gender: [properties['gender']],
+					givenName: [properties['givenName']],
+					familyName: [properties['familyName']],
+					phone: [properties['phone']],
+				}),
 			}),
 		});
 	}
