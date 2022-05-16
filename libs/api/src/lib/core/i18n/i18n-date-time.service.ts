@@ -1,4 +1,4 @@
-import { BaseService } from '../base';
+import { BaseService } from '../../common';
 
 export abstract class DateUtilService extends BaseService {
 	public abstract convertToDate(date: number | Date): number;

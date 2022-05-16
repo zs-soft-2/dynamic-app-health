@@ -7,7 +7,6 @@ import { from, Observable } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 import { FhirClientService } from '@dynamic-app-health/api';
-import { SearchParameterStatusKind } from '@ahryman40k/ts-fhir-types/lib/R4';
 
 @Injectable()
 export class FhirClientServiceImpl extends FhirClientService {
@@ -38,12 +37,14 @@ export class FhirClientServiceImpl extends FhirClientService {
 			? {
 					...searchParams,
 			  }
-			: {};
+			: {
+				_total: 'accurate'
+			};
 
 		return from(
 			this.fhirClient.search({
 				resourceType: params.resourceType,
-				searchParams,
+				searchParams: extendedSearchParams,
 			})
 		);
 	}

@@ -8,8 +8,8 @@ import * as patientActions from './patient.actions';
 
 @Injectable()
 export class PatientEffects {
-	public addPatient = createEffect(() =>
-		this.actions$.pipe(
+	public addPatient = createEffect(() => {
+		return this.actions$.pipe(
 			ofType(patientActions.addPatient),
 			switchMap((action) =>
 				this.patientDataService.add$(action.patient).pipe(
@@ -20,10 +20,10 @@ export class PatientEffects {
 					})
 				)
 			)
-		)
-	);
-	public listPatients = createEffect(() =>
-		this.actions$.pipe(
+		);
+	});
+	public listPatients = createEffect(() => {
+		return this.actions$.pipe(
 			ofType(patientActions.listPatients),
 			switchMap(() =>
 				this.patientDataService
@@ -36,10 +36,10 @@ export class PatientEffects {
 						)
 					)
 			)
-		)
-	);
-	public loadPatient = createEffect(() =>
-		this.actions$.pipe(
+		);
+	});
+	public loadPatient = createEffect(() => {
+		return this.actions$.pipe(
 			ofType(patientActions.loadPatient),
 			switchMap((action) =>
 				this.patientDataService.load$(action.id).pipe(
@@ -54,10 +54,10 @@ export class PatientEffects {
 					})
 				)
 			)
-		)
-	);
-	public updatePatient = createEffect(() =>
-		this.actions$.pipe(
+		);
+	});
+	public updatePatient = createEffect(() => {
+		return this.actions$.pipe(
 			ofType(patientActions.updatePatient),
 			switchMap((action) =>
 				this.patientDataService.update$(action.patient).pipe(
@@ -71,8 +71,8 @@ export class PatientEffects {
 					})
 				)
 			)
-		)
-	);
+		);
+	});
 
 	public constructor(
 		private actions$: Actions,

@@ -6,7 +6,7 @@ import {
 	PatientEntityAdd,
 	PatientStateService,
 } from '@dynamic-app-health/api';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 
 import * as patientActions from '../+state/patient.actions';
 import * as fromPatient from '../+state/patient.reducer';
@@ -69,24 +69,24 @@ export class PatientStateServiceImpl extends PatientStateService {
 	}
 
 	public selectEntities$(): Observable<PatientEntity[]> {
-		return this.store.pipe(select(patientSelectors.selectAllPatient));
+		return this.store.select(patientSelectors.selectAllPatient);
 	}
 
 	public selectEntity$(): Observable<PatientEntity | undefined> {
-		return this.store.pipe(select(patientSelectors.selectSelectedPatient));
+		return this.store.select(patientSelectors.selectSelectedPatient);
 	}
 
 	public selectEntityById$(
 		id: string
 	): Observable<PatientEntity | undefined> {
-		return this.store.pipe(select(patientSelectors.selectPatientById(id)));
+		return this.store.select(patientSelectors.selectPatientById(id));
 	}
 
 	public selectSelectedEntity$(): Observable<PatientEntity | undefined> {
-		return this.store.pipe(select(patientSelectors.selectSelectedPatient));
+		return this.store.select(patientSelectors.selectSelectedPatient);
 	}
 
 	public selectSelectedEntityId$(): Observable<string> {
-		return this.store.pipe(select(patientSelectors.getSelectedId));
+		return this.store.select(patientSelectors.getSelectedId);
 	}
 }

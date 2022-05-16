@@ -1,7 +1,7 @@
-import { RequestParams } from 'libs/domain/fhir/patient/data/src/lib/service';
 import { Observable } from 'rxjs';
 
 import { EntityDataService } from '../../../common';
+import { RequestParams } from '../search';
 import {
 	PatientEntity,
 	PatientEntityAdd,

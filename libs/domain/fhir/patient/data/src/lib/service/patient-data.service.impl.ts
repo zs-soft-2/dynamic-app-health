@@ -1,6 +1,5 @@
-import { Compartment, ResourceType, SearchParams } from 'fhir-kit-client';
 import { nanoid } from 'nanoid';
-import { from, map, Observable, of, switchMap } from 'rxjs';
+import { from, Observable, of, switchMap } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 import {
@@ -10,20 +9,18 @@ import {
 	PatientEntity,
 	PatientEntityAdd,
 	PatientEntityUpdate,
+	RequestParams,
 } from '@dynamic-app-health/api';
 
-export interface RequestParams {
-	compartment?: Compartment;
-	headers?: HeadersInit;
-	options?: RequestInit;
-	resourceType: ResourceType;
-	searchParams?: SearchParams;
-}
 
 @Injectable()
 export class PatientDataServiceImpl extends PatientDataService {
 	public constructor(private fhirClientService: FhirClientService) {
 		super();
+
+		fhirClientService.getClient().smartAuthMetadata().then((response) => {
+			console.log(response);
+			});
 	}
 
 	public add$(entity: PatientEntityAdd): Observable<PatientEntity> {

@@ -25,9 +25,21 @@
 								"onlyDependOnLibsWithTags": ["scope:api"]
 							},
 							{
+								"sourceTag": "scope:data",
+								"onlyDependOnLibsWithTags": ["scope:api"]
+							},
+							{
 								"sourceTag": "type:feature",
 								"onlyDependOnLibsWithTags": [
 									"type:api",
+									"type:feature"
+								]
+							},
+							{
+								"sourceTag": "type:domain",
+								"onlyDependOnLibsWithTags": [
+									"type:api",
+									"type:core",
 									"type:feature"
 								]
 							},

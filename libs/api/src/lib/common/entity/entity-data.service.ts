@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+
 import { DataService } from '../data';
 
 export abstract class EntityDataService<R, S, T> extends DataService {
