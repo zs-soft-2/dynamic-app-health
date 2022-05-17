@@ -3,6 +3,7 @@ import { from, Observable, of, switchMap } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 import {
+	Bundle,
 	EntityUpdate,
 	FhirClientService,
 	PatientDataService,
@@ -62,13 +63,13 @@ export class PatientDataServiceImpl extends PatientDataService {
 		);
 	}
 
-	public search$(requestParams: RequestParams): Observable<PatientEntity[]> {
+	public search$(requestParams: RequestParams): Observable<Bundle[]> {
 		return this.fhirClientService.search(requestParams).pipe(
 			switchMap((response) => {
-				const entries = response['entry'] ? response['entry'] : [];
+				
 
 				return of(
-					entries.map((entry: any) => entry.resource as unknown)
+					response
 				);
 			})
 		);
