@@ -35,7 +35,7 @@ export class PatientViewComponent
 
 	public ngOnInit(): void {
 		this.componentService
-			.init$(this.config)
+			.init$(this.COMPONENT_ID,  this.config)
 			.pipe(takeUntil(this.destroy))
 			.subscribe((params) => {
 				this.params$$.next(params);

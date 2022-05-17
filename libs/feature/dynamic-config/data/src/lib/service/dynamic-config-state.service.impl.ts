@@ -6,16 +6,15 @@ import {
 	DynamicConfigEntityAdd,
 	DynamicConfigStateService,
 } from '@dynamic-app-health/api';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 
 import * as dynamicConfigActions from '../+state/dynamic-config.actions';
-import * as fromDynamicConfig from '../+state/dynamic-config.reducer';
 import * as dynamicConfigSelectors from '../+state/dynamic-config.selectors';
 
 @Injectable()
 export class DynamicConfigStateServiceImpl extends DynamicConfigStateService {
 	public constructor(
-		private store: Store<fromDynamicConfig.DynamicConfigPartialState>
+		private store: Store
 	) {
 		super();
 	}
@@ -73,35 +72,31 @@ export class DynamicConfigStateServiceImpl extends DynamicConfigStateService {
 	}
 
 	public selectEntities$(): Observable<DynamicConfigEntity[]> {
-		return this.store.pipe(
-			select(dynamicConfigSelectors.selectAllDynamicConfig)
-		);
+		return this.store.
+			select(dynamicConfigSelectors.selectAllDynamicConfig);
 	}
 
 	public selectEntity$(): Observable<DynamicConfigEntity | undefined> {
-		return this.store.pipe(
-			select(dynamicConfigSelectors.selectSelectedDynamicConfig)
-		);
+		return this.store.
+			select(dynamicConfigSelectors.selectSelectedDynamicConfig);
 	}
 
 	public selectEntityById$(
 		id: string
 	): Observable<DynamicConfigEntity | undefined> {
-		return this.store.pipe(
-			select(dynamicConfigSelectors.selectDynamicConfigById(id))
-		);
+		return this.store.
+			select(dynamicConfigSelectors.selectDynamicConfigById(id));
 	}
 
 	public selectSelectedEntity$(): Observable<
 		DynamicConfigEntity | undefined
 	> {
-		return this.store.pipe(
-			select(dynamicConfigSelectors.selectSelectedDynamicConfig)
-		);
+		return this.store.
+			select(dynamicConfigSelectors.selectSelectedDynamicConfig);
 	}
 
 	public selectSelectedEntityID$(): Observable<string> {
-		return this.store.pipe(select(dynamicConfigSelectors.getSelectedId));
+		return this.store.select(dynamicConfigSelectors.getSelectedId);
 	}
 
 	public selectSelectedEntityId$(): Observable<string> {

@@ -13,5 +13,8 @@ export abstract class ComponentBaseService<S, T> extends BaseService {
 		this.params$$ = new ReplaySubject();
 	}
 
-	public abstract init$(configEntity?: ConfigEntity<T>): Observable<S>;
+	public abstract init$(
+		componentId: string,
+		configEntity?: ConfigEntity<T>
+	): Observable<S>;
 }

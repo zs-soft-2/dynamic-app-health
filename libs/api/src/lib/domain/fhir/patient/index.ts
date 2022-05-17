@@ -8,6 +8,7 @@ export * from './patient-list.params';
 export * from './patient-resource.enum';
 export * from './patient-state.service';
 export * from './patient-util.service';
+export * from './patient.bundle';
 export * from './patient.entity';
 export * from './patient.params';
 export * from './patient.view';

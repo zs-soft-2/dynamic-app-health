@@ -36,6 +36,7 @@ export class FhirClientServiceImpl extends FhirClientService {
 		const extendedSearchParams: SearchParams = searchParams
 			? {
 					...searchParams,
+					_total: 'accurate'
 			  }
 			: {
 				_total: 'accurate'

@@ -2,53 +2,60 @@ import { Observable } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 import {
-	PatientEntity,
-	PatientEntityAdd,
-	PatientStateService,
+    PatientBundle, PatientEntity, PatientEntityAdd, PatientStateService
 } from '@dynamic-app-health/api';
 import { Store } from '@ngrx/store';
 
 import * as patientActions from '../+state/patient.actions';
-import * as fromPatient from '../+state/patient.reducer';
 import * as patientSelectors from '../+state/patient.selectors';
 
 @Injectable()
 export class PatientStateServiceImpl extends PatientStateService {
-	public constructor(private store: Store<fromPatient.PatientPartialState>) {
+    public constructor(private store: Store) {
 		super();
 	}
 
-	public dispatchAddEntityAction(entity: PatientEntityAdd): void {
+    public dispatchAddEntityAction(entity: PatientEntityAdd): void {
 		this.store.dispatch(patientActions.addPatient({ patient: entity }));
 	}
 
-	public dispatchDeleteEntityAction(patient: PatientEntity): void {
+    public dispatchDeleteEntityAction(patient: PatientEntity): void {
 		this.store.dispatch(
 			patientActions.deletePatient({ patientId: patient.id })
 		);
 	}
 
-	public dispatchListEntitiesAction(): void {
-		this.store.dispatch(patientActions.listPatients());
+    public dispatchListEntitiesAction(): void {
+		throw new Error();
 	}
 
-	public dispatchLoadEntitiesByIdsAction(ids: string[]): void {
+    public dispatchListPatient(
+		requesterId: string,
+		index: number,
+		count: number
+	): void {
+		this.store.dispatch(
+			patientActions.listPatients({ requesterId, index, count })
+		);
+	}
+
+    public dispatchLoadEntitiesByIdsAction(ids: string[]): void {
 		throw new Error('Method not implemented.');
 	}
 
-	public dispatchLoadEntityAction(id: string): void {
+    public dispatchLoadEntityAction(id: string): void {
 		this.store.dispatch(patientActions.loadPatient({ id }));
 	}
 
-	public dispatchSetSelectPatientAction(id: string): void {
+    public dispatchSetSelectPatientAction(patient: PatientEntity): void {
 		this.store.dispatch(
-			patientActions.setSelectPatient({
-				patientId: id,
+			patientActions.setSelectedPatient({
+				patient,
 			})
 		);
 	}
 
-	public dispatchSetSelectedEntityIdAction(entityId: string): void {
+    public dispatchSetSelectedEntityIdAction(entityId: string): void {
 		this.store.dispatch(
 			patientActions.setSelectedPatientId({
 				patientId: entityId,
@@ -56,7 +63,7 @@ export class PatientStateServiceImpl extends PatientStateService {
 		);
 	}
 
-	public dispatchUpdateEntityAction(entity: PatientEntity): void {
+    public dispatchUpdateEntityAction(entity: PatientEntity): void {
 		this.store.dispatch(
 			patientActions.updatePatient({
 				patient: entity,
@@ -64,29 +71,37 @@ export class PatientStateServiceImpl extends PatientStateService {
 		);
 	}
 
-	public isLoading$(): Observable<boolean> {
+    public isLoading$(): Observable<boolean> {
 		throw new Error('Method not implemented.');
 	}
 
-	public selectEntities$(): Observable<PatientEntity[]> {
-		return this.store.select(patientSelectors.selectAllPatient);
+    public selectEntities$(): Observable<PatientEntity[]> {
+		throw new Error();
 	}
 
-	public selectEntity$(): Observable<PatientEntity | undefined> {
-		return this.store.select(patientSelectors.selectSelectedPatient);
+    public selectEntity$(): Observable<PatientEntity | undefined> {
+		throw new Error();
 	}
 
-	public selectEntityById$(
+    public selectEntityById$(
 		id: string
 	): Observable<PatientEntity | undefined> {
-		return this.store.select(patientSelectors.selectPatientById(id));
+		throw new Error();
 	}
 
-	public selectSelectedEntity$(): Observable<PatientEntity | undefined> {
-		return this.store.select(patientSelectors.selectSelectedPatient);
+    public selectPatientBundleByRequesterId$(
+		requesterId: string
+	): Observable<PatientBundle | undefined> {
+		return this.store.select(
+			patientSelectors.selectPatientBundleByRequesterId(requesterId)
+		);
 	}
 
-	public selectSelectedEntityId$(): Observable<string> {
-		return this.store.select(patientSelectors.getSelectedId);
+    public selectSelectedEntity$(): Observable<PatientEntity | undefined> {
+		throw new Error();
+	}
+
+    public selectSelectedEntityId$(): Observable<string> {
+		return this.store.select(patientSelectors.selectSelectedPatientId);
 	}
 }

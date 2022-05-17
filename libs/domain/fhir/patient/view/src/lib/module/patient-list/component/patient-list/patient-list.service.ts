@@ -26,6 +26,7 @@ export class PatientListService extends ComponentBaseService<
 	private dynamicConfig: DynamicConfigEntity | undefined;
 	private defaultPagination: Pagination;
 	private defaultProperties: DynamicProperties;
+	private componentId!: string;
 
 	public constructor(
 		private readonly router: Router,
@@ -52,14 +53,16 @@ export class PatientListService extends ComponentBaseService<
 	}
 
 	public init$(
+		componentId: string,
 		dynamicConfig?: DynamicConfigEntity
 	): Observable<PatientListParams> {
+		this.componentId = componentId;
 		this.dynamicConfig = dynamicConfig;
 
 		const patientListConfig: PatientListConfig =
 			dynamicConfig?.config as PatientListConfig;
 
-		this.patientStateService.dispatchListEntitiesAction();
+		this.patientStateService.dispatchListPatient(this.componentId, 0, 20);
 		this.componentStore.setState((state) => {
 			const pagination: Pagination | undefined =
 				patientListConfig?.pagination;
@@ -78,11 +81,11 @@ export class PatientListService extends ComponentBaseService<
 
 		return combineLatest([
 			this.patientStateService
-				.selectEntities$()
-				.pipe(map((entities) => entities as PatientEntity[])),
+				.selectPatientBundleByRequesterId$(this.componentId).pipe(),
 			this.patientStateService.selectSelectedEntityId$(),
 		]).pipe(
-			switchMap(([patients, selectedPatientId]) => {
+			switchMap(([patientBundle, selectedPatientId]) => {
+				const patients: PatientEntity[] | undefined = patientBundle?.bundles[0].entry as PatientEntity[];
 				const patientViews: PatientView[] = patients.map((patient) =>
 					this.createPatientView(patient, this.dynamicConfig?.config.properties || this.defaultProperties)
 				);

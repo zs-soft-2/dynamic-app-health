@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 
 import { EntityDataService } from '../../../common';
+import { Bundle } from '../bundle';
 import { RequestParams } from '../search';
 import {
 	PatientEntity,
@@ -13,5 +14,5 @@ export abstract class PatientDataService extends EntityDataService<
 	PatientEntityAdd,
 	PatientEntityUpdate
 > {
-	public abstract search$(params: RequestParams): Observable<PatientEntity[]>;
+	public abstract search$(params: RequestParams): Observable<Bundle>;
 }

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import {
-	PATIENT_FEATURE_KEY,
+	PATIENT_BUNDLE_KEY,
 	PatientDataService,
 	PatientStateService,
 } from '@dynamic-app-health/api';
@@ -15,7 +15,7 @@ import { PatientDataServiceImpl, PatientStateServiceImpl } from './service';
 @NgModule({
 	imports: [
 		CommonModule,
-		StoreModule.forFeature(PATIENT_FEATURE_KEY, fromPatient.reducer),
+		StoreModule.forFeature(PATIENT_BUNDLE_KEY, fromPatient.reducer),
 		EffectsModule.forFeature([PatientEffects]),
 	],
 	providers: [

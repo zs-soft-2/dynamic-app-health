@@ -20,6 +20,7 @@ export class PatientViewService extends ComponentBaseService<
 > {
 	private dynamicConfig: DynamicConfigEntity | undefined;
 	private defaultProperties: DynamicProperties;
+	private componentId!: string;
 
 	public constructor(
 		private patientStateService: PatientStateService,
@@ -31,8 +32,10 @@ export class PatientViewService extends ComponentBaseService<
 	}
 
 	public init$(
+		componentId: string,
 		dynamicConfig?: DynamicConfigEntity
 	): Observable<PatientParams> {
+		this.componentId = componentId;
 		this.dynamicConfig = dynamicConfig;
 		this.patientStateService.dispatchListEntitiesAction();
 

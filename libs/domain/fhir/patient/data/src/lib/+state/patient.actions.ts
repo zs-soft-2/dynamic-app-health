@@ -1,7 +1,6 @@
 import { Update } from '@ngrx/entity';
 import { createAction, props } from '@ngrx/store';
-import { PatientEntity, PatientEntityAdd } from '@dynamic-app-health/api';
-import { PatientBundle } from './patient.reducer';
+import { PatientBundle, PatientEntity, PatientEntityAdd } from '@dynamic-app-health/api';
 
 export const addPatient = createAction(
 	'[Patient] Add Patient',
@@ -77,7 +76,7 @@ export const loadPatientSuccess = createAction(
 	props<{ patient: PatientEntity }>()
 );
 
-export const setSelectPatient = createAction(
+export const setSelectedPatient = createAction(
 	'[Patient] Set Selected Patient',
 	props<{ patient: PatientEntity }>()
 );

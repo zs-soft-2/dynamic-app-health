@@ -1,46 +1,41 @@
-import { PATIENT_FEATURE_KEY, PatientEntity } from '@dynamic-app-health/api';
+import { PatientBundle, PATIENT_BUNDLE_KEY } from '@dynamic-app-health/api';
 import { Dictionary } from '@ngrx/entity';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-import { patientAdapter, PatientPartialState, State } from './patient.reducer';
+import { patientBundleAdapter, PatientBundlePartialState, PatientState } from './patient.reducer';
 
-const { selectAll, selectEntities } = patientAdapter.getSelectors();
+const { selectAll, selectEntities } = patientBundleAdapter.getSelectors();
 
-export const getPatientState = createFeatureSelector<
-	PatientPartialState,
-	State
->(PATIENT_FEATURE_KEY);
+export const selectPatientBundleState = createFeatureSelector<
+PatientState
+>(PATIENT_BUNDLE_KEY);
 
-export const getPatientError = createSelector(
-	getPatientState,
-	(state: State) => state.error
+export const selectPatientError = createSelector(
+	selectPatientBundleState,
+	(state: PatientState) => state.error
 );
 
-export const getPatientLoading = createSelector(
-	getPatientState,
-	(state: State) => state.loading
+export const selectPatientBundleLoading = createSelector(
+	selectPatientBundleState,
+	(state: PatientState) => state.loading
 );
 
-export const getSelectedId = createSelector(
-	getPatientState,
-	(state: State) => state.selectedId || ''
+export const selectSelectedPatientId = createSelector(
+	selectPatientBundleState,
+	(state: PatientState) => state.selectedId || ''
 );
 
-export const selectPatientEntities = createSelector(
-	getPatientState,
+export const selectPatientBundles = createSelector(
+	selectPatientBundleState,
 	selectEntities
 );
 
-export const selectAllPatient = createSelector(getPatientState, selectAll);
+export const selectAllPatientBundles = createSelector(selectPatientBundleState, selectAll);
 
-export const selectSelectedPatient = createSelector(
-	selectPatientEntities,
-	getSelectedId,
-	(patientEntities, patientID) => patientEntities[patientID]
+
+export const selectPatientBundleByRequesterId = (requesterId: string) => createSelector(
+	selectPatientBundles,
+	(patientBundles: Dictionary<PatientBundle>) => {
+		return patientBundles[requesterId];
+	}
 );
-
-export const selectPatientById = (id: string) =>
-	createSelector(
-		selectPatientEntities,
-		(patients: Dictionary<PatientEntity>) => patients[id]
-	);
