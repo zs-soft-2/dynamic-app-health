@@ -1,7 +1,7 @@
 import { map, switchMap } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
-import { Bundle, PatientDataService } from '@dynamic-app-health/api';
+import { PatientDataService } from '@dynamic-app-health/api';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 import * as patientActions from './patient.actions';
@@ -29,6 +29,25 @@ export class PatientEffects {
 									bundles,
 									requesterId: action.requesterId,
 								},
+							});
+						})
+					)
+			)
+		);
+	});
+
+	public nextPatients = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(patientActions.nextPatients),
+			switchMap((action) =>
+				this.patientDataService
+					.nextPage$(action.bundle)
+					.pipe(
+						map((bundle) => {
+							return patientActions.nextPatientsSuccess({
+								bundle,
+								index: action.index,
+								requesterId: action.requesterId,
 							});
 						})
 					)

@@ -22,11 +22,12 @@ export class AppComponent implements OnInit {
 
 	@createError(ErrorTypeEnum.SimpleError)
 	public doAnithing(): void {
-		throw new Error('Hiba');
+		throw new Error('Error');
 	}
 
 	public ngOnInit(): void {
 		console.log(this.i18nService.getActiveLangAsString());
+
 		this.doAnithing();
 	}
 }

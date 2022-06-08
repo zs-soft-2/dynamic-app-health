@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 import {
+	Bundle,
     PatientBundle, PatientEntity, PatientEntityAdd, PatientStateService
 } from '@dynamic-app-health/api';
 import { Store } from '@ngrx/store';
@@ -39,6 +40,16 @@ export class PatientStateServiceImpl extends PatientStateService {
 		);
 	}
 
+	public dispatchNextPatient(
+		requesterId: string,
+		index: number,
+		bundle: Bundle
+	): void {
+		this.store.dispatch(
+			patientActions.nextPatients({ requesterId, index, bundle })
+		);
+	}
+
     public dispatchLoadEntitiesByIdsAction(ids: string[]): void {
 		throw new Error('Method not implemented.');
 	}
@@ -73,6 +84,10 @@ export class PatientStateServiceImpl extends PatientStateService {
 
     public isLoading$(): Observable<boolean> {
 		throw new Error('Method not implemented.');
+	}
+
+    public selectAllPatientBundles$(): Observable<PatientBundle[]> {
+		return this.store.select(patientSelectors.selectAllPatientBundles);
 	}
 
     public selectEntities$(): Observable<PatientEntity[]> {

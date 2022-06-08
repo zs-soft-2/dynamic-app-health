@@ -1,8 +1,4 @@
-import Client, {
-	Compartment,
-	FhirResource,
-	SearchParams,
-} from 'fhir-kit-client';
+import Client, { Compartment, FhirResource, SearchParams } from 'fhir-kit-client';
 import { from, Observable } from 'rxjs';
 
 import { Injectable } from '@angular/core';
@@ -36,11 +32,11 @@ export class FhirClientServiceImpl extends FhirClientService {
 		const extendedSearchParams: SearchParams = searchParams
 			? {
 					...searchParams,
-					_total: 'accurate'
+					_total: 'accurate',
 			  }
 			: {
-				_total: 'accurate'
-			};
+					_total: 'accurate',
+			  };
 
 		return from(
 			this.fhirClient.search({
@@ -48,5 +44,19 @@ export class FhirClientServiceImpl extends FhirClientService {
 				searchParams: extendedSearchParams,
 			})
 		);
+	}
+
+	public nextPage(params: {
+		bundle: FhirResource & { type: string };
+		options?: RequestInit | undefined;
+	}): Observable<FhirResource> {
+		return from(this.fhirClient.nextPage(params));
+	}
+
+	public prevPage(params: {
+		bundle: FhirResource & { type: string };
+		options?: RequestInit | undefined;
+	}): Observable<FhirResource> {
+		return from(this.fhirClient.prevPage(params));
 	}
 }

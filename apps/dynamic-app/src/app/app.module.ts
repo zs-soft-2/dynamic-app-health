@@ -11,6 +11,7 @@ import {
 	DynamicPageStateService,
 	EnvironmentService,
 } from '@dynamic-app-health/api';
+import { CommonUtilModule } from '@dynamic-app-health/common/util';
 import { ErrorDecoratorService } from '@dynamic-app-health/core/error/util';
 import { DomainFhirPatientDataModule } from '@dynamic-app-health/domain/fhir/patient/data';
 import { DomainFhirPatientUtilModule } from '@dynamic-app-health/domain/fhir/patient/util';
@@ -27,6 +28,7 @@ import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { initializeApp } from './initializer';
 import { AppRoutingModule, CoreModule, TopBarModule } from './module';
+import { metaReducers } from './module/core/reducer';
 import {
 	DynamicComponentMappingServiceImpl,
 	EnvironmentServiceImpl,
@@ -41,7 +43,7 @@ import {
 		StoreModule.forRoot(
 			{},
 			{
-				metaReducers: !environment.production ? [] : [],
+				metaReducers: metaReducers,
 				runtimeChecks: {
 					strictActionImmutability: true,
 					strictStateImmutability: true,
@@ -53,6 +55,7 @@ import {
 		CoreModule,
 		AppRoutingModule,
 		TopBarModule,
+		CommonUtilModule,
 		FeatureDynamicConfigDataModule,
 		FeatureDynamicConfigEditorModule,
 		FeatureDynamicPageDataModule,

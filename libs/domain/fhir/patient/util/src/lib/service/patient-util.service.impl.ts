@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
+	CommonUtilService,
 	ContactPoint,
 	DynamicConfigEntity,
 	DynamicConfigEntityUpdate,
@@ -34,6 +35,10 @@ export class PatientUtilServiceImpl extends PatientUtilService {
 		birthDate: true,
 		gender: true,
 	};
+
+	public constructor(private commonUtilService: CommonUtilService) {
+		super();
+	}
 
 	public createPatientView(
 		patient: PatientEntity,
@@ -96,10 +101,11 @@ export class PatientUtilServiceImpl extends PatientUtilService {
 		formGroupValue: any,
 		configId: string | undefined
 	): DynamicConfigEntity {
-		const { label, id, config } = formGroupValue;
+		const { componentId, label, id, config } = formGroupValue;
 
 		return {
 			id: id || configId,
+			componentId: componentId || this.commonUtilService.createComponentId(),
 			label,
 			config
 		};
@@ -108,9 +114,10 @@ export class PatientUtilServiceImpl extends PatientUtilService {
 	public getPatientDynamicConfigUpdate(
 		formGroupValue: any
 	): DynamicConfigEntityUpdate {
-		const { label, id, config } = formGroupValue;
+		const { componentId, config, id, label  } = formGroupValue;
 
 		return {
+			componentId,
 			id,
 			label,
 			config
@@ -121,9 +128,10 @@ export class PatientUtilServiceImpl extends PatientUtilService {
 		formGroupValue: any,
 		configId: string | undefined
 	): DynamicConfigEntity {
-		const { label, id, config } = formGroupValue;
+		const { componentId, label, id, config } = formGroupValue;
 
 		return {
+			componentId: componentId || this.commonUtilService.createComponentId(),
 			id: id || configId,
 			label,
 			config
@@ -133,13 +141,13 @@ export class PatientUtilServiceImpl extends PatientUtilService {
 	public getPatientListDynamicConfigUpdate(
 		formGroupValue: any
 	): DynamicConfigEntityUpdate {
-		const { label, id, config } = formGroupValue;
+		const { componentId, label, id, config } = formGroupValue;
 
 		return {
+			componentId,
+			config,
 			id,
 			label,
-
-			config
 		};
 	}
 

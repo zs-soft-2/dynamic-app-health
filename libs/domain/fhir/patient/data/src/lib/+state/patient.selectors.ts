@@ -2,7 +2,7 @@ import { PatientBundle, PATIENT_BUNDLE_KEY } from '@dynamic-app-health/api';
 import { Dictionary } from '@ngrx/entity';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-import { patientBundleAdapter, PatientBundlePartialState, PatientState } from './patient.reducer';
+import { patientBundleAdapter, PatientState } from './patient.reducer';
 
 const { selectAll, selectEntities } = patientBundleAdapter.getSelectors();
 

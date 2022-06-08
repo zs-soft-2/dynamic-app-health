@@ -1,7 +1,6 @@
 import {
 	delay,
 	filter,
-	find,
 	firstValueFrom,
 	map,
 	of,
@@ -9,16 +8,14 @@ import {
 	tap,
 } from 'rxjs';
 
-import { Router, Routes } from '@angular/router';
+import { Router } from '@angular/router';
 import {
 	ApplicationConfigEntity,
 	ApplicationConfigInitializerService,
 	ApplicationConfigStateService,
-	DynamicPageEntity,
 	DynamicPageRouteService,
 	DynamicPageStateService,
 } from '@dynamic-app-health/api';
-import { DynamicPageViewComponent } from '@dynamic-app-health/feature/dynamic-page/view';
 
 export function initializeApp(
 	applicationConfigStateService: ApplicationConfigStateService,

@@ -36,7 +36,7 @@ export class PatientListComponent
 
 	public ngOnInit(): void {
 		this.componentService
-			.init$(this.COMPONENT_ID, this.config)
+			.init$(this.config)
 			.pipe(takeUntil(this.destroy))
 			.subscribe((params) => {
 				this.params = params;
@@ -47,5 +47,9 @@ export class PatientListComponent
 
 	public handleRowSelect(event: any): void {
 		this.componentService.handleRowSelect(event.data);
+	}
+
+	public paginate(event: any): void {
+		this.componentService.paginate(event);
 	}
 }

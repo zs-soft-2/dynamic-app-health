@@ -1,6 +1,7 @@
 <ng-container *ngIf="params$$ | async as params">
 	<div class="content" fxLayout="column" fxLayoutAlign="space-around center">
 		<form [formGroup]="params.formGroup">
+			<input name="componentId" formControlName="componentId" hidden />
 			<input name="id" formControlName="id" hidden />
 
 			<p-fieldset legend="Base">

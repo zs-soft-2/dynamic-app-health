@@ -1,8 +1,8 @@
-import { nanoid } from 'nanoid';
 import { Observable, of } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 import {
+	CommonUtilService,
 	DynamicConfigDataService,
 	DynamicConfigEntity,
 	DynamicConfigEntityUpdate,
@@ -12,12 +12,16 @@ const dynamicConfigs: DynamicConfigEntity[] = [];
 
 @Injectable()
 export class DynamicConfigDataServiceImpl extends DynamicConfigDataService {
+	public constructor(private commonUtilService: CommonUtilService) {
+		super();
+	}
+
 	public add$(
 		dynamicConfig: DynamicConfigEntity
 	): Observable<DynamicConfigEntity> {
 		const dynamicConfigEntity: DynamicConfigEntity = {
 			...dynamicConfig,
-			id: dynamicConfig.id || nanoid(10),
+			id: dynamicConfig.id || this.commonUtilService.createEntityId(),
 		};
 
 		return of(dynamicConfigEntity);

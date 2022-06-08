@@ -1,8 +1,8 @@
-import { nanoid } from 'nanoid';
 import { Observable, of } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 import {
+	CommonUtilService,
 	DynamicLayout,
 	DynamicPageDataService,
 	DynamicPageEntity,
@@ -12,23 +12,27 @@ import {
 
 import { dynamicLayoutsForPages } from '../layout';
 
-export const dynamicPages: DynamicPageEntity[] = [
-	{
-		id: nanoid(10),
-		layout: dynamicLayoutsForPages[0],
-		path: 'home',
-		label: 'Home',
-	},
-];
-
 @Injectable()
 export class DynamicPageDataServiceImpl extends DynamicPageDataService {
+	private readonly dynamicPages: DynamicPageEntity[] = [
+		{
+			id: 'lk658F',
+			layout: dynamicLayoutsForPages[0],
+			path: 'home',
+			label: 'Home',
+		},
+	];
+
+	public constructor(private commonUtilService: CommonUtilService) {
+		super();
+	}
+
 	public add$(
 		dynamicPage: DynamicPageEntityAdd
 	): Observable<DynamicPageEntity> {
 		const dynamicPageEntity: DynamicPageEntity = {
 			...dynamicPage,
-			id: nanoid(10),
+			id: this.commonUtilService.createEntityId(),
 		};
 
 		return of(dynamicPageEntity);
@@ -43,15 +47,15 @@ export class DynamicPageDataServiceImpl extends DynamicPageDataService {
 	}
 
 	public getDynamicPages(): DynamicPageEntity[] {
-		return dynamicPages;
+		return this.dynamicPages;
 	}
 
 	public list$(): Observable<DynamicPageEntity[]> {
-		return of(dynamicPages);
+		return of(this.dynamicPages);
 	}
 
 	public load$(dynamicPageId: string): Observable<DynamicPageEntity> {
-		const dynamicPage: DynamicPageEntity | undefined = dynamicPages.find(
+		const dynamicPage: DynamicPageEntity | undefined = this.dynamicPages.find(
 			(dynamicPage) => dynamicPage.id === dynamicPageId
 		);
 

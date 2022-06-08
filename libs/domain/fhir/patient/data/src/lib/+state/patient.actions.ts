@@ -1,6 +1,11 @@
+import {
+	Bundle,
+	PatientBundle,
+	PatientEntity,
+	PatientEntityAdd,
+} from '@dynamic-app-health/api';
 import { Update } from '@ngrx/entity';
 import { createAction, props } from '@ngrx/store';
-import { PatientBundle, PatientEntity, PatientEntityAdd } from '@dynamic-app-health/api';
 
 export const addPatient = createAction(
 	'[Patient] Add Patient',
@@ -49,7 +54,10 @@ export const deletePatientSuccess = createAction(
 	props<{ patientId: string }>()
 );
 
-export const listPatients = createAction('[Patient] List Patients', props<{ requesterId: string; index: number; count: number; }>());
+export const listPatients = createAction(
+	'[Patient] List Patients',
+	props<{ requesterId: string; index: number; count: number }>()
+);
 
 export const listPatientsFail = createAction(
 	'[Patient] List Patients FAIL',
@@ -59,6 +67,21 @@ export const listPatientsFail = createAction(
 export const listPatientsSuccess = createAction(
 	'[Patient] List Patients Success',
 	props<{ patientBundle: PatientBundle }>()
+);
+
+export const nextPatients = createAction(
+	'[Patient] Next Patients',
+	props<{ requesterId: string; index: number; bundle: Bundle; }>()
+);
+
+export const nextPatientsFail = createAction(
+	'[Patient] Next Patients FAIL',
+	props<{ error: Error }>()
+);
+
+export const nextPatientsSuccess = createAction(
+	'[Patient] Next Patients Success',
+	props<{ requesterId: string; index: number; bundle: Bundle; }>()
 );
 
 export const loadPatient = createAction(

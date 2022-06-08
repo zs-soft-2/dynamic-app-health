@@ -1,15 +1,24 @@
-import { nanoid } from 'nanoid';
 import { from, map, Observable, of, switchMap } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 import {
-    Bundle, EntityUpdate, FhirClientService, PatientDataService, PatientEntity, PatientEntityAdd,
-    PatientEntityUpdate, RequestParams
+	Bundle,
+	CommonUtilService,
+	EntityUpdate,
+	FhirClientService,
+	PatientDataService,
+	PatientEntity,
+	PatientEntityAdd,
+	PatientEntityUpdate,
+	RequestParams,
 } from '@dynamic-app-health/api';
 
 @Injectable()
 export class PatientDataServiceImpl extends PatientDataService {
-    public constructor(private fhirClientService: FhirClientService) {
+	public constructor(
+		private commonUtilService: CommonUtilService,
+		private fhirClientService: FhirClientService
+	) {
 		super();
 
 		fhirClientService
@@ -20,20 +29,20 @@ export class PatientDataServiceImpl extends PatientDataService {
 			});
 	}
 
-    public add$(entity: PatientEntityAdd): Observable<PatientEntity> {
+	public add$(entity: PatientEntityAdd): Observable<PatientEntity> {
 		const addedEntity: PatientEntity = {
 			...entity,
-			id: nanoid(10),
+			id: this.commonUtilService.createEntityId(),
 		};
 
 		return of(addedEntity);
 	}
 
-    public delete$(entity: PatientEntity): Observable<PatientEntity> {
+	public delete$(entity: PatientEntity): Observable<PatientEntity> {
 		throw new Error('Method not implemented.');
 	}
 
-    public list$(): Observable<PatientEntity[]> {
+	public list$(): Observable<PatientEntity[]> {
 		return from(
 			this.fhirClientService
 				.getClient()
@@ -47,7 +56,7 @@ export class PatientDataServiceImpl extends PatientDataService {
 		);
 	}
 
-    public load$(id: string): Observable<PatientEntity> {
+	public load$(id: string): Observable<PatientEntity> {
 		return from(
 			this.fhirClientService
 				.getClient()
@@ -59,13 +68,25 @@ export class PatientDataServiceImpl extends PatientDataService {
 		);
 	}
 
-    public search$(requestParams: RequestParams): Observable<Bundle> {
+	public nextPage$(bundle: Bundle): Observable<Bundle> {
+		return this.fhirClientService
+			.nextPage({ bundle })
+			.pipe(map((response) => response as Bundle));
+	}
+
+	public prevPage$(bundle: Bundle): Observable<Bundle> {
+		return this.fhirClientService
+			.prevPage({ bundle })
+			.pipe(map((response) => response as Bundle));
+	}
+
+	public search$(requestParams: RequestParams): Observable<Bundle> {
 		return this.fhirClientService
 			.search(requestParams)
 			.pipe(map((response) => response as Bundle));
 	}
 
-    public update$(entity: EntityUpdate): Observable<PatientEntityUpdate> {
+	public update$(entity: EntityUpdate): Observable<PatientEntityUpdate> {
 		return of(entity);
 	}
 }

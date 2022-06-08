@@ -1,6 +1,7 @@
 <ng-container *ngIf="params$$ | async as params">
 	<div class="content" fxLayout="column" fxLayoutAlign="center center">
 		<form [formGroup]="params.formGroup" novalidate>
+			<input name="componentId" formControlName="componentId" hidden />
 			<input name="id" formControlName="id" hidden />
 
 			<div formGroupName="config">

@@ -3,13 +3,13 @@ import {
 	GridsterItemComponentInterface,
 } from 'angular-gridster2';
 import { cloneDeep } from 'lodash';
-import { nanoid } from 'nanoid';
 import { combineLatest, Observable, ReplaySubject, switchMap } from 'rxjs';
 
 import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
+	CommonUtilService,
 	DynamicComponent,
 	DynamicComponentMappingService,
 	DynamicConfigEntity,
@@ -44,9 +44,10 @@ export class DynamicPageEditorService {
 		private dynamicPageStateService: DynamicPageStateService,
 		private dynamicComponentMapping: DynamicComponentMappingService,
 		private dynamicConfigStateService: DynamicConfigStateService,
-		private componentUtil: DynamicPageEditorUtilService,
-		private router: Router,
-		private location: Location
+		private commonUtilService: CommonUtilService,
+		private componentUtilService: DynamicPageEditorUtilService,
+		private location: Location,
+		private router: Router
 	) {
 		this.params$$ = new ReplaySubject();
 		this.layout = {
@@ -56,7 +57,7 @@ export class DynamicPageEditorService {
 			maxCols: 100,
 			minRows: 1,
 			maxRows: 100,
-			margin: 5
+			margin: 5,
 		};
 	}
 
@@ -72,7 +73,7 @@ export class DynamicPageEditorService {
 		let configId = layoutItem.content?.configId;
 
 		if (!configId || configId === '0') {
-			configId = nanoid(10);
+			configId = this.commonUtilService.createEntityId();
 
 			const content: DynamicContent | undefined = layoutItem.content;
 
@@ -111,10 +112,11 @@ export class DynamicPageEditorService {
 						this.dynamicConfigs =
 							dynamicConfigs as DynamicConfigEntity[];
 						this.componentMap = componentMap;
-						this.dynamicPage = this.componentUtil.findDynamicPage(
-							entities as DynamicPageEntity[],
-							data['path']
-						);
+						this.dynamicPage =
+							this.componentUtilService.findDynamicPage(
+								entities as DynamicPageEntity[],
+								data['path']
+							);
 
 						this.layout = cloneDeep(
 							this.dynamicPage?.layout || this.layout
@@ -168,7 +170,7 @@ export class DynamicPageEditorService {
 
 	private addDynamicPage(): void {
 		const dynamicPage: DynamicPageEntityAdd =
-			this.componentUtil.createDynamicPage(
+			this.componentUtilService.createDynamicPage(
 				this.params.formGroup,
 				this.layout
 			);
@@ -203,7 +205,8 @@ export class DynamicPageEditorService {
 		pageView: DynamicPageView,
 		dynamicPage: DynamicPageEntity | undefined
 	): DynamicPageEditorParams {
-		const formGroup = this.componentUtil.createFormGroup(dynamicPage);
+		const formGroup =
+			this.componentUtilService.createFormGroup(dynamicPage);
 		const layout: DynamicLayout | undefined = dynamicPage?.layout;
 
 		const dynamicPageEditorParams: DynamicPageEditorParams = {
@@ -273,7 +276,7 @@ export class DynamicPageEditorService {
 		return {
 			item: {
 				...this.defaultItem,
-				id: nanoid(3),
+				id: this.commonUtilService.createItemId(),
 			},
 			content: {
 				componentName,
@@ -331,7 +334,10 @@ export class DynamicPageEditorService {
 
 	private updateDynamicPage(layout: DynamicLayout): void {
 		const dynamicPage: DynamicPageEntityUpdate =
-			this.componentUtil.updateDynamicPage(this.params.formGroup, layout);
+			this.componentUtilService.updateDynamicPage(
+				this.params.formGroup,
+				layout
+			);
 
 		this.dynamicPageStateService.dispatchUpdateEntityAction(dynamicPage);
 	}

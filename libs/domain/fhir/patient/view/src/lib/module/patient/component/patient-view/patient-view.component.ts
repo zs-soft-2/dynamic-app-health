@@ -27,7 +27,7 @@ export class PatientViewComponent
 	implements OnDestroy, OnInit
 {
 	@Input()
-	public config!: DynamicConfigEntity;
+	public dynamicConfig!: DynamicConfigEntity;
 
 	public constructor(private componentService: PatientViewService) {
 		super();
@@ -35,7 +35,7 @@ export class PatientViewComponent
 
 	public ngOnInit(): void {
 		this.componentService
-			.init$(this.COMPONENT_ID,  this.config)
+			.init$(this.dynamicConfig)
 			.pipe(takeUntil(this.destroy))
 			.subscribe((params) => {
 				this.params$$.next(params);

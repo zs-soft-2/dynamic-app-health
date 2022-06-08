@@ -44,6 +44,10 @@
 								]
 							},
 							{
+								"sourceTag": "type:common",
+								"onlyDependOnLibsWithTags": ["type:api"]
+							},
+							{
 								"sourceTag": "type:core",
 								"onlyDependOnLibsWithTags": ["type:api"]
 							},
@@ -52,6 +56,7 @@
 								"onlyDependOnLibsWithTags": [
 									"type:api",
 									"type:core",
+									"type:domain",
 									"type:feature"
 								]
 							},

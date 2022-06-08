@@ -47,8 +47,15 @@ export const dynamicPageReducer = createReducer(
 		(state, { dynamicPageId }) =>
 			dynamicPageAdapter.removeOne(dynamicPageId, state)
 	),
-	on(dynamicPageActions.listDynamicPagesSuccess, (state, { dynamicPages }) =>
-		dynamicPageAdapter.upsertMany(dynamicPages, state)
+	on(
+		dynamicPageActions.listDynamicPagesSuccess,
+		(state, { dynamicPages }) => {
+			if (!state.ids.length) {
+				return dynamicPageAdapter.upsertMany(dynamicPages, state);
+			} else {
+				return state;
+			}
+		}
 	),
 	on(dynamicPageActions.loadDynamicPageSuccess, (state, { dynamicPage }) =>
 		dynamicPageAdapter.upsertOne(dynamicPage, state)

@@ -2,6 +2,7 @@
 	"version": 2,
 	"projects": {
 		"api": "libs/api",
+		"common-util": "libs/common/util",
 		"core-application-config-data": "libs/core/application-config/data",
 		"core-authentication-data": "libs/core/authentication/data",
 		"core-error-data": "libs/core/error/data",

@@ -8,4 +8,5 @@ export * from './pagination';
 export * from './permission';
 export * from './resource';
 export * from './role';
+export * from './service';
 export * from './state';

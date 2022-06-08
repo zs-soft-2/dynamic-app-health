@@ -1,0 +1,26 @@
+{
+	"projectType": "library",
+	"root": "libs/common/util",
+	"sourceRoot": "libs/common/util/src",
+	"prefix": "dah",
+	"targets": {
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/libs/common/util"],
+			"options": {
+				"jestConfig": "libs/common/util/jest.config.js",
+				"passWithNoTests": true
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": [
+					"libs/common/util/src/**/*.ts",
+					"libs/common/util/src/**/*.html"
+				]
+			}
+		}
+	},
+	"tags": ["type:common"]
+}

@@ -1,18 +1,12 @@
 <div class="patient-list">
 	<ng-container *ngIf="params$$ | async as params; else skeleton">
-		<p-table
-			[columns]="params.columns"
-			[value]="params.patients"
-			responsiveLayout="stack"
-			selectionMode="single"
-			[(selection)]="params.selectedPatientView"
-			(onRowSelect)="handleRowSelect($event)"
-			styleClass="p-datatable-sm"
-			[paginator]="params.pagination.isPagination"
-			[showPageLinks]="params.pagination.showPageLinks"
-			[showJumpToPageDropdown]="params.pagination.showJumpToPageDropdown"
-			[rows]="params.pagination.rows"
-		>
+		<p-paginator *ngIf="params.pagination.isPagination" [rows]="params.pagination.rows"
+			[totalRecords]="params.pagination.total || 0" [showPageLinks]="params.pagination.showPageLinks"
+			[showJumpToPageDropdown]="params.pagination.showJumpToPageDropdown" (onPageChange)="paginate($event)"></p-paginator>
+
+		<p-table [columns]="params.columns" [loading]="params.loading" [value]="params.patients" [rows]="params.pagination.rows" [first]="params.pagination.index || 0"
+			[(selection)]="params.selectedPatientView" (onRowSelect)="handleRowSelect($event)" responsiveLayout="stack"
+			selectionMode="single" styleClass="p-datatable-sm">
 			<ng-template pTemplate="header" let-columns>
 				<tr>
 					<th *ngFor="let col of columns">
@@ -45,11 +39,21 @@
 
 			<ng-template pTemplate="body" let-product>
 				<tr>
-					<td><p-skeleton></p-skeleton></td>
-					<td><p-skeleton></p-skeleton></td>
-					<td><p-skeleton></p-skeleton></td>
-					<td><p-skeleton></p-skeleton></td>
-					<td><p-skeleton></p-skeleton></td>
+					<td>
+						<p-skeleton></p-skeleton>
+					</td>
+					<td>
+						<p-skeleton></p-skeleton>
+					</td>
+					<td>
+						<p-skeleton></p-skeleton>
+					</td>
+					<td>
+						<p-skeleton></p-skeleton>
+					</td>
+					<td>
+						<p-skeleton></p-skeleton>
+					</td>
 				</tr>
 			</ng-template>
 		</p-table>

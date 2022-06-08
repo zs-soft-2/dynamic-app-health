@@ -2,6 +2,7 @@ import { iif, Observable, switchMap, takeUntil } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 import {
+	CommonUtilService,
 	ComponentBaseService,
 	DynamicConfigEntity,
 	DynamicProperties,
@@ -20,11 +21,11 @@ export class PatientViewService extends ComponentBaseService<
 > {
 	private dynamicConfig: DynamicConfigEntity | undefined;
 	private defaultProperties: DynamicProperties;
-	private componentId!: string;
 
 	public constructor(
-		private patientStateService: PatientStateService,
-		private patientUtilService: PatientUtilService
+		private readonly commonUtilService: CommonUtilService,
+		private readonly patientStateService: PatientStateService,
+		private readonly patientUtilService: PatientUtilService
 	) {
 		super();
 
@@ -32,13 +33,12 @@ export class PatientViewService extends ComponentBaseService<
 	}
 
 	public init$(
-		componentId: string,
 		dynamicConfig?: DynamicConfigEntity
 	): Observable<PatientParams> {
-		this.componentId = componentId;
 		this.dynamicConfig = dynamicConfig;
 		this.patientStateService.dispatchListEntitiesAction();
-
+		
+		const componentId = this.dynamicConfig?.componentId || this.commonUtilService.createComponentId();
 		const selectedPatientId: string = this.dynamicConfig?.config.selectedId || '';
 
 		iif(

@@ -14,7 +14,6 @@ export abstract class ComponentBaseService<S, T> extends BaseService {
 	}
 
 	public abstract init$(
-		componentId: string,
 		configEntity?: ConfigEntity<T>
 	): Observable<S>;
 }

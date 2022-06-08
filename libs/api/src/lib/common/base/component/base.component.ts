@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid';
 import { Subject } from 'rxjs';
 
 import { Component, OnDestroy } from '@angular/core';
@@ -7,7 +6,7 @@ import { Component, OnDestroy } from '@angular/core';
 	template: '',
 })
 export abstract class BaseComponent implements OnDestroy {
-	protected readonly COMPONENT_ID = nanoid(6);
+	protected componentId!: string;
 
 	protected destroy: Subject<boolean>;
 

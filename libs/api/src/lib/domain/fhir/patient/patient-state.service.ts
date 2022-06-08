@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 
 import { EntityStateService } from '../../../common';
+import { Bundle } from '../bundle';
 import { PatientBundle } from './patient.bundle';
 import {
 	PatientEntity,
@@ -17,6 +18,11 @@ export abstract class PatientStateService extends EntityStateService<
 		requesterId: string,
 		index: number,
 		count: number
+	): void;
+	public abstract dispatchNextPatient(
+		requesterId: string,
+		index: number,
+		bundle: Bundle
 	): void;
 	public abstract selectPatientBundleByRequesterId$(
 		requesterId: string

@@ -3,6 +3,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { FieldsetModule } from 'primeng/fieldset';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
+import { PaginatorModule } from 'primeng/paginator';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TableModule } from 'primeng/table';
 
@@ -25,6 +26,7 @@ import { PatientListConfigComponent } from './component/patient-list-config';
 		FormsModule,
 		InputTextModule,
 		InputNumberModule,
+		PaginatorModule,
 		ReactiveFormsModule,
 		SkeletonModule,
 		TableModule,

@@ -14,5 +14,7 @@ export abstract class PatientDataService extends EntityDataService<
 	PatientEntityAdd,
 	PatientEntityUpdate
 > {
+	public abstract nextPage$(bundle: Bundle): Observable<Bundle>;
+	public abstract prevPage$(bundle: Bundle): Observable<Bundle>;
 	public abstract search$(params: RequestParams): Observable<Bundle>;
 }

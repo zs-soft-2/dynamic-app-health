@@ -1,9 +1,6 @@
+import { PATIENT_BUNDLE_KEY, PatientBundle } from '@dynamic-app-health/api';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Action, createReducer, on } from '@ngrx/store';
-import {
-	PatientBundle,
-	PATIENT_BUNDLE_KEY,
-} from '@dynamic-app-health/api';
 
 import * as patientActions from './patient.actions';
 
@@ -37,27 +34,60 @@ export const patientReducer = createReducer(
 			error: null,
 		};
 	}),
-	on(patientActions.setSelectedPatientId, (state, { patientId }): PatientState => {
-		return {
-			...state,
-			loading: false,
-			error: null,
-			selectedId: patientId,
-		};
-	}),
+	on(
+		patientActions.setSelectedPatientId,
+		(state, { patientId }): PatientState => {
+			return {
+				...state,
+				loading: false,
+				error: null,
+				selectedId: patientId,
+			};
+		}
+	),
 
-	on(patientActions.listPatientsSuccess, (state, { patientBundle }): PatientState =>
-		patientBundleAdapter.addOne(patientBundle, {
-			...state
-		})
+	on(
+		patientActions.listPatientsSuccess,
+		(state, { patientBundle }): PatientState =>
+			patientBundleAdapter.upsertMany([patientBundle], {
+				...state,
+			})
+	),
+	on(
+		patientActions.nextPatientsSuccess,
+		(state, { requesterId, index, bundle }): PatientState => {
+			let patientBundle: PatientBundle | undefined =
+				state.entities[requesterId];
+
+			const bundles: any = {};
+
+			bundles[index] = bundle;
+
+			if (patientBundle) {
+				patientBundle = { ...patientBundle, bundles };
+			} else {
+				patientBundle = {
+					requesterId,
+					bundles,
+					total: bundle.total || 0,
+				};
+			}
+
+			return patientBundleAdapter.upsertOne(patientBundle, {
+				...state,
+			});
+		}
 	),
 	on(patientActions.clearPatients, (state) =>
 		patientBundleAdapter.removeAll(state)
 	),
-	on(patientActions.setSelectedPatientId, (state, { patientId }): PatientState => ({
-		...state,
-		selectedId: patientId,
-	}))
+	on(
+		patientActions.setSelectedPatientId,
+		(state, { patientId }): PatientState => ({
+			...state,
+			selectedId: patientId,
+		})
+	)
 );
 
 export function reducer(state: PatientState | undefined, action: Action) {

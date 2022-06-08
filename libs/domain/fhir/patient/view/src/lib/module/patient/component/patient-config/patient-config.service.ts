@@ -117,7 +117,7 @@ export class PatientConfigService extends ConfigComponentBaseService<
 			dynamicConfig?.config.properties || this.defaultProperties;
 
 		return this.formBuilder.group({
-			id: [dynamicConfig?.id],
+			componentId: [dynamicConfig?.componentId],
 			config: this.formBuilder.group({
 				label: [dynamicConfig?.config.label],
 				selectedId: [dynamicConfig?.config.selectedId],
@@ -129,6 +129,7 @@ export class PatientConfigService extends ConfigComponentBaseService<
 					phone: [properties['phone']],
 				}),
 			}),
+			id: [dynamicConfig?.id],
 		});
 	}
 

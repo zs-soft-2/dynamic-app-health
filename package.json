@@ -33,6 +33,7 @@
 		"fhir-kit-client": "^1.9.1",
 		"lodash": "^4.17.21",
 		"ng-dynamic-component": "^10.1.0",
+		"ngrx-store-localstorage": "^13.0.1",
 		"primeicons": "5.0.0",
 		"primeng": "^13.3.3",
 		"rxjs": "~7.4.0",

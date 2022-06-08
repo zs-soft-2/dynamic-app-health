@@ -8,6 +8,7 @@ export interface PatientTableColumn {
 
 export interface PatientListParams extends ComponentBaseParam {
 	columns: PatientTableColumn[];
+	loading: boolean;
 	patients: PatientView[];
 	selectedPatientView?: PatientView;
 	pagination: Pagination;

@@ -4,4 +4,5 @@ export interface Pagination {
 	isPagination: boolean;
 	showPageLinks: boolean;
 	showJumpToPageDropdown: boolean;
+	total?: number;
 }
